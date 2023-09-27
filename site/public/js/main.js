@@ -1,5 +1,12 @@
 var itensSelecionados = document.getElementsByClassName('item-type');
 var divTextMoni = document.getElementById('text-moni');
+var guilherme = document.getElementById("guilherme");
+var jeremias = document.getElementById("jeremias");
+var lisandra = document.getElementById("lisandra");
+var lucas = document.getElementById("lucas");
+var marcos = document.getElementById("marcos");
+var michael = document.getElementById("michael");
+var status = document.getElementById("status");
 
 
 for (var i = 0; i < itensSelecionados.length; i++) {
@@ -88,3 +95,24 @@ for (var i = 0; i < itensSelecionados.length; i++) {
         this.classList.add('item-selected');
     });
 }
+
+guilherme.addEventListener("click", function(){
+    guilherme.classList.toggle("flip");
+    
+})
+jeremias.addEventListener("click", function(){
+    jeremias.classList.toggle("flip");
+})
+lisandra.addEventListener("click", function(){
+    lisandra.classList.toggle("flip");
+})
+lucas.addEventListener("click", function(){
+    lucas.classList.toggle("flip");
+})
+marcos.addEventListener("click", function(){
+    marcos.classList.toggle("flip");
+})
+michael.addEventListener("click", function(){
+    michael.classList.toggle("flip");
+})
+

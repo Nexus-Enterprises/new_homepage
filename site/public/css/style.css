@@ -429,9 +429,14 @@ header h1{
   grid-gap: 2rem;
   border: 1px solid #5a5a5a;
   padding: 3rem;
+  perspective: 1500px;
+}
+.cards-team > .card-tm-nxs.flip {
+  cursor: pointer;
+  transform: rotateY(180deg);
 }
 
-.card-tm-nxs{
+ .card-tm-nxs{
   display: flex;
   flex-direction: column;
   background-color: #2A2A2A;
@@ -439,7 +444,50 @@ header h1{
   padding: 6rem 1.2rem;
   gap: 2rem;
   border-radius: 20px;
+  transition: transform 1500ms;
+  transform-style: preserve-3d;
+  
 }
+.front-card, .back-card {
+  backface-visibility: hidden;
+}
+.front-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  line-height: 50px;
+}
+.back-card {
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.back-card p {
+  width: 50%;
+  margin: 0;
+  padding: 0;
+}
+
+#guilherme .back-card {
+  display: flex;
+  transform: rotateY(180deg);
+}
+#jeremias .back-card {
+  display: flex;
+  transform: rotateY(180deg);
+}
+#lisandra .back-card {
+  display: flex;
+  transform: rotateY(180deg);
+}
+#lucas .back-card {
+  display: flex;
+  transform: rotateY(180deg);
+}
+
 
 .card-tm-nxs img{
   border-radius: 360px;
@@ -570,6 +618,10 @@ header h1{
   opacity: 0.5;
   cursor: pointer;
   transition: 0.3s;
+}
+
+.card-tm-nxs:hover {
+  cursor: pointer;
 }
 
 a:hover{
