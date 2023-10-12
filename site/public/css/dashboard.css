@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kodchasan:wght@300;400;500;700&family=Moulpali&family=Poppins:wght@300;500;700&display=swap');
+
+*{  
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+    transition: all 0.5s;
+}
+
+a:hover{
+    opacity: 60%;
+    transition: ease-in-out;
+}
+
+.container{
+    display: flex;
+}
+.left_side{
+    width: 18vw;
+    background-color: #21004C;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif; 
+}
+
+.left_side_logo{
+    display: flex;
+    align-items: center;
+    font-family: 'Kodchasan', sans-serif;
+    color: white;
+    font-weight: 200;
+    justify-content: center;
+    padding: 5% 0 ;
+}
+
+.left_side_logo img{
+    width: 15%;
+}
+
+.profile_user{
+    display: flex;
+    font-size: 18px;
+    background-color: #FFFEFE;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+}
+
+.img_profile{
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3% 0;
+}
+
+.infos{
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info_profile, .icons_profile{
+    align-items: center;
+    width: 100%;
+    gap: 20%;
+    display: flex;
+    justify-content: center;
+    padding: 3%;
+}
+
+.info_profile{
+    gap: 15%;
+}
+
+.name_user{
+    font-size: 20px;
+}
+.func_user{
+    opacity: 50%;
+    font-size: 14px;
+}
+
+/* Options */
+
+.options{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10vh;
+    background-color: #21004C;
+    padding: 5vh 10px;
+    gap: 10%;
+}
+
+.item_option{
+    display: flex;
+    align-items: center;
+    margin-left: 130px;
+    gap: 5%;
+    width: 100%;
+    justify-content: left;
+    padding: 15px 0;
+    background-color: #21004C;
+    color: white;
+    font-weight: 300;
+    font-family: 'Poppins', sans-serif;
+    margin: 0 20px;
+}
+
+.fa {
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+.text_initial{
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+/* .dashboard{
+    background-color: #9E6AE1;
+    border-radius: 12px;
+    height: 50%;
+    font-weight: bold;
+    padding-left: 20px;
+} */
+
+
+/* Right Side */
+
+.right_side{
+    background-color: black;
+    width: 82vw;
+    height: 100vh;
+    display: flex;
+}
+
+
