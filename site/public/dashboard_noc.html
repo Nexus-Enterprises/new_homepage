@@ -7,57 +7,444 @@
     <title>Dashboard - NOC</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/dashboard.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
+    <div class="left_side_logo">
+        <img src="./assets/img-nexus/logo_nexs.svg" alt="Logo Nexus." srcset="">
+        <h2 class="left_side_title">Nexus.</h2>
+    </div>
     <div class="container">
         <div class="left_side">
-            <div class="left_side_logo">
-                <img src="./assets/img-nexus/logo_nexs.svg" alt="Logo Nexus." srcset="">
-                <h2 class="left_side_title">Nexus.</h2>
-            </div>
             <div class="profile_user">
-                <div class="img_profile">
-                    <img src="./assets/img-nexus/img_profile.svg" alt="Foto de perfil do usuario" srcset="">
-                </div>
                 <div class="infos">
                     <div class="info_profile">
-                        <h5 class="name_user">José</h5>
-                        <h5 class="func_user">Eng. Noc</h5>
+                        <h5 class="name_user">Marcos</h5>
+                        <h5 class="func_user">Estagiário em Desenvolvimento de Sistemas</h5>
                     </div>
                     <div class="icons_profile">
                         <a href="#"><i class="fa fa-user" aria-hidden="true"></i></a>
                         <a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
             <div class="options">
-                <div class="initial item_option">
-                    <i class="fa fa-home" aria-hidden="true"></i>
-                    <p class="text_initial">Página Inicial</p>
+                <div class="container_options">
+                    <div class="initial item_option ">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                        <p class="text_initial">Página Inicial</p>
+                    </div>
                 </div>
-                <div class="dashboard item_option">
-                    <i class="fa fa-line-chart" aria-hidden="true"></i>
-                    <p class="text_initial">Dashboard</p>
+                <div class="container_options">
+                    <div class="dashboard item_option selected">
+                        <i class="fa fa-line-chart" aria-hidden="true"></i>
+                        <p class="text_initial">Dashboard</p>
+                    </div>
                 </div>
-                <div class="hist item_option">
-                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                    <p class="text_initial">Histórico</p>
+                <div class="container_options">
+                    <div class="hist item_option ">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                        <p class="text_initial">Histórico</p>
+                    </div>
                 </div>
-                <div class="list_func item_option">
-                    <i class="fa fa-book" aria-hidden="true"></i>
-                    <p class="text_initial">Lista Funcionários</p>
+                <div class="container_options">
+                    <div class="list_func item_option ">
+                        <i class="fa fa-book" aria-hidden="true"></i>
+                        <p class="text_initial">Lista Funcionários</p>
+                    </div>
                 </div>
-                <div class="logout item_option">
-                    <i class="fa fa-sign-out" aria-hidden="true"></i>
-                    <p class="text_initial">Sair</p>
+                <div class="container_options ">
+                    <div class="logout item_option ">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        <p class="text_initial">Sair</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="right_side">a</div>
+        <div class="right_side">
+            <div class="f-part">
+                <h1 class="title-right">MAIOR CONSUMO DOS COMPONENTES</h1>
+                <div class="container-right">
+                    <div class="card">
+                        <div class="top-card">
+                            <h1 class="text-card">CPU</h1>
+                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                        </div>
+                        <div class="bottom-card">
+                            <div class="left-bottom-card">
+                                <h1 class="agencia-text">Agência</h1>
+                                <p class="num-agencia">0000001</p>
+                                <h1 class="maquina-text">Máquina</h1>
+                                <p class="num-maquina">00-1</p>
+                            </div>
+                            <div class="chartBox">
+                                <canvas id="myChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="top-card">
+                            <h1 class="text-card">RAM</h1>
+                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                        </div>
+                        <div class="bottom-card">
+                            <div class="left-bottom-card">
+                                <h1 class="agencia-text">Agência</h1>
+                                <p class="num-agencia">0000001</p>
+                                <h1 class="maquina-text">Máquina</h1>
+                                <p class="num-maquina">00-1</p>
+                            </div>
+                            <div class="chartBox">
+                                <canvas id="myChart1"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="top-card">
+                            <h1 class="text-card">DISCO</h1>
+                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                        </div>
+                        <div class="bottom-card">
+                            <div class="left-bottom-card">
+                                <h1 class="agencia-text">Agência</h1>
+                                <p class="num-agencia">0000001</p>
+                                <h1 class="maquina-text">Máquina</h1>
+                                <p class="num-maquina">00-1</p>
+                            </div>
+                            <div class="chartBox">
+                                <canvas id="myChart2"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="full-tr">
+                    <h1 class="title-tr">Agências</h1>
+                    <table class="tg">
+                        <thead>
+                            <tr>
+                                <th class="tg-baqh">Numero Agência</th>
+                                <th class="tg-baqh">Consumo CPU</th>
+                                <th class="tg-baqh">Consumo RAM</th>
+                                <th class="tg-baqh">Consumo Disco</th>
+                                <th class="tg-baqh">Qtd. máquina cima de 70%</th>
+                                <th class="tg-baqh">Qtd. de máquina da agência</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="tg-baqh">0001</td>
+                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                                <td class="tg-baqh"><span class="alert-yellow">50%</span></td>
+                                <td class="tg-baqh"><span class="alert-red">70%</span></td>
+                                <td class="tg-baqh">21</td>
+                                <td class="tg-baqh">31</td>
+                            </tr>
+                            <tr>
+                                <td class="tg-baqh">0001</td>
+                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                                <td class="tg-baqh"><span class="alert-blue">40%</span></td>
+                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                                <td class="tg-baqh">21</td>
+                                <td class="tg-baqh">21</td>
+                            </tr>
+                            <tr>
+                                <td class="tg-baqh">0001</td>
+                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                                <td class="tg-baqh">21</td>
+                                <td class="tg-baqh">21</td>
+                            </tr>
+                            <tr>
+                                <td class="tg-baqh">0001</td>
+                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                                <td class="tg-baqh">21</td>
+                                <td class="tg-baqh">21</td>
+                            </tr>
+                            <tr>
+                                <td class="tg-baqh">0001</td>
+                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                                <td class="tg-baqh">21</td>
+                                <td class="tg-baqh">21</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="s-part">
+                <div class="container-s-part">
+                    <h1 class="title-container-s-part">Maquinas que mais utilizaram os componentes</h1>
+                    <select id="agencias">
+                        <option value="" selected disabled>Agencias</option>
+                        <option value="">Agencia 0001</option>
+                        <option value="">Agencia 0002</option>
+                        <option value="">Agencia 0003</option>
+                        <option value="">Agencia 0004</option>
+                    </select>
+                    <div class="container-alertas">
+                        <div class="alerta-agencia">Agência 00001</div>
+                        <div class="alerta-location">Localização | 192.168.128.2</div>
+                        <div class="alerta">
+                            <div class="t-alerta">
+                                <p class="i-maquina">Máquina 00001</p>
+                                <div class="horario">
+                                   <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                   <p class="horario_alerta">12:34</p>
+                                </div>
+                            </div>
+                            <div class="b-alerta alert-blue">
+                                <p class="elemento-alerta">CPU</p>
+                                <p class="porcentagem-alerta">20%</p>
+                            </div>
+                        </div>
+                        <div class="alerta">
+                            <div class="t-alerta">
+                                <p class="i-maquina">Máquina 00001</p>
+                                <div class="horario">
+                                   <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                   <p class="horario_alerta">12:34</p>
+                                </div>
+                            </div>
+                            <div class="b-alerta alert-red">
+                                <p class="elemento-alerta">RAM</p>
+                                <p class="porcentagem-alerta">90%</p>
+                            </div>
+                        </div>
+                        <div class="alerta">
+                            <div class="t-alerta">
+                                <p class="i-maquina">Máquina 00001</p>
+                                <div class="horario">
+                                   <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                   <p class="horario_alerta">12:34</p>
+                                </div>
+                            </div>
+                            <div class="b-alerta alert-yellow">
+                                <p class="elemento-alerta">DISCO</p>
+                                <p class="porcentagem-alerta">30%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-alertas">
+                        <div class="alerta-agencia">Agência 00002</div>
+                        <div class="alerta-location">Localização | 192.168.128.2</div>
+                        <div class="alerta">
+                            <div class="t-alerta">
+                                <p class="i-maquina">Máquina 00001</p>
+                                <div class="horario">
+                                   <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                   <p class="horario_alerta">12:34</p>
+                                </div>
+                            </div>
+                            <div class="b-alerta alert-red">
+                                <p class="elemento-alerta">CPU</p>
+                                <p class="porcentagem-alerta">90%</p>
+                            </div>
+                        </div>
+                        <div class="alerta">
+                            <div class="t-alerta">
+                                <p class="i-maquina">Máquina 00001</p>
+                                <div class="horario">
+                                   <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                   <p class="horario_alerta">12:34</p>
+                                </div>
+                            </div>
+                            <div class="b-alerta alert-red">
+                                <p class="elemento-alerta">RAM</p>
+                                <p class="porcentagem-alerta">90%</p>
+                            </div>
+                        </div>
+                        <div class="alerta">
+                            <div class="t-alerta">
+                                <p class="i-maquina">Máquina 00001</p>
+                                <div class="horario">
+                                   <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                   <p class="horario_alerta">12:34</p>
+                                </div>
+                            </div>
+                            <div class="b-alerta alert-red">
+                                <p class="elemento-alerta">DISCO</p>
+                                <p class="porcentagem-alerta">90%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </body>
 
 </html>
+
+<script>
+
+    let proximaAtualizacao;
+
+    window.onload = plotarGrafico();
+
+    function plotarGrafico() {
+
+        const data = {
+            labels: []
+            ,
+            datasets: [{
+                label: 'Consumo geral de CPU',
+                data: [80, 20],
+                backgroundColor: [
+                    'rgb(158, 106, 225)',
+                    'rgb(241, 241, 244)'
+                ],
+                hoverOffset: 4
+            }]
+        };
+
+        const doughnutLabel = {
+            id: 'doughtnutLabel',
+            beforeDatasetsDraw(chart, args, pluginOptions) {
+                const { ctx, data } = chart;
+
+                ctx.save();
+                const xCoor = chart.getDatasetMeta(0).data[0].x;
+                const yCoor = chart.getDatasetMeta(0).data[0].y;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle'
+                ctx.font = 'bold 15px Poppins';
+                ctx.fillStyle = 'rgb(241, 241, 244)';
+                ctx.fillText(`${data.datasets[0].data[0]}%`, xCoor, yCoor);
+
+            }
+        }
+
+        // Criando estrutura para plotar gráfico - config
+        const config = {
+            type: 'doughnut',
+            data: data,
+            options: {
+                hoverBorderWidth: 0,
+                borderWidth: 0,
+                weight: 1,
+                cutout: 37,
+                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
+                showTooltips: false
+
+
+            },
+            plugins: [doughnutLabel]
+        };
+
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
+        const dataDoughnut1 = {
+            labels: [],
+            datasets: [{
+                label: 'Consumo geral de CPU',
+                data: [95, 5],
+                backgroundColor: [
+                    'rgb(158, 106, 225)',
+                    'rgb(241, 241, 244)'
+                ],
+                hoverOffset: 4
+            }]
+        };
+
+        const doughnutLabel1 = {
+            id: 'doughnutLabel',
+            beforeDatasetsDraw(chart, args, pluginOptions) {
+                const { ctx } = chart;
+
+                ctx.save();
+                const xCoor1 = chart.getDatasetMeta(0).data[0].x;
+                const yCoor1 = chart.getDatasetMeta(0).data[0].y;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle'
+                ctx.font = 'bold 15px Poppins';
+                ctx.fillStyle = 'rgb(241, 241, 244)';
+                ctx.fillText(`${dataDoughnut1.datasets[0].data[0]}%`, xCoor1, yCoor1);
+            }
+        };
+
+        // Criando estrutura para plotar gráfico - config
+        const configDoughnut1 = {
+            type: 'doughnut',
+            data: dataDoughnut1,
+            options: {
+                hoverBorderWidth: 0,
+                borderWidth: 0,
+                weight: 1,
+                cutout: 37,
+                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
+                showTooltips: false
+            },
+            plugins: [doughnutLabel1]
+        };
+
+        const myChart1 = new Chart(
+            document.getElementById('myChart1'),
+            configDoughnut1
+        );
+
+        const dataDoughnut2 = {
+            labels: [],
+            datasets: [{
+                label: 'Consumo geral de CPU',
+                data: [45, 55],
+                backgroundColor: [
+                    'rgb(158, 106, 225)',
+                    'rgb(241, 241, 244)'
+                ],
+                hoverOffset: 4
+            }]
+        };
+
+        const doughnutLabel2 = {
+            id: 'doughnutLabel',
+            beforeDatasetsDraw(chart, args, pluginOptions) {
+                const { ctx } = chart;
+
+                ctx.save();
+                const xCoor2 = chart.getDatasetMeta(0).data[0].x;
+                const yCoor2 = chart.getDatasetMeta(0).data[0].y;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle'
+                ctx.font = 'bold 15px Poppins';
+                ctx.fillStyle = 'rgb(241, 241, 244)';
+                ctx.fillText(`${dataDoughnut2.datasets[0].data[0]}%`, xCoor2, yCoor2);
+            }
+        };
+
+        // Criando estrutura para plotar gráfico - config
+        const configDoughnut2 = {
+            type: 'doughnut',
+            data: dataDoughnut2,
+            options: {
+                hoverBorderWidth: 0,
+                borderWidth: 0,
+                weight: 1,
+                cutout: 37,
+                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
+                showTooltips: false
+            },
+            plugins: [doughnutLabel2]
+        };
+
+        const myChart2 = new Chart(
+            document.getElementById('myChart2'),
+            configDoughnut2
+        );
+
+    }
+
+
+</script>
