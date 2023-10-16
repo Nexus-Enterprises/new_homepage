@@ -7,6 +7,12 @@
     text-decoration: none;
     scroll-behavior: smooth;
     font-family: 'Poppins' sans-serif;
+    text-decoration: none;
+}
+
+.container_options a{
+    text-decoration: none;
+    color: white;
 }
 
 body {
@@ -199,6 +205,12 @@ a:hover {
 .title-right {
     padding: 10px;
     font-size: 24px;
+    margin-bottom: 3vh;
+}
+
+.title-right-agencia{
+    font-size: 24px;
+    padding: 10px 0;
 }
 
 .text-card {
@@ -245,6 +257,7 @@ a:hover {
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
     padding: 20px;
+    font-size: 24px;
 }
 
 .tr{
@@ -293,7 +306,7 @@ a:hover {
 }
 
 .alert-red{
-    background-color: #FF9F9F;
+    background-color: #FF3D3D;
     padding: 5px 10px;
     border-radius: 30px;
     color: #000000;
@@ -305,8 +318,8 @@ a:hover {
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
     padding-bottom: 10px;
-    margin-top: 30px;
     background-color: #1F1F1F;
+    margin-top: 20px;
 }
 
 .border{
@@ -315,7 +328,7 @@ a:hover {
 }
 
 .alert-yellow{
-    background-color: #FFF59F;
+    background-color: #E1B000;
     padding: 5px 10px;
     border-radius: 30px;
     font-weight: bold;
@@ -323,7 +336,7 @@ a:hover {
 }
 
 .alert-blue{
-    background-color: #75CDDF;
+    background-color: #3DA2FF;
     padding: 5px 10px;
     border-radius: 30px;
     color: #000000;
@@ -348,7 +361,7 @@ a:hover {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
     padding: 20px;
     border-radius: 30px;
 }
@@ -387,6 +400,7 @@ a:hover {
     display: flex;
     flex-direction: column;
     max-width: 280px;
+    border-radius: 10px;
 }
 
 .t-alerta{
@@ -394,6 +408,7 @@ a:hover {
     gap: 10px;
     padding-left: 20px;
     margin: 10px;
+    border-radius: 10px;
 }
 
 .horario{
@@ -404,20 +419,21 @@ a:hover {
 .b-alerta{
     display: flex;
     gap: 10px;
-    justify-content: left;
+    justify-content: space-between;
     padding-left: 20px;
     border: 1px solid white;
     margin: 10px;
     border-radius: 5px;
+    color: #ffffff;
 }
 
 .title-container-s-part{
     font-size: 20px;
     text-align: center;
-    margin-top: 32vh;
+    margin-top: 35vh;
 }
 
-#agencias {
+#agencias, .lista_maquinas {
 	cursor: pointer;
 	outline:0;
 	color: #ffffff;
@@ -429,6 +445,12 @@ a:hover {
 	border: 1px solid #d6d6d6;
 	background-color: #454545;
     width: 90%;
+    text-indent: 2px;
+}
+
+.lista_maquinas{
+    width: 93%;
+    margin: 0;
 }
 #agencias:hover, #agencias:focus {
 	border: 1px solid #000000;
@@ -455,3 +477,81 @@ a:hover {
     border-radius: 10px;
     border: 1px solid rgba(255,255,255,0.2);
   }
+
+  /* Dashboard Agencia */
+
+  .lista_maquinas{
+    margin: 10px 0;
+  }
+
+  .cards-maquinas{
+    display: flex;
+    gap: 20px;
+    overflow-x: scroll;
+    max-width: 870px;
+    padding: 0 0 20px 0;
+  }
+
+  .card-maq{
+    background-color: #454545;
+    width: 25vh;
+    max-width: 25vh;
+    min-width: 25vh;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-radius: 10px;
+  }
+
+  .cab-card{
+    display: flex;
+    flex-direction: column;
+    background-color: #9E6AE1;
+    padding: 10px 0;
+    width: 100%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+  }
+
+  .center-card{
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    width: 80%;
+  }
+
+  .info-card{
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    border-bottom: 1px solid #838383;
+    width: 100%;
+    align-items: center;
+    font-size: 15px;
+  }
+
+  .item, .cons-item{
+    padding: 0 10px;
+  }
+
+  .footer-card{
+    padding: 10px 0;
+    width: 80%;
+    font-size: 13px;
+  }
+  
+
+  .ativo{
+    color: #88EF85;
+  }
+
+  .manutencao{
+    color: #FFDE68;
+  }
+
+  .desativada{
+    color: #FF3D3D;
+  }
+
