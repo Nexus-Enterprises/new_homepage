@@ -1,3 +1,4 @@
+/* Importação de fontes */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Kodchasan:wght@300;400;500;700&family=Moulpali&family=Poppins:wght@300;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');
@@ -26,7 +27,7 @@ a:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgba(33,0,76,1);
+    background-color: rgb(0, 0, 0);
     color: white;
     padding: 10px;
 }
@@ -40,7 +41,6 @@ a:hover {
     margin-right: 6px;
     margin-top: 25px;
     position: relative; /* Posição relativa para alinhar a seta */
-
 }
 
 .btn-voltar .seta-voltar::before {
@@ -55,7 +55,6 @@ a:hover {
     font-family: 'Pixelify Sans' !important; /* Fonte da seta */
 }
 
-
 .imagem-title {
     display: flex;
     align-items: center;
@@ -66,7 +65,6 @@ a:hover {
     height: 50px;
     margin-right: 10px;
     margin-top: 25px;
-
 }
 
 .title {
@@ -85,7 +83,7 @@ a:hover {
 /* Estilos para o container */
 .container {
     background: rgb(0,0,0);
-    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(33,0,76,1) 100%);
+    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(33,0,76,1) 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -110,71 +108,76 @@ a:hover {
 
 /* Estilos para o formulário de login */
 .information-login {
-    width: 100%;
-    max-width: 500px;
+    max-width: 400px;
     margin: 0 auto;
-    padding: 30px;
-    box-sizing: border-box;
-    border-radius: 5px;
-    margin-bottom: 20px;
+    padding: 20px;
     color: white;
-
-}
-
-.information-login label {
+    border-radius: 5px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  }
+  
+  label {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
     margin-bottom: 5px;
-}
-
-.information-login input {
+    color: #ffffff;
+  }
+  
+  input[type="text"],
+  input[type="email"] {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
     margin-bottom: 10px;
+    border: 1px solid #ccc;
     border-radius: 5px;
+  }
+  
+  button#search-cep {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .ceps, .enderecos, .cidade-uf {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  
+  .ceps > div, .enderecos > div, .cidade-uf > div {
+    flex: 1;
+    min-width: 100px;
+    margin-right: 10px;
+  }
+  
+  .ceps input[type="text"] {
+    width: 90%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+    button#search-cep {
+    width: 40px;
+    height: 40px;
+    margin-top: 25px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+  }
+  
+  .ceps > div, .enderecos > div, .cidade-uf > div {
+    display: flex;
     flex-direction: column;
-}
+  }
 
-.phone #phone-ddd {
-    width: 80px;
-    padding: 10px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    border-radius: 5px;
-}
-
-.phone #phone-number {
-    width: 354px;
-    padding: 10px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    border-radius: 5px;
-}
-
-
-#agency-number {
-    width: 80px;
-    padding: 10px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    border-radius: 5px;
-}
-
-select {
-    width: 354px;
-    padding: 10px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    border-radius: 5px;
-}
-
-#agency-empresa {
-    color: #000000;
-}
-
-
-.submit-proxima {
+  .submit-proxima {
     width: 100%;
-    max-width: 430px;
+    max-width: 400px;
     margin: 0 auto;
     padding: 12px;
     box-sizing: border-box;
@@ -183,4 +186,3 @@ select {
     color: white;
     background-color: #9E6AE1;
 }
-
