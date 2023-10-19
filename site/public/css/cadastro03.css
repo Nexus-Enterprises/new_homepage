@@ -1,0 +1,211 @@
+/* Importação de fontes */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kodchasan:wght@300;400;500;700&family=Moulpali&family=Poppins:wght@300;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');
+
+/* Reset de estilos e configurações padrão */
+body, html {
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    overflow-y: hidden;
+}
+
+/* Estilo para links */
+a {
+    text-decoration: none;
+    color: black;
+    transition: opacity 0.5s;
+}
+
+a:hover {
+    opacity: 0.6;
+}
+
+/* Estilo para o topo da página */
+.topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    padding: 10px;
+}
+
+.btn-voltar {
+    color: white;
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    margin-right: 6px;
+    margin-top: 25px;
+    position: relative; /* Posição relativa para alinhar a seta */
+}
+
+.btn-voltar .seta-voltar::before {
+    content: "<"; /* Adiciona a seta (<) antes do texto do botão */
+    margin-right: 5px; /* Espaço entre a seta e o texto */
+    font-weight: bold; /* Deixa a seta em negrito, você pode personalizar como quiser */
+    font-size: 20px;
+}
+
+.seta-voltar {
+    display: inline-block; /* Garante que a seta seja exibida na mesma linha que o texto */
+    font-family: 'Pixelify Sans' !important; /* Fonte da seta */
+}
+
+.imagem-title {
+    display: flex;
+    align-items: center;
+}
+
+.imagem-title img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    margin-top: 25px;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    font-weight: 300;
+    margin: 0;
+    margin-right: 535px;
+    margin-top: 25px;
+    font-family: 'Kodchasan', sans-serif;
+    color: #fff; /* Cor do texto */
+    text-shadow: 0 0 45px #fff; /* Adiciona um sombreamento no texto */
+}
+
+/* Estilos para o container */
+.container {
+    background: rgb(0,0,0);
+    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(33,0,76,1) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    height: 90vh;
+}
+
+.primary-title {
+    font-size: 40px;
+    font-weight: 700;
+    color: white;
+    margin: 1% 0;
+}
+
+.container p {
+    font-size: 20px;
+    font-weight: 300;
+    color: white;
+    margin: 1% 0;
+}
+
+/* Estilos para o formulário de login */
+.information-login {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  color: white;
+  border-radius: 5px;
+}
+
+.information-login label {
+  font-size: 14px;
+  font-weight: 300;
+  color: white;
+  margin: 1% 0;
+}
+
+.information-login input {
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.agencia {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.agencia div {
+  flex-direction: column;
+  align-items: center;
+}
+
+.agencia label {
+  font-size: 14px;
+  font-weight: 300;
+  color: white;
+}
+
+.agencia input {
+  width: 245px;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+#id-digito {
+  width: 150px;
+}
+
+.telefone-agencia {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+
+.telefone-agencia div {
+  flex-direction: column;
+  align-items: center;
+}
+
+.telefone-agencia label {
+  font-size: 14px;
+  font-weight: 300;
+  color: white;
+  margin-right: 20px;
+}
+
+.telefone-agencia input {
+  width: 300px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+#id-ddd {
+  width: 90px;
+}
+
+
+.submit-proxima {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  color: white;
+  background-color: #9E6AE1;
+}
