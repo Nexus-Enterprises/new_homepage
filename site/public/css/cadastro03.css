@@ -22,62 +22,56 @@ a:hover {
     opacity: 0.6;
 }
 
-/* Estilo para o topo da página */
 .topo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgb(0, 0, 0);
-    color: white;
-    padding: 10px;
+  display: flex;
+  flex-direction: column; /* Alinhar elementos verticalmente */
+  justify-content: center; /* Centralizar verticalmente */
+  align-items: center; /* Centralizar horizontalmente */
+  background-color: rgb(0, 0, 0);
+  color: white;
+  padding: 10px;
 }
 
 .btn-voltar {
-    color: white;
-    background: none;
-    border: none;
-    font-size: 14px;
-    cursor: pointer;
-    margin-right: 6px;
-    margin-top: 25px;
-    position: relative; /* Posição relativa para alinhar a seta */
+  color: white;
+  background: none;
+  border: none;
+  font-size: 14px;
+  padding: 20px;
+  cursor: pointer;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  display: flex; /* Para alinhar a seta com o texto */
+  align-items: center; /* Alinhar verticalmente */
 }
 
-.btn-voltar .seta-voltar::before {
-    content: "<"; /* Adiciona a seta (<) antes do texto do botão */
-    margin-right: 5px; /* Espaço entre a seta e o texto */
-    font-weight: bold; /* Deixa a seta em negrito, você pode personalizar como quiser */
-    font-size: 20px;
-}
-
-.seta-voltar {
-    display: inline-block; /* Garante que a seta seja exibida na mesma linha que o texto */
-    font-family: 'Pixelify Sans' !important; /* Fonte da seta */
+.seta-voltar::before {
+  content: "<"; /* Código Unicode para uma seta apontando para a esquerda */
+  margin-right: 5px;
+  font-size: 20px;
+  line-height: 1;
 }
 
 .imagem-title {
-    display: flex;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: auto;
+  margin-left: auto;
 }
 
+
 .imagem-title img {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-    margin-top: 25px;
+  width: 50px;
+  height: 50px;
 }
 
 .title {
-    display: flex;
-    align-items: center;
-    font-size: 30px;
-    font-weight: 300;
-    margin: 0;
-    margin-right: 535px;
-    margin-top: 25px;
-    font-family: 'Kodchasan', sans-serif;
-    color: #fff; /* Cor do texto */
-    text-shadow: 0 0 45px #fff; /* Adiciona um sombreamento no texto */
+  font-size: 30px;
+  font-family: 'Kodchasan', sans-serif;
+  color: #fff;
+  text-shadow: 0 0 45px #fff;
 }
 
 /* Estilos para o container */

@@ -73,6 +73,7 @@ a:hover {
   color: #fff;
   text-shadow: 0 0 45px #fff;
 }
+
 /* Estilos para o container */
 .container {
     background: rgb(0,0,0);
@@ -86,6 +87,8 @@ a:hover {
 }
 
 .primary-title {
+    display: flex;
+    justify-content: center;
     font-size: 40px;
     font-weight: 700;
     color: white;
@@ -101,81 +104,71 @@ a:hover {
 
 /* Estilos para o formulário de login */
 .information-login {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    color: white;
-    border-radius: 5px;
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-  }
-  
-  label {
-    display: block;
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 5px;
-    color: #ffffff;
-  }
-  
-  input[type="text"],
-  input[type="email"] {
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  button#search-cep {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  .ceps, .enderecos, .cidade-uf {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-  }
-  
-  .ceps > div, .enderecos > div, .cidade-uf > div {
-    flex: 1;
-    min-width: 100px;
-    margin-right: 10px;
-  }
-  
-  .ceps input[type="text"] {
-    width: 90%;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-    button#search-cep {
-    width: 40px;
-    height: 40px;
-    margin-top: 25px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-  }
-  
-  .ceps > div, .enderecos > div, .cidade-uf > div {
-    display: flex;
-    flex-direction: column;
-  }
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  color: white;
+  border-radius: 5px;
+}
 
-  .submit-proxima {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 12px;
-    box-sizing: border-box;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    color: white;
-    background-color: #9E6AE1;
+.information-login label {
+  font-size: 14px;
+  font-weight: 300;
+  color: white;
+  margin: 1% 0;
+}
+
+.information-login input {
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.information-login select {
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+
+/*
+ <!-- Informações adicionais -->
+    <div class="information-login">
+
+      <label>Marca*</label>
+      <input type="text" placeholder="HP" required>
+
+      <label>Modelo*</label>
+      <input type="text" placeholder="EliteBook G8" required>
+
+      <label>Situação da Máquina</label>
+     <select aria-placeholder="Selecione">
+
+     </select>
+
+      <label>Funcionário Responsável</label>
+      <select >
+
+      </select>
+    </div>
+*/
+
+.submit-proxima {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  color: white;
+  background-color: #9E6AE1;
 }
