@@ -74,6 +74,43 @@ a:hover {
   text-shadow: 0 0 45px #fff;
 }
 
+.progress {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: white;
+  border: 1px solid #9E6AE1;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 65px;
+}
+
+.circle-active {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: white;
+  border: 1px solid #9E6AE1;
+  background-color: #9E6AE1;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 65px;
+}
+
+.circle-active + .circle {
+  border-color: #9E6AE1;
+}
+
 /* Estilos para o container */
 .container {
     background: rgb(0,0,0);
