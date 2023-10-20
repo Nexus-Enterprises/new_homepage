@@ -138,37 +138,22 @@ a:hover {
   outline: none;
 }
 
-
-/*
- <!-- Informações adicionais -->
-    <div class="information-login">
-
-      <label>Marca*</label>
-      <input type="text" placeholder="HP" required>
-
-      <label>Modelo*</label>
-      <input type="text" placeholder="EliteBook G8" required>
-
-      <label>Situação da Máquina</label>
-     <select aria-placeholder="Selecione">
-
-     </select>
-
-      <label>Funcionário Responsável</label>
-      <select >
-
-      </select>
-    </div>
-*/
-
 .submit-proxima {
   width: 100%;
   max-width: 400px;
-  margin: 0 auto;
   padding: 12px;
   box-sizing: border-box;
   border-radius: 5px;
   margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 500;
   color: white;
   background-color: #9E6AE1;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-proxima:hover {
+  background-color: #7c4fd9;
 }

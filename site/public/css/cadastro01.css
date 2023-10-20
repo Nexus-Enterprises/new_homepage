@@ -162,16 +162,22 @@ select {
     color: #000000;
 }
 
-
 .submit-proxima {
     width: 100%;
-    max-width: 430px;
-    margin: 0 auto;
+    max-width: 400px;
     padding: 12px;
     box-sizing: border-box;
     border-radius: 5px;
     margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 500;
     color: white;
     background-color: #9E6AE1;
-}
-
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-proxima:hover {
+    background-color: #7c4fd9;
+  }
