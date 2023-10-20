@@ -197,7 +197,7 @@ a:hover {
     flex-direction: column;
     max-width: 300px;
     max-height: 300px;
-    margin: 10px;
+    margin: 10px 0;
     border-radius: 10px;
     padding: 20px;
 }
@@ -434,6 +434,7 @@ a:hover {
     text-align: center;
     margin-top: 35vh;
 }
+
 
 #agencias,
 .lista_maquinas {
@@ -926,13 +927,12 @@ a:hover {
 }
 .container-right2 {
     display: flex;
-    gap: 5px;
+    gap: 20px;
 }
 
 .title-right2 {
-    padding: 10px;
+    padding: 10px 10px 0 10px;
     font-size: 24px;
-    margin-bottom: 3vh;
 }
 .f-part2 {
     display: flex;
@@ -949,4 +949,51 @@ a:hover {
     padding: 10px;
     display: flex;
     justify-content: space-around;
+}
+.container-side {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+.container-taref {
+    width: max-content;
+    background-color: #000000;
+}
+.title-container-s-part2 {
+    font-size: 20px;
+    text-align: center;
+
+}
+.container-alertas2 {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    gap: 10px;
+    align-items: center;
+    background-color: #343434;
+    padding: 20px;
+    border-radius: 10px;
+}
+.container-s-part3 {
+    background-color: #161616;
+    width: 400px;
+    height: 350px;
+    overflow-y: scroll;
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 30px;
+}
+.alerta2 {
+    background-color: #454545;
+    display: flex;
+    flex-direction: column;
+    max-width: 280px;
+    border-radius: 10px;
+    width: 300px;
+    
 }
