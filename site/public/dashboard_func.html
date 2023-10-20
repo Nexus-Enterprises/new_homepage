@@ -122,7 +122,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="grafico">
                     <div class="titulo">
                         <h2>Gráfico de Desempenho de Recursos da Máquina</h2>
@@ -130,14 +130,102 @@
                     <canvas id="myChart3"></canvas>
                 </div>
             </div>
-
-            <div class="container-s-part2">
-                <div class="chartBox2">
-                    <h2>Agilidade da Maquina</h2>
-                    <canvas id="gauge"></canvas>
-                   
+            <div class="container-side">
+                <div class="container-s-part2">
+                    <div class="chartBox2">
+                        <h2>Agilidade da Maquina</h2>
+                        <canvas id="gauge" style="margin-top: -50px;"></canvas>
+                    </div>
                 </div>
+                <div class="s-part">
+                    <div class="container-s-part3">
+                        <h1 class="title-container-s-part2">Tarefas em Segundo Plano</h1>
+                        <div class="container-alertas2">
+                            <div class="alerta2">
+                                <div class="t-alerta">
+                                    <p class="i-maquina">Nome Tarefa</p>
+                                    <div class="horario">
+                                       <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                       <p class="horario_alerta">12:34</p>
+                                    </div>
+                                </div>
+                                <div class="b-alerta alert-blue">
+                                    <p class="elemento-alerta">CPU</p>
+                                    <p class="porcentagem-alerta">20%</p>
+                                </div>
+                            </div>
+                            <div class="alerta2">
+                                <div class="t-alerta">
+                                    <p class="i-maquina">Nome Tarefa</p>
+                                    <div class="horario">
+                                       <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                       <p class="horario_alerta">12:34</p>
+                                    </div>
+                                </div>
+                                <div class="b-alerta alert-red">
+                                    <p class="elemento-alerta">RAM</p>
+                                    <p class="porcentagem-alerta">90%</p>
+                                </div>
+                            </div>
+                            <div class="alerta2">
+                                <div class="t-alerta">
+                                    <p class="i-maquina">Nome Tarefa</p>
+                                    <div class="horario">
+                                       <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                       <p class="horario_alerta">12:34</p>
+                                    </div>
+                                </div>
+                                <div class="b-alerta alert-yellow">
+                                    <p class="elemento-alerta">DISCO</p>
+                                    <p class="porcentagem-alerta">30%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-alertas">
+                            <div class="alerta2">
+                                <div class="t-alerta">
+                                    <p class="i-maquina">Nome Tarefa</p>
+                                    <div class="horario">
+                                       <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                       <p class="horario_alerta">12:34</p>
+                                    </div>
+                                </div>
+                                <div class="b-alerta alert-red">
+                                    <p class="elemento-alerta">CPU</p>
+                                    <p class="porcentagem-alerta">90%</p>
+                                </div>
+                            </div>
+                            <div class="alerta2">
+                                <div class="t-alerta">
+                                    <p class="i-maquina">Nome Tarefa</p>
+                                    <div class="horario">
+                                       <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                       <p class="horario_alerta">12:34</p>
+                                    </div>
+                                </div>
+                                <div class="b-alerta alert-red">
+                                    <p class="elemento-alerta">RAM</p>
+                                    <p class="porcentagem-alerta">90%</p>
+                                </div>
+                            </div>
+                            <div class="alerta2">
+                                <div class="t-alerta">
+                                    <p class="i-maquina">Nome Tarefa</p>
+                                    <div class="horario">
+                                       <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                       <p class="horario_alerta">12:34</p>
+                                    </div>
+                                </div>
+                                <div class="b-alerta alert-red">
+                                    <p class="elemento-alerta">DISCO</p>
+                                    <p class="porcentagem-alerta">90%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
             </div>
+
         </div>
 
     </div>
@@ -411,13 +499,14 @@
                         "rgba(255, 206, 86, 0.8)",
                         "rgba(75, 192, 192, 0.8)",
                     ],
-                    needleValue: 100,
+                    needleValue: 70,
                     borderColor: "white",
                     borderWidth: 0,
                     cutout: "70%",
                     circumference: 180,
                     rotation: 270,
                     borderRadius: 1,
+
                 },
             ],
         };
@@ -452,7 +541,7 @@
                 ctx.rotate(angle);
                 ctx.beginPath();
                 ctx.moveTo(0, -10);
-                ctx.lineTo(height - ctx.canvas.offsetTop + 50, 0); // change 160 value if the needle size gets changed
+                ctx.lineTo(height - ctx.canvas.offsetTop + 15, 0); // change 160 value if the needle size gets changed
                 ctx.lineTo(0, 10);
                 ctx.fillStyle = "#444";
                 ctx.fill();
