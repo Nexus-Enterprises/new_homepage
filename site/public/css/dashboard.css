@@ -17,6 +17,7 @@
 
 body {
     overflow-y: hidden;
+    background-color: #000000;
 }
 
 a {
@@ -659,16 +660,16 @@ a:hover {
 .right-side-hist {
     background-color: black;
     color: white;
+    width: 78vw;
+    padding: 10vh 3vw;
 }
 
 .t-right-side-hist {
     display: flex;
     font-family: 'Poppins', sans-serif;
     gap: 5vh;
-    padding: 2vh;
     align-items: center;
-    justify-content: space-evenly;
-    width: 80vw;
+    justify-content: space-between;
 }
 
 .button-selected-hist {
@@ -694,16 +695,38 @@ a:hover {
     font-family: 'Poppins' sans-serif;
 }
 
+.select-maquinas{
+    cursor: pointer;
+    outline: 0;
+    color: #ffffff;
+    font-size: 15px;
+    padding: 9px 10px;
+    min-width: 23vw;
+    max-width: 23vw;
+    border-radius: 11px;
+    background-color: #454545;
+    text-indent: 2px;
+    border: none;
+    font-family: 'Poppins' sans-serif;
+}
+
 .container-m-right-side{
     display: flex;
-    justify-content: center;
-    width: 81.5vw;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 3vh;
     gap: 10px}
 
 .m-right-side-hist{
     display: flex;
     align-items: center;
-    justify-content: center;
+    width: 100%;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.items-element{
+    display: flex;
     gap: 40px;
 }
 
@@ -719,7 +742,6 @@ a:hover {
 .container-m-right-side a{
     color: white;
     text-decoration: none;
-    margin-top: 3vh;
 }
 
 .container-m-right-side a:hover{
@@ -738,6 +760,21 @@ a:hover {
     padding: 10px 0 0 0;
 }
 
+.container-b-side{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.all-cards-2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+}
+
 .card-hist{
     font-family: 'Poppins', sans-serif;
     color: white;
@@ -746,12 +783,9 @@ a:hover {
     justify-content: center;
     align-items: center;
     gap: 14px;
-    width: 320px;
-    max-width: 450px;
-    max-height: 400px;
-    margin: 10px;
+    min-width: 22vw;
+    max-width: 22vw;
     border-radius: 10px;
-    padding: 10px 40px;
 }
 
 .l-card{
@@ -899,6 +933,19 @@ a:hover {
     padding-top: 15px;
 }
 
+.grafico-linha{
+    width: 900px;
+    background-color: #161616;
+    border-radius: 10px;
+    padding: 20px 30px;
+}
+
+.titulo-linha{
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+
+}
+
 .container-s-part2{
     background-color: #161616;
     width: 400px;
@@ -906,7 +953,7 @@ a:hover {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    align-items: center;
+    align-items: center;    
     gap: 10px;
     padding: 20px;
     border-radius: 8.64px;
