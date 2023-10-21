@@ -57,8 +57,31 @@ a:hover {
     font-size: 24px;
 }
 
+.left_side_logo-add-func{
+    display: flex;
+    align-items: center;
+    font-family: 'Kodchasan', sans-serif;
+    color: white;
+    font-weight: 200;
+    justify-content: space-between;
+    padding: 0 3% 0 1%;
+    background-color: #21004C;
+    overflow: hidden;
+    font-size: 24px;
+}
+
+.left_side_logo-add-func img {
+    width: 23%;
+}
+
 .left_side_logo img {
     width: 3%;
+}
+
+.container-logo-top-side{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .profile_user {
@@ -673,6 +696,14 @@ a:hover {
     justify-content: space-between;
 }
 
+.t-right-side-hist-agencia{
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    gap: 20vh;
+    align-items: center;
+    justify-content: center;
+}
+
 .button-selected-hist {
     display: flex;
     gap: 15px;
@@ -726,6 +757,14 @@ a:hover {
     gap: 40px;
 }
 
+.m-right-side-hist-agencia{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    gap: 40px;
+}
+
 .items-element{
     display: flex;
     gap: 40px;
@@ -758,6 +797,7 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 20px;
     padding: 10px 0 0 0;
 }
 
@@ -784,7 +824,7 @@ a:hover {
     justify-content: center;
     align-items: center;
     gap: 14px;
-    min-width: 22vw;
+    min-width: 383px;
     max-width: 22vw;
     border-radius: 10px;
 }
@@ -884,15 +924,16 @@ a:hover {
 .alerta-all-maquinas{
     display: grid;
     grid-template-columns: 400px 400px 400px;
-    padding: 0vh 5vh;
+    padding: 0 0 0 7vh;
     gap: 20px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     overflow-y: scroll;
     height: 400px;
-    margin-left: 10px; 
+    /* margin-left: 10px;  */
     margin-top: 1vh;
+    width: 1300px;
 }
 
 .title-maquinas-r-side, .title-cards{
@@ -1043,4 +1084,23 @@ a:hover {
     border-radius: 10px;
     width: 300px;
     
+}
+
+.container-add-func-top-side{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: 0.5s all;
+}
+
+.container-add-func-top-side:hover{
+    cursor: pointer;
+    opacity: 0.5;
+    transition: ease-in-out;
+}
+
+.num-agencia{
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
 }
