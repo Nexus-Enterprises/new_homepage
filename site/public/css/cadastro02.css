@@ -81,8 +81,7 @@ a:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
-    height: 90vh;
+    padding: 10px;
 }
 
 .progress {
@@ -101,7 +100,6 @@ a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 65px;
 }
 
 .circle-active {
@@ -111,11 +109,10 @@ a:hover {
   color: white;
   border: 1px solid #9E6AE1;
   background-color: #9E6AE1;
-  margin: 10px;
+  margin: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 65px;
 }
 
 .circle-active + .circle {
@@ -138,45 +135,45 @@ a:hover {
 
 /* Estilos para o formulário de login */
 .information-login {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    color: white;
-    border-radius: 5px;
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-  }
-  
-  label {
-    display: block;
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 5px;
-    color: #ffffff;
-  }
-  
-  input[type="text"],
-  input[type="email"] {
-    width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  color: white;
+  border-radius: 5px;
+}
+
+.information-login label {
+  font-size: 14px;
+  font-weight: 300;
+  color: white;
+  margin: 1% 0;
+}
+
+.information-login input {
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+  #search-cep {
+    max-width: 10%;
+    width: 10px;
+    height: 43px;
+    margin-top: 26px;
     padding: 10px;
     box-sizing: border-box;
-    margin-bottom: 10px;
+    background-color: white;
     border: 1px solid #ccc;
     border-radius: 5px;
-  }
-  
-  button#search-cep {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    cursor: pointer;
   }
   
   .ceps, .enderecos, .cidade-uf {
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 10px;
   }
   
   .ceps > div, .enderecos > div, .cidade-uf > div {
@@ -186,23 +183,19 @@ a:hover {
   }
   
   .ceps input[type="text"] {
-    width: 90%;
+    width: 100%;
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 5px;
   }
   
-    button#search-cep {
-    width: 40px;
-    height: 40px;
-    margin-top: 25px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-  }
-  
   .ceps > div, .enderecos > div, .cidade-uf > div {
     display: flex;
     flex-direction: column;
+  }
+
+  #id-bairro, #id-complemento {
+    width: 98%;
   }
 
   .submit-proxima {

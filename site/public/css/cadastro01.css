@@ -80,8 +80,6 @@ a:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 20px;
     height: 90vh;
 }
 
@@ -95,26 +93,12 @@ a:hover {
 }
 
 .progress {
-display: flex;
-justify-content: center;
-padding: 10px;
-}
-
-.circle-active {  
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    color: white;
-    border: 1px solid #9E6AE1;
-    background-color: #9E6AE1;
-    margin: 10px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-top: 65px;
-}
-
-.circle {
+    padding: 10px;
+  }
+  
+  .circle {
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -124,8 +108,24 @@ padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 65px;
-}
+  }
+  
+  .circle-active {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: white;
+    border: 1px solid #9E6AE1;
+    background-color: #9E6AE1;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .circle-active + .circle {
+    border-color: #9E6AE1;
+  }
 
 .container p {
     font-size: 20px;
@@ -199,7 +199,7 @@ select {
 
 .submit-proxima {
     width: 100%;
-    max-width: 400px;
+    max-width: 440px;
     padding: 12px;
     box-sizing: border-box;
     border-radius: 5px;
