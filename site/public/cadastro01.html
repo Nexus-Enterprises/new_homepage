@@ -43,37 +43,41 @@
         <!-- Informações adicionais -->
         <div class="information-login">
             <label for="first-name">Nome*</label>
-            <input type="text" id="first-name" name="first-name" required placeholder="Insira seu nome">
+            <input id="firstName" name="first-name" required placeholder="Insira seu nome">
 
-            <label for="last-name">Sobrenome*</label>
-            <input type="text" id="last-name" name="last-name" required placeholder="Insira seu sobrenome">
+            <label for="last_name">Sobrenome*</label>
+            <input id="lastName" name="last-name" required placeholder="Insira seu sobrenome">
 
             <label for="email">Email corporativo*</label>
-            <input type="email" id="email" name="email" required placeholder="Insira seu email">
+            <input id="email" name="email" required placeholder="Insira seu email">
 
             <label for="cargo">Cargo*</label>
-            <input type="text" id="cargo" name="cargo" required placeholder="Insira seu cargo">
+            <input name="role" id="role" required placeholder="Insira seu cargo">
 
             <div class="phone">
                 <label for="Telefone">Telefone Corporativo*</label>
                 <div>
-                <input type="tel" id="phone-ddd" class="tel-ddd" name="phone-ddd" placeholder="(99)">
-                <input type="tel" id="phone-number" name="phone-number" placeholder="99999-9999">
+                    <input id="phone_ddd" class="tel-ddd" name="phone_ddd" placeholder="(99)">
+                    <input id="phone_number" name="phone-number" placeholder="99999-9999">
                 </div>
             </div>
 
             <div class="agency">
-                <label for="Agency">Agência*</label>
+                <label for="Agency">Banco*</label>
                 <div>
-                <input type="tel" id="agency-number" class="agency-number" name="agency-number" placeholder="0000-0">
-                <select id="agency-empresa" placeholder="Empresas">Empresas</select>
+                    <select id="agency_empresa" required>
+                        <option selected>Selecione um Banco</option>
+                        <option value="Bradesco">Bradesco</option>
+                        <option value="Banco do Brasil">Banco do Brasil</option>
+                        <option value="Itau">Itau</option>
+                    </select>
                 </div>
             </div>
         </div>
 
 
-        <button class="submit-proxima">Próxima etapa</button>
-
+        <a class="submit-proxima"><button class="submit-proxima" onclick="register()">Póxima etapa</button></a>
+        <div id="mensagem_erro"></div>
     </div>
 
 </body>
@@ -83,4 +87,52 @@
 <script>
 
 
+function register() {
+    var firstNameVar = document.getElementById("firstName").value;
+    var lastNameVar = document.getElementById("lastName").value;
+    var emailVar = document.getElementById("email").value;
+    var phoneDDDVar = document.getElementById("phone_ddd").value;
+    var phoneNumberVar = document.getElementById("phone_number").value;
+    var agencyVar = document.getElementById("agency_number").value;
+    var agencyEmpreVar = document.getElementById("agency_empresa").value;
+    var roleVar = document.getElementById("role").value;
+
+    if (firstNameVar == "" || lastNameVar == "" || emailVar == "" || phoneDDDVar == "" || phoneNumberVar == "" || roleVar == "" || agencyVar == "" || agencyEmpreVar == "") {
+        console.log("Erro ao cadastrar! Confira os campos");
+        return false;
+    }
+
+    fetch("/usuarios/cadastrarFuncionario", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            firstNameServer: firstNameVar,
+            lastNameServer: lastNameVar,
+            emailServer: emailVar,
+            phoneDDDServer: phoneDDDVar,
+            phoneNumberServer: phoneNumberVar,
+            roleServer: roleVar,
+            agencyServer: agencyVar,
+            agencyEmpreServer: agencyEmpreVar
+        })
+    }).then(function (response) {
+        if (response.status === 200) {
+            sessionStorage.Funcionario = firstNameVar;
+
+            mensagem_erro.innerHTML = "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+            console.log("Cadastro realizado com sucesso!");
+            setTimeout(() => {
+                        window.location = "cadastro02.html";
+                    }, "1500")
+        } else {
+            console.log("Erro ao realizar o cadastro.");
+        }
+    }).catch(function (error) {
+        console.log("Erro na resposta:", error);
+    });
+
+    return false;
+}
 </script>

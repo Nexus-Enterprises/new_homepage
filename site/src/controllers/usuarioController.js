@@ -51,44 +51,65 @@ function autenticar(req, res) {
 
 }
 
-function cadastrar(req, res) {
-    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
-    var nome = req.body.nomeServer;
-    var email = req.body.emailServer;
-    var senha = req.body.senhaServer;
-    var empresaId = req.body.empresaServer;
-
-    // Faça as validações dos valores
-    if (nome == undefined) {
-        res.status(400).send("Seu nome está undefined!");
-    } else if (email == undefined) {
-        res.status(400).send("Seu email está undefined!");
-    } else if (senha == undefined) {
-        res.status(400).send("Sua senha está undefined!");
-    } else if (empresaId == undefined) {
-        res.status(400).send("Sua empresa está undefined!");
-    } else {
-
-        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, email, senha, empresaId)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao realizar o cadastro! Erro: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
+function cadastrarFuncionario(req, res) {
+    // Obter os valores do corpo da solicitação
+    const firstName = req.body.firstNameServer;
+    const lastName = req.body.lastNameServer;
+    const email = req.body.emailServer;
+    const phoneDDD = req.body.phoneDDDServer;
+    const phoneNumber = req.body.phoneNumberServer;
+    const role = req.body.roleServer;
+    const agency = req.body.agencyServer;
+    const agencyEmpre = req.body.agencyEmpreServer;
+    
+    // Validar os valores
+    if (!firstName || !lastName || !email || !phoneDDD || !phoneNumber || !role || !agency || !agencyEmpre) {
+        return res.status(400).json({ error: "Por favor, preencha todos os campos corretamente." });
     }
+    
+    // Passar os valores como parâmetros para o modelo de usuário (usuarioModel)
+    usuarioModel.cadastrarFuncionario(firstName, lastName, email, phoneDDD, phoneNumber, role, agency, agencyEmpre)
+        .then(function (resultado) {
+            console.log("Cadastro realizado com sucesso!");
+            res.json(resultado);
+        })
+        .catch(function (erro) {
+            console.log("Houve um erro ao realizar o cadastro:", erro);
+            res.status(500).json({ error: "Houve um erro ao realizar o cadastro." });
+        });
+}
+
+function cadastrarAgencia(req, res) {
+    // Obter os valores do corpo da solicitação
+    const cep = req.body.cepServer
+    const endereco = req.body.enderecoServer;
+    const numero = req.body.numeroServer;
+    const bairro = req.body.bairroServer;
+    const cidade = req.body.cidadeServer;
+    const uf = req.body.ufServer;
+    const complemento = req.body.complementoServer;
+    
+    // Validar os valores
+    if (!cep || !endereco || !bairro || !cidade || !uf ) {
+        return res.status(400).json({ error: "Por favor, preencha todos os campos corretamente." });
+    } else if (complemento == "undefined"){
+        complemento = null
+    }
+    
+    // Passar os valores como parâmetros para o modelo de usuário (usuarioModel)
+    usuarioModel.cadastrarAgencia(cep, endereco, bairro, cidade, uf, complemento)
+        .then(function (resultado) {
+            console.log("Cadastro realizado com sucesso!");
+            res.json(resultado);
+        })
+        .catch(function (erro) {
+            console.log("Houve um erro ao realizar o cadastro:", erro);
+            res.status(500).json({ error: "Houve um erro ao realizar o cadastro." });
+        });
 }
 
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrarFuncionario,
+    cadastrarAgencia
 }
