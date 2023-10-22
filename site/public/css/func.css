@@ -386,3 +386,12 @@ i {
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
+.container_options a {
+    display: flex;
+    gap: 10px;
+    }
+    .list_func .text_initial {
+        width: 200px;
+        padding: 0;
+        margin: 0;
+    }
