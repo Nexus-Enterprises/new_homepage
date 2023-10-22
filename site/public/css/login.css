@@ -5,6 +5,7 @@
     margin: 0;
     font-family: 'Kodchasan', sans-serif;
     overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 body {
@@ -42,41 +43,52 @@ body {
 
 .div-pai-sections {
     display: flex;
+    height: 80vh;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row-reverse;
 }
 
 .left-side-login {
-    width: 80%;
+    width:70%;
     display: flex;
     flex-direction: column;
     color: white;
-    padding: 2rem 3rem;
+    /* padding: 2rem 3rem 2rem 12rem; */
     gap: 2rem;
 }
 
 .right-side-login {
-    width: 40%;
+    width: 70%;
     display: flex;
     align-items: center;
     color: white;
-    padding-right: 10rem;
-    gap: 2rem;
     justify-content: center;
-    filter: blur(5px);
+    filter: blur(px);
 }
 
+.div-logo{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.div-logo img{
+    width: 30%;
+
+}
 
 .items-login {
     display: flex;
     flex-direction: column;
     gap: 3rem;
-    padding: 0.5rem;
 }
 
 .items-login input {
     width: 70%;
     padding: 1rem 0;
     background-color: transparent;
-    
     border: none;
     border-bottom: 1px solid white;
     color: white;
@@ -99,16 +111,43 @@ body {
     width: 70%;
     padding: 0.6rem 0;
     border-radius: 10px;
-    border: 1px solid #8300C0;
+    /* border: 1px solid #8300C0; */
     color: #31105C;
     font-weight: bold;
     font-size: 1.2rem;
+    transition: all 0.5s;
 }
 
 .button-login:hover {
-    -webkit-box-shadow: 0px 0px 7px 2px #9101d4;
-    -moz-box-shadow: 0px 0px 7px 2px #9101d4;
-    box-shadow: 0px 0px 7px 2px #9101d4;
     transition: all 0.4s ease-in-out;
     cursor: pointer;
+    opacity: 0.5;
 }
+
+textarea:focus, input:focus{
+    outline: none;
+    border-bottom: 2px solid white;
+}
+
+.input-fields::-ms-reveal {
+    filter: invert(100%);
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .div-pai-sections{
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 5vh;
+    }
+
+    .div-pai-sections img{
+        width: 10%;
+        filter: blur();
+    }
+
+}
+
+  
