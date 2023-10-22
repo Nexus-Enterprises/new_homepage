@@ -15,9 +15,26 @@
 </head>
 
 <body>
-    <div class="left_side_logo">
-        <img src="./assets/img-nexus/logo_nexs.svg" alt="Logo Nexus." srcset="">
-        <h2 class="left_side_title">Nexus.</h2>
+    <div class="left_side_logo-func">
+
+        <div class="container-logo-top-side">
+            <img src="./assets/img-nexus/logo_nexs.svg" alt="Logo Nexus." srcset="">
+            <h2 class="left_side_title">Nexus.</h2>
+        </div>
+        <div class="left-side">
+            <div class="num-funcional">Agencia 001</div>
+            <div class="num-maquina">Maquina 001</div>
+        </div>
+        <div class="right-side">
+            <div class="container-status">
+                <p class="text-status">Ativo</p>
+            </div>
+
+            <div class="container-notify">
+                <img src="./assets/img-nexus/bell.svg" alt="">
+            </div>
+        </div>
+    </div>
     </div>
     <div class="container">
         <div class="left_side">
@@ -36,194 +53,204 @@
             <div class="options">
                 <div class="container_options">
                     <div class="initial item_option ">
-                        <i class="fa fa-home" aria-hidden="true"></i>
-                        <p class="text_initial">Página Inicial</p>
+                        <a href="index.html">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <p class="text_initial">Página Inicial</p>
+                        </a>
                     </div>
                 </div>
                 <div class="container_options">
-                    <div class="dashboard item_option selected">
-                        <i class="fa fa-line-chart" aria-hidden="true"></i>
-                        <p class="text_initial">Dashboard</p>
-                    </div>
+                    <a href="dashboard_func.html">
+                        <div class="dashboard item_option selected">
+                            <i h class="fa fa-line-chart" aria-hidden="true"></i>
+                            <p class="text_initial">Dashboard</p>
+                    </a>
                 </div>
-                <div class="container_options">
+            </div>
+            <div class="container_options">
+                <a href="historico.html">
                     <div class="hist item_option ">
                         <i class="fa fa-calendar" aria-hidden="true"></i>
                         <p class="text_initial">Histórico</p>
+                </a>
+            </div>
+        </div>
+        <div class="container_options">
+            <a href="index.html">
+                <div class="list_func item_option ">
+                    <i class="fa fa-book" aria-hidden="true"></i>
+                    <p class="text_initial">Lista Funcionários</p>
+                </div>
+            </a>
+        </div>
+        <div class="container_options ">
+            <a href="login.html">
+                <div class="logout item_option ">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    <p class="text_initial">Sair</p>
+            </a>
+        </div>
+    </div>
+    </div>
+    </div>
+    <div class="right_side2">
+        <div class="f-part2">
+            <h1 class="title-right2">MAIOR CONSUMO DOS COMPONENTES</h1>
+            <div class="container-right2">
+                <div class="card">
+                    <div class="top-card">
+                        <h1 class="text-card">CPU</h1>
+                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                    </div>
+                    <div class="bottom-card">
+                        <div class="left-bottom-card">
+                            <h1 class="agencia-text">Agência</h1>
+                            <p class="num-agencia">0000001</p>
+                            <h1 class="maquina-text">Máquina</h1>
+                            <p class="num-maquina">00-1</p>
+                        </div>
+                        <div class="chartBox">
+                            <canvas id="myChart"></canvas>
+                        </div>
                     </div>
                 </div>
-                <div class="container_options">
-                    <div class="list_func item_option ">
-                        <i class="fa fa-book" aria-hidden="true"></i>
-                        <p class="text_initial">Lista Funcionários</p>
+                <div class="card">
+                    <div class="top-card">
+                        <h1 class="text-card">RAM</h1>
+                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                    </div>
+                    <div class="bottom-card">
+                        <div class="left-bottom-card">
+                            <h1 class="agencia-text">Agência</h1>
+                            <p class="num-agencia">0000001</p>
+                            <h1 class="maquina-text">Máquina</h1>
+                            <p class="num-maquina">00-1</p>
+                        </div>
+                        <div class="chartBox">
+                            <canvas id="myChart1"></canvas>
+                        </div>
                     </div>
                 </div>
-                <div class="container_options ">
-                    <div class="logout item_option ">
-                        <i class="fa fa-sign-out" aria-hidden="true"></i>
-                        <p class="text_initial">Sair</p>
+                <div class="card">
+                    <div class="top-card">
+                        <h1 class="text-card">DISCO</h1>
+                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                    </div>
+                    <div class="bottom-card">
+                        <div class="left-bottom-card">
+                            <h1 class="agencia-text">Agência</h1>
+                            <p class="num-agencia">0000001</p>
+                            <h1 class="maquina-text">Máquina</h1>
+                            <p class="num-maquina">00-1</p>
+                        </div>
+                        <div class="chartBox">
+                            <canvas id="myChart2"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="grafico">
+                <div class="titulo">
+                    <h2>Gráfico de Desempenho de Recursos da Máquina</h2>
+                </div>
+                <canvas id="myChart3"></canvas>
+            </div>
         </div>
-        <div class="right_side2">
-            <div class="f-part2">
-                <h1 class="title-right2">MAIOR CONSUMO DOS COMPONENTES</h1>
-                <div class="container-right2">
-                    <div class="card">
-                        <div class="top-card">
-                            <h1 class="text-card">CPU</h1>
-                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                        </div>
-                        <div class="bottom-card">
-                            <div class="left-bottom-card">
-                                <h1 class="agencia-text">Agência</h1>
-                                <p class="num-agencia">0000001</p>
-                                <h1 class="maquina-text">Máquina</h1>
-                                <p class="num-maquina">00-1</p>
+        <div class="container-side">
+            <div class="container-s-part2">
+                <div class="chartBox2">
+                    <h2>Agilidade da Maquina</h2>
+                    <canvas id="gauge" style="margin-top: -50px;"></canvas>
+                </div>
+            </div>
+            <div class="s-part">
+                <div class="container-s-part3">
+                    <h1 class="title-container-s-part2">Tarefas em Segundo Plano</h1>
+                    <div class="container-alertas2">
+                        <div class="alerta2">
+                            <div class="t-alerta">
+                                <p class="i-maquina">Nome Tarefa</p>
+                                <div class="horario">
+                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                    <p class="horario_alerta">12:34</p>
+                                </div>
                             </div>
-                            <div class="chartBox">
-                                <canvas id="myChart"></canvas>
+                            <div class="b-alerta alert-blue">
+                                <p class="elemento-alerta">CPU</p>
+                                <p class="porcentagem-alerta">20%</p>
+                            </div>
+                        </div>
+                        <div class="alerta2">
+                            <div class="t-alerta">
+                                <p class="i-maquina">Nome Tarefa</p>
+                                <div class="horario">
+                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                    <p class="horario_alerta">12:34</p>
+                                </div>
+                            </div>
+                            <div class="b-alerta alert-red">
+                                <p class="elemento-alerta">RAM</p>
+                                <p class="porcentagem-alerta">90%</p>
+                            </div>
+                        </div>
+                        <div class="alerta2">
+                            <div class="t-alerta">
+                                <p class="i-maquina">Nome Tarefa</p>
+                                <div class="horario">
+                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                    <p class="horario_alerta">12:34</p>
+                                </div>
+                            </div>
+                            <div class="b-alerta alert-yellow">
+                                <p class="elemento-alerta">DISCO</p>
+                                <p class="porcentagem-alerta">30%</p>
                             </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="top-card">
-                            <h1 class="text-card">RAM</h1>
-                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                        </div>
-                        <div class="bottom-card">
-                            <div class="left-bottom-card">
-                                <h1 class="agencia-text">Agência</h1>
-                                <p class="num-agencia">0000001</p>
-                                <h1 class="maquina-text">Máquina</h1>
-                                <p class="num-maquina">00-1</p>
+                    <div class="container-alertas">
+                        <div class="alerta2">
+                            <div class="t-alerta">
+                                <p class="i-maquina">Nome Tarefa</p>
+                                <div class="horario">
+                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                    <p class="horario_alerta">12:34</p>
+                                </div>
                             </div>
-                            <div class="chartBox">
-                                <canvas id="myChart1"></canvas>
+                            <div class="b-alerta alert-red">
+                                <p class="elemento-alerta">CPU</p>
+                                <p class="porcentagem-alerta">90%</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="card">
-                        <div class="top-card">
-                            <h1 class="text-card">DISCO</h1>
-                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                        </div>
-                        <div class="bottom-card">
-                            <div class="left-bottom-card">
-                                <h1 class="agencia-text">Agência</h1>
-                                <p class="num-agencia">0000001</p>
-                                <h1 class="maquina-text">Máquina</h1>
-                                <p class="num-maquina">00-1</p>
+                        <div class="alerta2">
+                            <div class="t-alerta">
+                                <p class="i-maquina">Nome Tarefa</p>
+                                <div class="horario">
+                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                    <p class="horario_alerta">12:34</p>
+                                </div>
                             </div>
-                            <div class="chartBox">
-                                <canvas id="myChart2"></canvas>
+                            <div class="b-alerta alert-red">
+                                <p class="elemento-alerta">RAM</p>
+                                <p class="porcentagem-alerta">90%</p>
+                            </div>
+                        </div>
+                        <div class="alerta2">
+                            <div class="t-alerta">
+                                <p class="i-maquina">Nome Tarefa</p>
+                                <div class="horario">
+                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                    <p class="horario_alerta">12:34</p>
+                                </div>
+                            </div>
+                            <div class="b-alerta alert-red">
+                                <p class="elemento-alerta">DISCO</p>
+                                <p class="porcentagem-alerta">90%</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="grafico">
-                    <div class="titulo">
-                        <h2>Gráfico de Desempenho de Recursos da Máquina</h2>
-                    </div>
-                    <canvas id="myChart3"></canvas>
-                </div>
-            </div>
-            <div class="container-side">
-                <div class="container-s-part2">
-                    <div class="chartBox2">
-                        <h2>Agilidade da Maquina</h2>
-                        <canvas id="gauge" style="margin-top: -50px;"></canvas>
-                    </div>
-                </div>
-                <div class="s-part">
-                    <div class="container-s-part3">
-                        <h1 class="title-container-s-part2">Tarefas em Segundo Plano</h1>
-                        <div class="container-alertas2">
-                            <div class="alerta2">
-                                <div class="t-alerta">
-                                    <p class="i-maquina">Nome Tarefa</p>
-                                    <div class="horario">
-                                       <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                       <p class="horario_alerta">12:34</p>
-                                    </div>
-                                </div>
-                                <div class="b-alerta alert-blue">
-                                    <p class="elemento-alerta">CPU</p>
-                                    <p class="porcentagem-alerta">20%</p>
-                                </div>
-                            </div>
-                            <div class="alerta2">
-                                <div class="t-alerta">
-                                    <p class="i-maquina">Nome Tarefa</p>
-                                    <div class="horario">
-                                       <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                       <p class="horario_alerta">12:34</p>
-                                    </div>
-                                </div>
-                                <div class="b-alerta alert-red">
-                                    <p class="elemento-alerta">RAM</p>
-                                    <p class="porcentagem-alerta">90%</p>
-                                </div>
-                            </div>
-                            <div class="alerta2">
-                                <div class="t-alerta">
-                                    <p class="i-maquina">Nome Tarefa</p>
-                                    <div class="horario">
-                                       <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                       <p class="horario_alerta">12:34</p>
-                                    </div>
-                                </div>
-                                <div class="b-alerta alert-yellow">
-                                    <p class="elemento-alerta">DISCO</p>
-                                    <p class="porcentagem-alerta">30%</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="container-alertas">
-                            <div class="alerta2">
-                                <div class="t-alerta">
-                                    <p class="i-maquina">Nome Tarefa</p>
-                                    <div class="horario">
-                                       <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                       <p class="horario_alerta">12:34</p>
-                                    </div>
-                                </div>
-                                <div class="b-alerta alert-red">
-                                    <p class="elemento-alerta">CPU</p>
-                                    <p class="porcentagem-alerta">90%</p>
-                                </div>
-                            </div>
-                            <div class="alerta2">
-                                <div class="t-alerta">
-                                    <p class="i-maquina">Nome Tarefa</p>
-                                    <div class="horario">
-                                       <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                       <p class="horario_alerta">12:34</p>
-                                    </div>
-                                </div>
-                                <div class="b-alerta alert-red">
-                                    <p class="elemento-alerta">RAM</p>
-                                    <p class="porcentagem-alerta">90%</p>
-                                </div>
-                            </div>
-                            <div class="alerta2">
-                                <div class="t-alerta">
-                                    <p class="i-maquina">Nome Tarefa</p>
-                                    <div class="horario">
-                                       <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                       <p class="horario_alerta">12:34</p>
-                                    </div>
-                                </div>
-                                <div class="b-alerta alert-red">
-                                    <p class="elemento-alerta">DISCO</p>
-                                    <p class="porcentagem-alerta">90%</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                
             </div>
 
         </div>

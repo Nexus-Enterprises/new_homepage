@@ -240,6 +240,9 @@ header h1{
 .right-nexus-spec{
   text-align: left;
 }
+.nexus-spec img {
+  margin: 20px;
+}
 
 .advantages-nex{
   display: flex;
@@ -450,6 +453,7 @@ header h1{
   border-radius: 20px;
   transition: transform 1500ms;
   transform-style: preserve-3d;
+  width: 250px;
   
 }
 .front-card, .back-card {
@@ -468,6 +472,7 @@ header h1{
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  max-width: 100%;
 
 }
 #span-card {
@@ -837,4 +842,8 @@ a:hover{
     display: block;
   }
   
+}
+.right-adv img {
+  display: flex;
+  position: relative;
 }
