@@ -25,7 +25,7 @@
                 <div class="infos">
                     <img src="./assets/img-nexus/Logo_Bradesco.svg" alt="" srcset="">
                     <div class="info_profile">
-                        <h5 class="name_user">Marcos</h5>
+                        <h5 class="name_user" id="name_user"></h5>
                     </div>
                     <div class="icons_profile">
                         <a href="#"><i class="fa fa-user" aria-hidden="true"></i></a>
@@ -36,259 +36,259 @@
             <div class="options">
                 <div class="container_options">
                     <a href="index.html">
-                    <div class="initial item_option ">
-                        <i class="fa fa-home" aria-hidden="true"></i>
-                        <p class="text_initial">Página Inicial</p>
+                        <div class="initial item_option ">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <p class="text_initial">Página Inicial</p>
                     </a>
-                    </div>
                 </div>
-                <div class="container_options">
-                    <a href="dashboard_func.html">
+            </div>
+            <div class="container_options">
+                <a href="dashboard_func.html">
                     <div class="dashboard item_option selected">
                         <i class="fa fa-line-chart" aria-hidden="true"></i>
                         <p class="text_initial">Dashboard</p>
-                    </a>
+                </a>
+            </div>
+        </div>
+        <div class="container_options">
+            <a href="historico.html">
+                <div class="hist item_option ">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <p class="text_initial">Histórico</p>
+            </a>
+        </div>
+    </div>
+    <div class="container_options">
+        <a href="lista_func.html">
+            <div class="list_func item_option ">
+                <i class="fa fa-book" aria-hidden="true"></i>
+                <p class="text_initial">Lista Funcionários</p>
+        </a>
+    </div>
+    </div>
+    <div class="container_options ">
+        <a href="login.html">
+            <div class="logout item_option ">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                <p class="text_initial">Sair</p>
+        </a>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="right_side">
+        <div class="f-part">
+            <h1 class="title-right">MAIOR CONSUMO DOS COMPONENTES</h1>
+            <div class="container-right">
+                <div class="card">
+                    <div class="top-card">
+                        <h1 class="text-card">CPU</h1>
+                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                    </div>
+                    <div class="bottom-card">
+                        <div class="left-bottom-card">
+                            <h1 class="agencia-text">Agência</h1>
+                            <p class="num-agencia">0000001</p>
+                            <h1 class="maquina-text">Máquina</h1>
+                            <p class="num-maquina">00-1</p>
+                        </div>
+                        <div class="chartBox">
+                            <canvas id="myChart"></canvas>
+                        </div>
                     </div>
                 </div>
-                <div class="container_options">
-                    <a href="historico.html">
-                    <div class="hist item_option ">
-                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                        <p class="text_initial">Histórico</p>
-                    </a>
+                <div class="card">
+                    <div class="top-card">
+                        <h1 class="text-card">RAM</h1>
+                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                    </div>
+                    <div class="bottom-card">
+                        <div class="left-bottom-card">
+                            <h1 class="agencia-text">Agência</h1>
+                            <p class="num-agencia">0000001</p>
+                            <h1 class="maquina-text">Máquina</h1>
+                            <p class="num-maquina">00-1</p>
+                        </div>
+                        <div class="chartBox">
+                            <canvas id="myChart1"></canvas>
+                        </div>
                     </div>
                 </div>
-                <div class="container_options">
-                    <a href="lista_func.html">
-                    <div class="list_func item_option ">
-                        <i class="fa fa-book" aria-hidden="true"></i>
-                        <p class="text_initial">Lista Funcionários</p>
-                    </a>
+                <div class="card">
+                    <div class="top-card">
+                        <h1 class="text-card">DISCO</h1>
+                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                    </div>
+                    <div class="bottom-card">
+                        <div class="left-bottom-card">
+                            <h1 class="agencia-text">Agência</h1>
+                            <p class="num-agencia">0000001</p>
+                            <h1 class="maquina-text">Máquina</h1>
+                            <p class="num-maquina">00-1</p>
+                        </div>
+                        <div class="chartBox">
+                            <canvas id="myChart2"></canvas>
+                        </div>
                     </div>
                 </div>
-                <div class="container_options ">
-                    <a href="login.html">
-                    <div class="logout item_option ">
-                        <i class="fa fa-sign-out" aria-hidden="true"></i>
-                        <p class="text_initial">Sair</p>
-                    </a>
+            </div>
+            <div class="full-tr">
+                <h1 class="title-tr">Agências</h1>
+                <table class="tg">
+                    <thead>
+                        <tr>
+                            <th class="tg-baqh">Numero Agência</th>
+                            <th class="tg-baqh">Consumo CPU</th>
+                            <th class="tg-baqh">Consumo RAM</th>
+                            <th class="tg-baqh">Consumo Disco</th>
+                            <th class="tg-baqh">Qtd. máquina cima de 70%</th>
+                            <th class="tg-baqh">Qtd. de máquina da agência</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="tg-baqh">0001</td>
+                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                            <td class="tg-baqh"><span class="alert-yellow">50%</span></td>
+                            <td class="tg-baqh"><span class="alert-red">70%</span></td>
+                            <td class="tg-baqh">21</td>
+                            <td class="tg-baqh">31</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-baqh">0001</td>
+                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                            <td class="tg-baqh"><span class="alert-blue">40%</span></td>
+                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                            <td class="tg-baqh">21</td>
+                            <td class="tg-baqh">21</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-baqh">0001</td>
+                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                            <td class="tg-baqh">21</td>
+                            <td class="tg-baqh">21</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-baqh">0001</td>
+                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                            <td class="tg-baqh">21</td>
+                            <td class="tg-baqh">21</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-baqh">0001</td>
+                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                            <td class="tg-baqh">21</td>
+                            <td class="tg-baqh">21</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="s-part">
+            <div class="container-s-part">
+                <h1 class="title-container-s-part">Maquinas que mais utilizaram os componentes</h1>
+                <select id="agencias">
+                    <option value="" selected disabled>Agencias</option>
+                    <option value="">Agencia 0001</option>
+                    <option value="">Agencia 0002</option>
+                    <option value="">Agencia 0003</option>
+                    <option value="">Agencia 0004</option>
+                </select>
+                <div class="container-alertas">
+                    <div class="alerta-agencia">Agência 00001</div>
+                    <div class="alerta-location">Localização | 192.168.128.2</div>
+                    <div class="alerta">
+                        <div class="t-alerta">
+                            <p class="i-maquina">Máquina 00001</p>
+                            <div class="horario">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                <p class="horario_alerta">12:34</p>
+                            </div>
+                        </div>
+                        <div class="b-alerta alert-blue">
+                            <p class="elemento-alerta">CPU</p>
+                            <p class="porcentagem-alerta">20%</p>
+                        </div>
+                    </div>
+                    <div class="alerta">
+                        <div class="t-alerta">
+                            <p class="i-maquina">Máquina 00001</p>
+                            <div class="horario">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                <p class="horario_alerta">12:34</p>
+                            </div>
+                        </div>
+                        <div class="b-alerta alert-red">
+                            <p class="elemento-alerta">RAM</p>
+                            <p class="porcentagem-alerta">90%</p>
+                        </div>
+                    </div>
+                    <div class="alerta">
+                        <div class="t-alerta">
+                            <p class="i-maquina">Máquina 00001</p>
+                            <div class="horario">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                <p class="horario_alerta">12:34</p>
+                            </div>
+                        </div>
+                        <div class="b-alerta alert-yellow">
+                            <p class="elemento-alerta">DISCO</p>
+                            <p class="porcentagem-alerta">30%</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-alertas">
+                    <div class="alerta-agencia">Agência 00002</div>
+                    <div class="alerta-location">Localização | 192.168.128.2</div>
+                    <div class="alerta">
+                        <div class="t-alerta">
+                            <p class="i-maquina">Máquina 00001</p>
+                            <div class="horario">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                <p class="horario_alerta">12:34</p>
+                            </div>
+                        </div>
+                        <div class="b-alerta alert-red">
+                            <p class="elemento-alerta">CPU</p>
+                            <p class="porcentagem-alerta">90%</p>
+                        </div>
+                    </div>
+                    <div class="alerta">
+                        <div class="t-alerta">
+                            <p class="i-maquina">Máquina 00001</p>
+                            <div class="horario">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                <p class="horario_alerta">12:34</p>
+                            </div>
+                        </div>
+                        <div class="b-alerta alert-red">
+                            <p class="elemento-alerta">RAM</p>
+                            <p class="porcentagem-alerta">90%</p>
+                        </div>
+                    </div>
+                    <div class="alerta">
+                        <div class="t-alerta">
+                            <p class="i-maquina">Máquina 00001</p>
+                            <div class="horario">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                <p class="horario_alerta">12:34</p>
+                            </div>
+                        </div>
+                        <div class="b-alerta alert-red">
+                            <p class="elemento-alerta">DISCO</p>
+                            <p class="porcentagem-alerta">90%</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="right_side">
-            <div class="f-part">
-                <h1 class="title-right">MAIOR CONSUMO DOS COMPONENTES</h1>
-                <div class="container-right">
-                    <div class="card">
-                        <div class="top-card">
-                            <h1 class="text-card">CPU</h1>
-                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                        </div>
-                        <div class="bottom-card">
-                            <div class="left-bottom-card">
-                                <h1 class="agencia-text">Agência</h1>
-                                <p class="num-agencia">0000001</p>
-                                <h1 class="maquina-text">Máquina</h1>
-                                <p class="num-maquina">00-1</p>
-                            </div>
-                            <div class="chartBox">
-                                <canvas id="myChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="top-card">
-                            <h1 class="text-card">RAM</h1>
-                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                        </div>
-                        <div class="bottom-card">
-                            <div class="left-bottom-card">
-                                <h1 class="agencia-text">Agência</h1>
-                                <p class="num-agencia">0000001</p>
-                                <h1 class="maquina-text">Máquina</h1>
-                                <p class="num-maquina">00-1</p>
-                            </div>
-                            <div class="chartBox">
-                                <canvas id="myChart1"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="top-card">
-                            <h1 class="text-card">DISCO</h1>
-                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                        </div>
-                        <div class="bottom-card">
-                            <div class="left-bottom-card">
-                                <h1 class="agencia-text">Agência</h1>
-                                <p class="num-agencia">0000001</p>
-                                <h1 class="maquina-text">Máquina</h1>
-                                <p class="num-maquina">00-1</p>
-                            </div>
-                            <div class="chartBox">
-                                <canvas id="myChart2"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="full-tr">
-                    <h1 class="title-tr">Agências</h1>
-                    <table class="tg">
-                        <thead>
-                            <tr>
-                                <th class="tg-baqh">Numero Agência</th>
-                                <th class="tg-baqh">Consumo CPU</th>
-                                <th class="tg-baqh">Consumo RAM</th>
-                                <th class="tg-baqh">Consumo Disco</th>
-                                <th class="tg-baqh">Qtd. máquina cima de 70%</th>
-                                <th class="tg-baqh">Qtd. de máquina da agência</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="tg-baqh">0001</td>
-                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                                <td class="tg-baqh"><span class="alert-yellow">50%</span></td>
-                                <td class="tg-baqh"><span class="alert-red">70%</span></td>
-                                <td class="tg-baqh">21</td>
-                                <td class="tg-baqh">31</td>
-                            </tr>
-                            <tr>
-                                <td class="tg-baqh">0001</td>
-                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                                <td class="tg-baqh"><span class="alert-blue">40%</span></td>
-                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                                <td class="tg-baqh">21</td>
-                                <td class="tg-baqh">21</td>
-                            </tr>
-                            <tr>
-                                <td class="tg-baqh">0001</td>
-                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                                <td class="tg-baqh">21</td>
-                                <td class="tg-baqh">21</td>
-                            </tr>
-                            <tr>
-                                <td class="tg-baqh">0001</td>
-                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                                <td class="tg-baqh">21</td>
-                                <td class="tg-baqh">21</td>
-                            </tr>
-                            <tr>
-                                <td class="tg-baqh">0001</td>
-                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                                <td class="tg-baqh">21</td>
-                                <td class="tg-baqh">21</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="s-part">
-                <div class="container-s-part">
-                    <h1 class="title-container-s-part">Maquinas que mais utilizaram os componentes</h1>
-                    <select id="agencias">
-                        <option value="" selected disabled>Agencias</option>
-                        <option value="">Agencia 0001</option>
-                        <option value="">Agencia 0002</option>
-                        <option value="">Agencia 0003</option>
-                        <option value="">Agencia 0004</option>
-                    </select>
-                    <div class="container-alertas">
-                        <div class="alerta-agencia">Agência 00001</div>
-                        <div class="alerta-location">Localização | 192.168.128.2</div>
-                        <div class="alerta">
-                            <div class="t-alerta">
-                                <p class="i-maquina">Máquina 00001</p>
-                                <div class="horario">
-                                   <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                   <p class="horario_alerta">12:34</p>
-                                </div>
-                            </div>
-                            <div class="b-alerta alert-blue">
-                                <p class="elemento-alerta">CPU</p>
-                                <p class="porcentagem-alerta">20%</p>
-                            </div>
-                        </div>
-                        <div class="alerta">
-                            <div class="t-alerta">
-                                <p class="i-maquina">Máquina 00001</p>
-                                <div class="horario">
-                                   <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                   <p class="horario_alerta">12:34</p>
-                                </div>
-                            </div>
-                            <div class="b-alerta alert-red">
-                                <p class="elemento-alerta">RAM</p>
-                                <p class="porcentagem-alerta">90%</p>
-                            </div>
-                        </div>
-                        <div class="alerta">
-                            <div class="t-alerta">
-                                <p class="i-maquina">Máquina 00001</p>
-                                <div class="horario">
-                                   <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                   <p class="horario_alerta">12:34</p>
-                                </div>
-                            </div>
-                            <div class="b-alerta alert-yellow">
-                                <p class="elemento-alerta">DISCO</p>
-                                <p class="porcentagem-alerta">30%</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container-alertas">
-                        <div class="alerta-agencia">Agência 00002</div>
-                        <div class="alerta-location">Localização | 192.168.128.2</div>
-                        <div class="alerta">
-                            <div class="t-alerta">
-                                <p class="i-maquina">Máquina 00001</p>
-                                <div class="horario">
-                                   <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                   <p class="horario_alerta">12:34</p>
-                                </div>
-                            </div>
-                            <div class="b-alerta alert-red">
-                                <p class="elemento-alerta">CPU</p>
-                                <p class="porcentagem-alerta">90%</p>
-                            </div>
-                        </div>
-                        <div class="alerta">
-                            <div class="t-alerta">
-                                <p class="i-maquina">Máquina 00001</p>
-                                <div class="horario">
-                                   <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                   <p class="horario_alerta">12:34</p>
-                                </div>
-                            </div>
-                            <div class="b-alerta alert-red">
-                                <p class="elemento-alerta">RAM</p>
-                                <p class="porcentagem-alerta">90%</p>
-                            </div>
-                        </div>
-                        <div class="alerta">
-                            <div class="t-alerta">
-                                <p class="i-maquina">Máquina 00001</p>
-                                <div class="horario">
-                                   <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                   <p class="horario_alerta">12:34</p>
-                                </div>
-                            </div>
-                            <div class="b-alerta alert-red">
-                                <p class="elemento-alerta">DISCO</p>
-                                <p class="porcentagem-alerta">90%</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    </div>
 
     </div>
 </body>
@@ -297,10 +297,19 @@
 
 <script>
 
+    function validarSessao() {
+        var nome = sessionStorage.Nome;
+        var sobrenome = sessionStorage.Sobrenome
+
+        if (nome != null) {
+            name_user.innerHTML = `${nome} ${sobrenome}`
+        } else {
+            window.location = "login.html";
+        }
+    }
+    window.onload = plotarGrafico(), validarSessao();
+
     let proximaAtualizacao;
-
-    window.onload = plotarGrafico();
-
     function plotarGrafico() {
 
         const data = {

@@ -14,11 +14,14 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body>
+<body onload="validarSessao()">
 
   <div class="topo">
     <button class="btn-voltar">
-      <div class="seta-voltar"></div> Voltar para tela inicial
+      <div class="seta-voltar"></div>
+      <a href="cadastro02.html" style="color: white;">
+        Voltar para tela anterior
+      </a>
     </button>
 
     <div class="imagem-title">
@@ -29,12 +32,12 @@
 
 
   <div class="container">
-    
+
     <div class="progress">
-        <div class="circle-active">1</div>
-        <div class="circle-active">2</div>
-        <div class="circle-active">3</div>
-        <div class="circle">4</div>
+      <div class="circle-active">1</div>
+      <div class="circle-active">2</div>
+      <div class="circle-active">3</div>
+      <div class="circle">4</div>
     </div>
 
     <h1 class="primary-title">Cadastre sua agência</h1>
@@ -47,43 +50,106 @@
       <div class="agencia">
         <div>
           <label for="id_agencia">Número da Agência</label>
-          <input type="text" id="id_agencia" name="name-agencia" required placeholder="0000">
+          <input type="text" id="id_agencia" name="name" required placeholder="0000">
         </div>
         <div>
           <label for="id_digito">Dígito</label>
           <input type="text" id="id_digito" name="name-digito" required placeholder="0">
         </div>
       </div>
-      <div>
+      <div id="banco_ip">
         <label for="id_organizacao">Organização</label>
         <input type="text" id="id_organizacao" name="name-organizacao" required placeholder="Banco do Brasil">
       </div>
       <div>
-        <label for="id_email-agencia">Email da Agência</label>
-        <input type="email" id="id_email-agencia" name="name-email-agencia" required placeholder="agencia@banco.com">
+        <label for="id_email">Email da Agência</label>
+        <input type="email" id="id_email" name="name-email" required placeholder="agencia@banco.com">
       </div>
-      <div class="telefone-agencia">
+      <div class="telefone">
         <div>
           <label for="id_ddd">DDD</label>
           <input type="text" id="id_ddd" name="name-ddd" required placeholder="00">
         </div>
         <div>
-          <label for="id_telefone-agencia">Telefone da Agência</label>
-          <input type="text" id="id_telefone-agencia" name="name-telefone-agencia" required placeholder="(00) 0000-0000">
+          <label for="id_telefone">Telefone da Agência</label>
+          <input type="text" id="id_telefone" name="name-telefone" required
+            placeholder="(00) 0000-0000">
         </div>
       </div>
     </div>
 
 
-    <button class="submit-proxima">Próxima etapa</button>
+    <button class="submit-proxima" onclick="register()">Próxima etapa</button>
 
   </div>
-
-
-
-
   </div>
 
 </body>
 
 </html>
+
+<script>
+
+function register() {
+    var agenciaVar = document.getElementById("id_agencia").value;
+    var digitoVar = document.getElementById("id_digito").value;
+    var organizacaoVar = document.getElementById("id_organizacao").value;
+    var emailVar = document.getElementById("id_email").value;
+    var dddVar = document.getElementById("id_ddd").value;
+    var telefoneVar = document.getElementById("id_telefone").value;
+    var enderecoVar = sessionStorage.Endereco
+
+
+    if (agenciaVar == "" || digitoVar == "" || organizacaoVar == "" || emailVar == "" || dddVar == "" || telefoneVar == "") {
+      console.log("Erro ao cadastrar! Confira os campos");
+      return false;
+    }
+
+    fetch("/usuarios/cadastrarAgencia", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        agenciaServer: agenciaVar,
+        digitoServer: digitoVar,
+        organizacaoServer: organizacaoVar,
+        emailServer: emailVar,
+        dddServer: dddVar,
+        telefoneServer: telefoneVar,
+        enderecoServer: enderecoVar
+      })
+    }).then(function (response) {
+      if (response.status === 200) {
+        sessionStorage.Agencia = agenciaVar;
+        console.log("Cadastro realizado com sucesso!");
+        setTimeout(() => {
+          window.location = "cadastro04.html";
+        }, "2000")
+      } else {
+        console.log("Erro ao realizar o cadastro.");
+      }
+    }).catch(function (error) {
+      console.log("Erro na resposta:", error);
+    });
+
+    return false;
+  }
+
+  function validarSessao() {
+    // aguardar();
+    var endereco = sessionStorage.Endereco;
+    var funcionario = sessionStorage.Funcionario;
+    var banco = sessionStorage.Banco;
+    banco_ip.innerHTML = `
+      <label for="id_organizacao">Organização</label>
+      <input type="text" id="id_organizacao" name="name-organizacao" value="${banco}">
+      `
+
+    if (funcionario != null) {
+    } else {
+      window.location = "cadastro01.html";
+    }
+
+  }
+</script>

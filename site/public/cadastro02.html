@@ -18,7 +18,10 @@
 
   <div class="topo">
     <button class="btn-voltar">
-      <div class="seta-voltar"></div> Voltar para tela inicial
+      <div class="seta-voltar"></div>
+      <a href="cadastro01.html" style="color: white;">
+        Voltar para tela anterior
+      </a>
     </button>
 
     <div class="imagem-title">
@@ -86,7 +89,7 @@
     </div>
 
 
-    <button class="submit-proxima">Próxima etapa</button>
+    <button class="submit-proxima" onclick="register()">Próxima etapa</button>
 
   </div>
 
@@ -162,7 +165,8 @@
   });
 
   function register() {
-    var cepVar = document.getElementById("id_cep").value;
+    var cep = document.getElementById("id_cep").value;
+    var cepVar = cep.replace("-", "");
     var enderecoVar = document.getElementById("id_endereco").value;
     var numeroVar = document.getElementById("id_numero").value;
     var bairroVar = document.getElementById("id_bairro").value;
@@ -176,7 +180,7 @@
       return false;
     }
 
-    fetch("/usuarios/cadastrarAgencia", {
+    fetch("/usuarios/cadastrarEndAgencia", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -193,12 +197,11 @@
     }).then(function (response) {
       if (response.status === 200) {
         sessionStorage.Endereco = enderecoVar;
-
-        mensagem_erro.innerHTML = "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+        
         console.log("Cadastro realizado com sucesso!");
         setTimeout(() => {
           window.location = "cadastro03.html";
-        }, "1500")
+        }, "2000")
       } else {
         console.log("Erro ao realizar o cadastro.");
       }
@@ -212,11 +215,14 @@
   function validarSessao() {
     // aguardar();
     var endereco = sessionStorage.Endereco;
-    var user = sessionStorage.Funcionario;
+    var funcionario = sessionStorage.Funcionario;
+    var banco = sessionStorage.Banco;
 
-    if (user != null) {
+    if (funcionario != null) {
+
     } else {
       window.location = "cadastro01.html";
     }
+
   }
 </script>
