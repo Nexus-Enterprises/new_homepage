@@ -31,7 +31,7 @@
                 <div class="infos">
                     <img src="./assets/img-nexus/Logo_Bradesco.svg" alt="" srcset="">
                     <div class="info_profile">
-                        <h5 class="name_user">Marcos</h5>
+                        <h5 class="name_user" id="name_user"></h5>
                     </div>
                     <div class="icons_profile">
                         <a href="#"><i class="fa fa-user" aria-hidden="true"></i></a>
@@ -406,4 +406,16 @@
 </html>
 
 <script>
+        function validarSessao() {
+        var email = sessionStorage.EMAIL_USUARIO;
+        var nome = sessionStorage.NOME_USUARIO;
+        var sobrenome = sessionStorage.SOBRENOME;
+        if (nome != null) {
+            name_user.innerHTML = `${nome} ${sobrenome}`
+        } else {
+            window.location = "login.html";
+        }
+    }
+
+    window.onload = validarSessao();
 </script>

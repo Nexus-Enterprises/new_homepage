@@ -2,7 +2,7 @@ var database = require("../database/config")
 
 function autenticar(email, token) {
     var instrucao = `
-        SELECT Funcionario.nome, Funcionario.sobrenome, Usuario.email FROM Usuario JOIN Funcionario ON Usuario.fkFuncionario = Funcionario.idFuncionario WHERE Usuario.email = '${email}' AND Usuario.token = '${token}';
+        SELECT * FROM Usuario JOIN Funcionario ON Usuario.fkFuncionario = Funcionario.idFuncionario WHERE Usuario.email = '${email}' AND Usuario.token = '${token}';
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);

@@ -846,4 +846,5 @@ a:hover{
 .right-adv img {
   display: flex;
   position: relative;
+  padding-left: 20px;
 }

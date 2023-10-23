@@ -55,7 +55,7 @@
 
         var emailVar = email.value;
         var tokenVar = token.value;
-
+    
         if (emailVar == "" || tokenVar == "") {
             return false;
         }
@@ -72,23 +72,18 @@
         }).then(function (resposta) {
             console.log("ESTOU NO THEN DO entrar()!")
 
-            if (resposta.ok) {
-                console.log(resposta);
-                sessionStorage.Nome = resposta.nome;
-                sessionStorage.Sobrenome = resposta.sobrenome;
-                sessionStorage.email = resposta.email;
-
-                resposta.json().then(json => {
-                    console.log(json);
-                    console.log(JSON.stringify(json));
-
-
-                    setTimeout(function () {
-                        window.location = "dashboard_noc.html";
-                    }, 1000); // apenas para exibir o loading
-
+            if (resposta.status === 200) {
+                resposta.json().then(element => {
+                    sessionStorage.EMAIL_USUARIO = element.emailCorporativo;
+                    sessionStorage.NOME_USUARIO = element.nome;
+                    sessionStorage.SOBRENOME = element.sobrenome;
+                    
                 });
 
+                setTimeout(function () {
+                    window.location = "dashboard_noc.html";
+                }, 1000); // apenas para exibir o loading
+                
             } else {
                 console.log("Houve um erro ao tentar realizar o login!");
             }

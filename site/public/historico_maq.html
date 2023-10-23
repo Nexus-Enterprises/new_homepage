@@ -190,9 +190,9 @@
 
 <script>
     function validarSessao() {
-        var nome = sessionStorage.Nome;
-        var sobrenome = sessionStorage.Sobrenome
-
+        var email = sessionStorage.EMAIL_USUARIO;
+        var nome = sessionStorage.NOME_USUARIO;
+        var sobrenome = sessionStorage.SOBRENOME;
         if (nome != null) {
             name_user.innerHTML = `${nome} ${sobrenome}`
         } else {
