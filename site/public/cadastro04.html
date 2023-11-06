@@ -17,12 +17,12 @@
 <body onload="funcionario(), validarSessao()">
   <body>
     <div class="topo">
+      <a href="cadastro03.html" style="color: white;">
       <button class="btn-voltar">
         <div class="seta-voltar"></div>
-        <a href="cadastro03.html" style="color: white;">
           Voltar para tela anterior
-        </a>
-      </button>
+        </button>
+      </a>
       <div class="imagem-title">
         <img src="./assets/img-nexus/logo_nexs.svg" alt="Logo Nexus." srcset="">
         <h2 class="title">Nexus.</h2>
@@ -79,6 +79,7 @@
     var modelVar = document.getElementById("model").value;
     var situationVar = document.getElementById("situation").value;
     var funcionarioVar = document.getElementById("funcionario_slc").value;
+    var email = sessionStorage.Email;
 
     if (brandVar == "" || modelVar == "" || situationVar == "" || funcionarioVar == "") {
       console.log("Erro ao cadastrar! Confira os campos");
@@ -96,7 +97,8 @@
         situationServer: situationVar,
         funcionarioServer: funcionarioVar,
         agenciaServer: sessionStorage.Agencia,
-        bancoServer: sessionStorage.Banco
+        bancoServer: sessionStorage.Banco,
+        emailServer: email
       })
     }).then(function (response) {
       if (response.status === 200) {
@@ -116,13 +118,14 @@
   }
 
   function funcionario() {
+    var agencia = sessionStorage.Agencia;
     fetch("/usuarios/listarFuncionario", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        
+        agenciaServer: agencia,
       })
     }).then(function (response) {
       if (response.ok) {

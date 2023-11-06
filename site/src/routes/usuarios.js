@@ -24,6 +24,10 @@ router.post("/listarFuncionario", function (req, res) {
     usuarioController.listarFuncionario(req, res);
 });
 
+router.post("/listarEmpresa", function (req, res) {
+    usuarioController.listarEmpresa(req, res);
+});
+
 router.post("/cadastrarMaquina", function (req, res) {
     usuarioController.cadastrarMaquina(req, res);
 });

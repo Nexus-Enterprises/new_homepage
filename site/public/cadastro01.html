@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - NOC</title>
+    <title>Cadastro </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/cadastro01.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -16,13 +16,12 @@
 
 <body onload="validarSessao()">
     <div class="topo">
-        <button class="btn-voltar">
-            <div class="seta-voltar"></div>
-            <a href="index.html" style="color: white;">
+        <a href="index.html" style="color: white;">
+            <button class="btn-voltar">
+                <div class="seta-voltar"></div>
                 Voltar para tela principal
-            </a>
-        </button>
-
+            </button>
+        </a>
         <div class="imagem-title">
             <img src="./assets/img-nexus/logo_nexs.svg" alt="Logo Nexus." srcset="">
             <h2 class="title">Nexus.</h2>
@@ -70,9 +69,6 @@
                 <div>
                     <select id="agency_empresa" required>
                         <option selected>Selecione um Banco</option>
-                        <option value="Bradesco">Bradesco</option>
-                        <option value="Banco do Brasil">Banco do Brasil</option>
-                        <option value="Itau">Itau</option>
                     </select>
                 </div>
             </div>
@@ -90,6 +86,26 @@
 
     function validarSessao() {
         sessionStorage.clear();
+        
+        fetch("/usuarios/listarEmpresa", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+            })
+        }).then(function (response) {
+            if (response.ok) {
+                response.json().then(json => {
+
+                    json.forEach(element => {
+                        agency_empresa.innerHTML += `
+            <option value="${element.nomeEmpresa}">${element.nomeEmpresa}</option>
+          `;
+                    });
+                })
+            }
+        });
     }
 
     function register() {

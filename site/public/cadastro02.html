@@ -17,12 +17,12 @@
 <body onload="validarSessao()">
 
   <div class="topo">
-    <button class="btn-voltar">
-      <div class="seta-voltar"></div>
-      <a href="cadastro01.html" style="color: white;">
+    <a href="cadastro01.html" style="color: white;">
+      <button class="btn-voltar">
+        <div class="seta-voltar"></div>
         Voltar para tela anterior
-      </a>
-    </button>
+      </button>
+    </a>
 
     <div class="imagem-title">
       <img src="./assets/img-nexus/logo_nexs.svg" alt="Logo Nexus." srcset="">
@@ -41,9 +41,9 @@
 
     </div>
 
-    <h1 class="primary-title">Cadastre sua agência</h1>
+    <h1 class="primary-title">Cadastro</h1>
 
-    <p>informe o endereço da sua agência</p>
+    <p>informe o Endereço da sua agência</p>
 
     <!-- Informações adicionais -->
     <div class="information-login">
@@ -197,7 +197,7 @@
     }).then(function (response) {
       if (response.status === 200) {
         sessionStorage.Endereco = enderecoVar;
-        
+
         console.log("Cadastro realizado com sucesso!");
         setTimeout(() => {
           window.location = "cadastro03.html";

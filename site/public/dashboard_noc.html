@@ -85,16 +85,7 @@
                         <h1 class="text-card">CPU</h1>
                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                     </div>
-                    <div class="bottom-card">
-                        <div class="left-bottom-card">
-                            <h1 class="agencia-text">Agência</h1>
-                            <p class="num-agencia">0000001</p>
-                            <h1 class="maquina-text">Máquina</h1>
-                            <p class="num-maquina">00-1</p>
-                        </div>
-                        <div class="chartBox">
-                            <canvas id="myChart"></canvas>
-                        </div>
+                    <div class="bottom-card" id="altoConsumoCPU">
                     </div>
                 </div>
                 <div class="card">
@@ -102,16 +93,8 @@
                         <h1 class="text-card">RAM</h1>
                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                     </div>
-                    <div class="bottom-card">
-                        <div class="left-bottom-card">
-                            <h1 class="agencia-text">Agência</h1>
-                            <p class="num-agencia">0000001</p>
-                            <h1 class="maquina-text">Máquina</h1>
-                            <p class="num-maquina">00-1</p>
-                        </div>
-                        <div class="chartBox">
-                            <canvas id="myChart1"></canvas>
-                        </div>
+                    <div class="bottom-card" id="altoConsumoRAM">
+                        
                     </div>
                 </div>
                 <div class="card">
@@ -145,47 +128,7 @@
                             <th class="tg-baqh">Qtd. de máquina da agência</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="tg-baqh">0001</td>
-                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                            <td class="tg-baqh"><span class="alert-yellow">50%</span></td>
-                            <td class="tg-baqh"><span class="alert-red">70%</span></td>
-                            <td class="tg-baqh">21</td>
-                            <td class="tg-baqh">31</td>
-                        </tr>
-                        <tr>
-                            <td class="tg-baqh">0001</td>
-                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                            <td class="tg-baqh"><span class="alert-blue">40%</span></td>
-                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                            <td class="tg-baqh">21</td>
-                            <td class="tg-baqh">21</td>
-                        </tr>
-                        <tr>
-                            <td class="tg-baqh">0001</td>
-                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                            <td class="tg-baqh">21</td>
-                            <td class="tg-baqh">21</td>
-                        </tr>
-                        <tr>
-                            <td class="tg-baqh">0001</td>
-                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                            <td class="tg-baqh">21</td>
-                            <td class="tg-baqh">21</td>
-                        </tr>
-                        <tr>
-                            <td class="tg-baqh">0001</td>
-                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                            <td class="tg-baqh">21</td>
-                            <td class="tg-baqh">21</td>
-                        </tr>
+                    <tbody id="agencias_noc">
                     </tbody>
                 </table>
             </div>
@@ -200,91 +143,7 @@
                     <option value="">Agencia 0003</option>
                     <option value="">Agencia 0004</option>
                 </select>
-                <div class="container-alertas">
-                    <div class="alerta-agencia">Agência 00001</div>
-                    <div class="alerta-location">Localização | 192.168.128.2</div>
-                    <div class="alerta">
-                        <div class="t-alerta">
-                            <p class="i-maquina">Máquina 00001</p>
-                            <div class="horario">
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                <p class="horario_alerta">12:34</p>
-                            </div>
-                        </div>
-                        <div class="b-alerta alert-blue">
-                            <p class="elemento-alerta">CPU</p>
-                            <p class="porcentagem-alerta">20%</p>
-                        </div>
-                    </div>
-                    <div class="alerta">
-                        <div class="t-alerta">
-                            <p class="i-maquina">Máquina 00001</p>
-                            <div class="horario">
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                <p class="horario_alerta">12:34</p>
-                            </div>
-                        </div>
-                        <div class="b-alerta alert-red">
-                            <p class="elemento-alerta">RAM</p>
-                            <p class="porcentagem-alerta">90%</p>
-                        </div>
-                    </div>
-                    <div class="alerta">
-                        <div class="t-alerta">
-                            <p class="i-maquina">Máquina 00001</p>
-                            <div class="horario">
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                <p class="horario_alerta">12:34</p>
-                            </div>
-                        </div>
-                        <div class="b-alerta alert-yellow">
-                            <p class="elemento-alerta">DISCO</p>
-                            <p class="porcentagem-alerta">30%</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="container-alertas">
-                    <div class="alerta-agencia">Agência 00002</div>
-                    <div class="alerta-location">Localização | 192.168.128.2</div>
-                    <div class="alerta">
-                        <div class="t-alerta">
-                            <p class="i-maquina">Máquina 00001</p>
-                            <div class="horario">
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                <p class="horario_alerta">12:34</p>
-                            </div>
-                        </div>
-                        <div class="b-alerta alert-red">
-                            <p class="elemento-alerta">CPU</p>
-                            <p class="porcentagem-alerta">90%</p>
-                        </div>
-                    </div>
-                    <div class="alerta">
-                        <div class="t-alerta">
-                            <p class="i-maquina">Máquina 00001</p>
-                            <div class="horario">
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                <p class="horario_alerta">12:34</p>
-                            </div>
-                        </div>
-                        <div class="b-alerta alert-red">
-                            <p class="elemento-alerta">RAM</p>
-                            <p class="porcentagem-alerta">90%</p>
-                        </div>
-                    </div>
-                    <div class="alerta">
-                        <div class="t-alerta">
-                            <p class="i-maquina">Máquina 00001</p>
-                            <div class="horario">
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                <p class="horario_alerta">12:34</p>
-                            </div>
-                        </div>
-                        <div class="b-alerta alert-red">
-                            <p class="elemento-alerta">DISCO</p>
-                            <p class="porcentagem-alerta">90%</p>
-                        </div>
-                    </div>
+                <div class="container-alertas" id="agenciaComp">
                 </div>
             </div>
         </div>
@@ -296,35 +155,223 @@
 </html>
 
 <script>
+    var agenciaVar = [];
 
     function validarSessao() {
         var email = sessionStorage.EMAIL_USUARIO;
         var nome = sessionStorage.NOME_USUARIO;
         var sobrenome = sessionStorage.SOBRENOME;
+        var cargo = sessionStorage.CARGO;
+        const empresa = sessionStorage.BANCO;
+
         if (nome != null) {
-            name_user.innerHTML = `${nome} ${sobrenome}`
+            name_user.innerHTML = `${nome} ${sobrenome}`;
+            fetch("/dashboard/listarAgenciasNOC", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    empresaServer: empresa,
+                })
+            }).then(function (response) {
+                if (response.ok) {
+                    response.json().then(json => {
+                        json.forEach(element => {
+                            console.log(element)
+                            agencias_noc.innerHTML += `
+                        <tr>
+                            <td class="tg-baqh">${element.CodigoAgencia}</td>
+                            <td class="tg-baqh"><span class="alert-red">${element.TotalUsoCPU}%</span></td>
+                            <td class="tg-baqh"><span class "alert-yellow">${element.TotalUsoRAM}%</span></td>
+                            <td class="tg-baqh"><span class="alert-red">${element.TotalUsoDisco}%</span></td>
+                            <td class="tg-baqh">${element.MáquinasAcimaDe70Percent}</td>
+                            <td class="tg-baqh">${element.TotalMaquinas}</td>
+                        </tr>
+                        `;
+                            agenciaComp.innerHTML += `
+                        <div class="alerta-agencia">Agência ${element.CodigoAgencia}</div>
+                        <div class="alerta-location" id="localizacao">Localização |</div>
+                        <div class="alerta" id="maquinasComp${element.CodigoAgencia}">
+                        </div>
+                        `;
+                            agenciaVar.push(element.CodigoAgencia);
+                        });
+
+                        ListarMaquinas();
+                    });
+                }
+            });
         } else {
             window.location = "login.html";
         }
     }
+
+
     window.onload = plotarGrafico(), validarSessao();
+
+    function ListarMaquinas() {
+        agenciaVar.forEach(agenciaNumero => {
+            fetch("/dashboard/listarMaquinas", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    agenciaServer: agenciaNumero,
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(json => {
+                        json.forEach(element => {
+                            var maquinasCompElement = document.getElementById(`maquinasComp${agenciaNumero}`);
+                            maquinasCompElement.innerHTML = `
+                                <div class="t-alerta">
+                                    <p class="i-maquina">Máquina ${element.idMaquina}</p>
+                                    <div class="horario">
+                                        <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                        <p class="horario_alerta">12:34</p>
+                                    </div>
+                                </div>
+                                <div class="b-alerta alert-blue">
+                                    <p class="elemento-alerta">CPU</p>
+                                    <p class="porcentagem-alerta">20%</p>
+                                </div>
+                            `;
+                            localizacao.innerHTML = `
+                            
+                            `;
+                        });
+                    });
+                }
+            });
+        });
+
+    }
 
     let proximaAtualizacao;
     function plotarGrafico() {
+        var banco = sessionStorage.BANCO;
 
-        const data = {
-            labels: []
-            ,
-            datasets: [{
-                label: 'Consumo geral de CPU',
-                data: [80, 20],
-                backgroundColor: [
-                    'rgb(158, 106, 225)',
-                    'rgb(241, 241, 244)'
-                ],
-                hoverOffset: 4
-            }]
-        };
+        fetch("/dashboard/altoConsumoCPU", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                bancoServer: banco,
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                resposta.json().then(json => {
+                    json.forEach(element => {
+                        altoConsumoCPU.innerHTML = `
+                        <div class="left-bottom-card">
+                            <h1 class="agencia-text">Agência</h1>
+                            <p class="num-agencia">${element.CodigoAgencia}</p>
+                            <h1 class="maquina-text">Máquina</h1>
+                            <p class="num-maquina">${element.NumeroMaquina}</p>
+                        </div>
+                        <div class="chartBox">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                        `;
+
+                        var Total = ((element.ConsumoAtual / element.TotalCapacidade) * 100)
+                        const data = {
+                            labels: []
+                            ,
+                            datasets: [{
+                                label: 'Consumo geral de CPU',
+                                data: [Total, (Total - 100)],
+                                backgroundColor: [
+                                    'rgb(158, 106, 225)',
+                                    'rgb(241, 241, 244)'
+                                ],
+                                hoverOffset: 4
+                            }]
+                        };
+
+                        // Criando estrutura para plotar gráfico - config
+                        const config = {
+                            type: 'doughnut',
+                            data: data,
+                            options: {
+                                hoverBorderWidth: 0,
+                                borderWidth: 0,
+                                weight: 1,
+                                cutout: 37,
+                                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
+                                showTooltips: false
+
+
+                            },
+                            plugins: [doughnutLabel]
+                        };
+
+                        const myChart = new Chart(
+                            document.getElementById('myChart'),
+                            config
+                        );
+
+
+
+                    });
+                });
+            }
+        });
+
+fetch("/dashboard/altoConsumoRAM", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                bancoServer: banco,
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                resposta.json().then(json => {
+                    json.forEach(element => {
+                        altoConsumoRAM = `
+                        <div class="left-bottom-card">
+                            <h1 class="agencia-text">Agência</h1>
+                            <p class="num-agencia">0000001</p>
+                            <h1 class="maquina-text">Máquina</h1>
+                            <p class="num-maquina">00-1</p>
+                        </div>
+                        <div class="chartBox">
+                            <canvas id="myChart1"></canvas>
+                        </div>
+                        `
+                        // Criando estrutura para plotar gráfico - config
+                        const config = {
+                            type: 'doughnut',
+                            data: data,
+                            options: {
+                                hoverBorderWidth: 0,
+                                borderWidth: 0,
+                                weight: 1,
+                                cutout: 37,
+                                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
+                                showTooltips: false
+
+
+                            },
+                            plugins: [doughnutLabel]
+                        };
+
+                        const myChart = new Chart(
+                            document.getElementById('myChart'),
+                            config
+                        );
+
+
+
+                    });
+                });
+            }
+        });
 
         const doughnutLabel = {
             id: 'doughtnutLabel',
@@ -342,42 +389,6 @@
 
             }
         }
-
-        // Criando estrutura para plotar gráfico - config
-        const config = {
-            type: 'doughnut',
-            data: data,
-            options: {
-                hoverBorderWidth: 0,
-                borderWidth: 0,
-                weight: 1,
-                cutout: 37,
-                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
-                showTooltips: false
-
-
-            },
-            plugins: [doughnutLabel]
-        };
-
-        const myChart = new Chart(
-            document.getElementById('myChart'),
-            config
-        );
-
-        const dataDoughnut1 = {
-            labels: [],
-            datasets: [{
-                label: 'Consumo geral de CPU',
-                data: [95, 5],
-                backgroundColor: [
-                    'rgb(158, 106, 225)',
-                    'rgb(241, 241, 244)'
-                ],
-                hoverOffset: 4
-            }]
-        };
-
         const doughnutLabel1 = {
             id: 'doughnutLabel',
             beforeDatasetsDraw(chart, args, pluginOptions) {
@@ -393,8 +404,20 @@
                 ctx.fillText(`${dataDoughnut1.datasets[0].data[0]}%`, xCoor1, yCoor1);
             }
         };
-
         // Criando estrutura para plotar gráfico - config
+        const dataDoughnut1 = {
+            labels: [],
+            datasets: [{
+                label: 'Consumo geral de CPU',
+                data: [95, 5],
+                backgroundColor: [
+                    'rgb(158, 106, 225)',
+                    'rgb(241, 241, 244)'
+                ],
+                hoverOffset: 4
+            }]
+        };
+
         const configDoughnut1 = {
             type: 'doughnut',
             data: dataDoughnut1,
