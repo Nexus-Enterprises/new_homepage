@@ -407,8 +407,8 @@ a:hover {
     text-align: left;
     padding: 10px 30px;
     max-width: 220px;
+    min-width: 220px;
     text-align: center;
-
 }
 
 .alerta-agencia {
@@ -427,6 +427,7 @@ a:hover {
     flex-direction: column;
     max-width: 280px;
     border-radius: 10px;
+    min-width: 280px;
 }
 
 .t-alerta {
@@ -456,7 +457,7 @@ a:hover {
 .title-container-s-part {
     font-size: 20px;
     text-align: center;
-    margin-top: 35vh;
+    margin-top: 15vh;
 }
 
 
