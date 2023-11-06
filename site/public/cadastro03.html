@@ -17,12 +17,12 @@
 <body onload="validarSessao()">
 
   <div class="topo">
-    <button class="btn-voltar">
-      <div class="seta-voltar"></div>
-      <a href="cadastro02.html" style="color: white;">
+    <a href="cadastro02.html" style="color: white;">
+      <button class="btn-voltar">
+        <div class="seta-voltar"></div>
         Voltar para tela anterior
-      </a>
-    </button>
+      </button>
+    </a>
 
     <div class="imagem-title">
       <img src="./assets/img-nexus/logo_nexs.svg" alt="Logo Nexus." srcset="">
@@ -72,8 +72,7 @@
         </div>
         <div>
           <label for="id_telefone">Telefone da Agência</label>
-          <input type="text" id="id_telefone" name="name-telefone" required
-            placeholder="(00) 0000-0000">
+          <input type="text" id="id_telefone" name="name-telefone" required placeholder="(00) 0000-0000">
         </div>
       </div>
     </div>
@@ -90,7 +89,7 @@
 
 <script>
 
-function register() {
+  function register() {
     var agenciaVar = document.getElementById("id_agencia").value;
     var digitoVar = document.getElementById("id_digito").value;
     var organizacaoVar = document.getElementById("id_organizacao").value;

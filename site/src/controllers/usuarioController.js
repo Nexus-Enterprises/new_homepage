@@ -11,27 +11,27 @@ function autenticar(req, res) {
     } else {
 
         usuarioModel.autenticar(email, token)
-        .then(
-            function (resultado) {
-                console.log(`\nResultados encontrados: ${resultado.length}`);
-                console.log(`Resultados: ${JSON.stringify(resultado)}`); // transforma JSON em String
+            .then(
+                function (resultado) {
+                    console.log(`\nResultados encontrados: ${resultado.length}`);
+                    console.log(`Resultados: ${JSON.stringify(resultado)}`); // transforma JSON em String
 
-                if (resultado.length == 1) {
-                    console.log(resultado);
-                    res.json(resultado[0]);
-                } else if (resultado.length == 0) {
-                    res.status(403).send("Email e/ou senha inválido(s)");
-                } else {
-                    res.status(403).send("Mais de um usuário com o mesmo login e senha!");
+                    if (resultado.length == 1) {
+                        console.log(resultado);
+                        res.json(resultado[0]);
+                    } else if (resultado.length == 0) {
+                        res.status(403).send("Email e/ou senha inválido(s)");
+                    } else {
+                        res.status(403).send("Mais de um usuário com o mesmo login e senha!");
+                    }
                 }
-            }
-        ).catch(
-            function (erro) {
-                console.log(erro);
-                console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
-                res.status(500).json(erro.sqlMessage);
-            }
-        );
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
     }
 
 }
@@ -94,7 +94,7 @@ function cadastrarEndAgencia(req, res) {
 
 function cadastrarAgencia(req, res) {
     // Obter os valores do corpo da solicitação
-    const agencia = req.body.agenciaServer
+    const agencia = req.body.agenciaServer;
     const digito = req.body.digitoServer;
     const organizacao = req.body.organizacaoServer;
     const email = req.body.emailServer;
@@ -122,7 +122,25 @@ function cadastrarAgencia(req, res) {
 }
 
 function listarFuncionario(req, res) {
-    usuarioModel.listarFuncionario()
+    const agencia = req.body.agenciaServer;
+    usuarioModel.listarFuncionario(agencia)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!")
+            }
+        }).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao realizar a consulta! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function listarEmpresa(req, res) {
+    usuarioModel.listarEmpresa()
         .then(function (resultado) {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);
@@ -146,6 +164,7 @@ function cadastrarMaquina(req, res) {
     const funcionario = req.body.funcionarioServer;
     const agencia = req.body.agenciaServer;
     const banco = req.body.bancoServer;
+    const email = req.body.emailServer;
 
     // Validar os valores
     if (!brand || !model || !situation || !funcionario) {
@@ -153,7 +172,7 @@ function cadastrarMaquina(req, res) {
     }
 
     // Passar os valores como parâmetros para o modelo de usuário (usuariomodel)
-    usuarioModel.cadastrarMaquina(brand, model, situation, funcionario, agencia, banco)
+    usuarioModel.cadastrarMaquina(brand, model, situation, funcionario, agencia, banco, email)
         .then(function (resultado) {
             console.log("Cadastro realizado com sucesso!");
             res.json(resultado);
@@ -188,5 +207,6 @@ module.exports = {
     cadastrarAgencia,
     listarFuncionario,
     cadastrarMaquina,
-    cadastrarToken
+    cadastrarToken,
+    listarEmpresa
 }

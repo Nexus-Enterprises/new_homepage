@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexus - Login</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/cadastro04.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/swiper@10.2.0/swiper-bundle.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/login.css">
@@ -14,9 +17,14 @@
 
 <body onload="validarSessao()">
 
-    <header class="header-login">
-        <a class="back-arrow"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a>
-    </header>
+    <div class="topo">
+        <a href="index.html" style="color: white;">
+        <button class="btn-voltar">
+            <div class="seta-voltar"></div>
+                Voltar para Home Page
+            </button>
+        </a>
+    </div>
 
     <div class="div-pai-sections">
         <section class="left-side-login">
@@ -55,7 +63,6 @@
 
         var emailVar = email.value;
         var tokenVar = token.value;
-    
         if (emailVar == "" || tokenVar == "") {
             return false;
         }
@@ -77,13 +84,23 @@
                     sessionStorage.EMAIL_USUARIO = element.emailCorporativo;
                     sessionStorage.NOME_USUARIO = element.nome;
                     sessionStorage.SOBRENOME = element.sobrenome;
-                    
+                    sessionStorage.CARGO = element.cargo;
+                    sessionStorage.BANCO = element.nomeEmpresa;
                 });
 
                 setTimeout(function () {
-                    window.location = "dashboard_noc.html";
+
+                    var cargo = sessionStorage.CARGO;
+                    
+                    if (cargo.toLowerCase().includes("gerente")) {
+                        window.location = "dashboard_agencia";
+                    } else if (cargo.toLowerCase().includes("noc")) {
+                        window.location = "dashboard_noc.html";
+                    } else {
+                        window.location = "dashboard_func";
+                    }
                 }, 1000); // apenas para exibir o loading
-                
+
             } else {
                 console.log("Houve um erro ao tentar realizar o login!");
             }
