@@ -270,6 +270,8 @@
                     json.forEach(e => {
                         console.log(e.idMaquina)
                         const idMaq = e.idMaquina
+                        
+                        machineData = [];
 
                         maq_foreach.innerHTML += `
                         <div class="cards-maquinas" id="cards_maquinas${e.idMaquina}">

@@ -124,5 +124,5 @@ module.exports = {
   listarAgenciasNOC,
   listarMaquinas,
   altoConsumoCPU,
-  altoConsumoRAM,
+  altoConsumoRAM
 }
