@@ -88,8 +88,10 @@
             <select name="" id="select_maquinas" class="lista_maquinas">
                 <option value="" selected disabled>Selecione a sua maquinas</option>
             </select>
-            <div class="container-right" id="maq_foreach">
-
+            <div class="container-right" >
+                <div class="cards-maquinas" id="cards_maquinas">
+                    
+                </div>
             </div>
             <div class="full-tr">
                 <h1 class="title-tr">Agências</h1>
@@ -272,11 +274,12 @@
                         const idMaq = e.idMaquina
 
 
-                        maq_foreach.innerHTML += `
-                        <div class="cards-maquinas" id="cards_maquinas${e.idMaquina}">
+                
+                        cards_maquinas.innerHTML += `
+                        <div id="receive_i${idMaq}">
                         </div>
-                        `
-
+                        `;
+                        
                         select_maquinas.innerHTML += `
                     <option value="${e.idMaquina}">Maquina ${e.idMaquina}</option>
                     `
@@ -317,11 +320,10 @@
                     json.forEach(e => {
                         var max = e.CapacidadeMaxima;
                         machineData.push(e);
-                        console.log(machineData)
                         var i = 0;
 
                         machineData.forEach(maq => {
-                            var Cards_maquinas = document.getElementById(`cards_maquinas${idMaq}`);
+                            var Cards_maquinas = document.getElementById(`receive_i${idMaq}`);
 
                             if (machineData[i].NomeComponente.includes("Processador") && machineData[i].IdMaquina == idMaq) {
                                 Cards_maquinas.innerHTML = `
@@ -355,8 +357,8 @@
                             <p class="cons-item">${machineData[i].UsoAtual}%</p>
                             `
                             } else if (machineData[i].NomeComponente.includes("Disco") && machineData[i].IdMaquina == idMaq) {
-                                var Cards_disco = document.getElementById(`card_disco${machineData[i].IdMaquina}`);
-                                Cards_disco.innerHTML = `
+                                var cards_disco = document.getElementById(`card_disco${machineData[i].IdMaquina}`);
+                                cards_disco.innerHTML = `
                             <p class="item">Disco</p>
                             <p class="cons-item">${machineData[i].UsoAtual}%</p>   
                             `
