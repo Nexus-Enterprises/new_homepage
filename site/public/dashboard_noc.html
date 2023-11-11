@@ -94,7 +94,7 @@
                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                     </div>
                     <div class="bottom-card" id="altoConsumoRAM">
-                        
+
                     </div>
                 </div>
                 <div class="card">
@@ -235,7 +235,7 @@
                                 </div>
                                 <div class="b-alerta alert-blue">
                                     <p class="elemento-alerta">CPU</p>
-                                    <p class="porcentagem-alerta">20%</p>
+                                    <p class="porcentagem-alerta">2%</p>
                                 </div>
                             `;
                             localizacao.innerHTML = `
@@ -253,7 +253,75 @@
     function plotarGrafico() {
         var banco = sessionStorage.BANCO;
 
-        fetch("/dashboard/altoConsumoCPU", {
+        // fetch("/dashboard/altoConsumoCPU", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify({
+        //         bancoServer: banco,
+        //     })
+        // }).then(function (resposta) {
+        //     if (resposta.ok) {
+        //         resposta.json().then(json => {
+        //             json.forEach(element => {
+        //                 altoConsumoCPU.innerHTML = `
+        //                 <div class="left-bottom-card">
+        //                     <h1 class="agencia-text">Agência</h1>
+        //                     <p class="num-agencia">${element.CodigoAgencia}</p>
+        //                     <h1 class="maquina-text">Máquina</h1>
+        //                     <p class="num-maquina">${element.NumeroMaquina}</p>
+        //                 </div>
+        //                 <div class="chartBox">
+        //                     <canvas id="myChart"></canvas>
+        //                 </div>
+        //                 `;
+
+        //                 var Total = ((element.ConsumoAtual / element.TotalCapacidade) * 100)
+        //                 const data = {
+        //                     labels: []
+        //                     ,
+        //                     datasets: [{
+        //                         label: 'Consumo geral de CPU',
+        //                         data: [Total, (Total - 100)],
+        //                         backgroundColor: [
+        //                             'rgb(158, 106, 225)',
+        //                             'rgb(241, 241, 244)'
+        //                         ],
+        //                         hoverOffset: 4
+        //                     }]
+        //                 };
+
+        //                 // Criando estrutura para plotar gráfico - config
+        //                 const config = {
+        //                     type: 'doughnut',
+        //                     data: data,
+        //                     options: {
+        //                         hoverBorderWidth: 0,
+        //                         borderWidth: 0,
+        //                         weight: 1,
+        //                         cutout: 37,
+        //                         events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
+        //                         showTooltips: false
+
+
+        //                     },
+        //                     plugins: [doughnutLabel]
+        //                 };
+
+        //                 const myChart = new Chart(
+        //                     document.getElementById('myChart'),
+        //                     config
+        //                 );
+
+
+
+        //             });
+        //         });
+        //     }
+        // });
+
+        fetch("/dashboard/altoConsumoRAM", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -265,7 +333,7 @@
             if (resposta.ok) {
                 resposta.json().then(json => {
                     json.forEach(element => {
-                        altoConsumoCPU.innerHTML = `
+                        altoConsumoRAM.innerHTML = `
                         <div class="left-bottom-card">
                             <h1 class="agencia-text">Agência</h1>
                             <p class="num-agencia">${element.CodigoAgencia}</p>
@@ -273,100 +341,9 @@
                             <p class="num-maquina">${element.NumeroMaquina}</p>
                         </div>
                         <div class="chartBox">
-                            <canvas id="myChart"></canvas>
-                        </div>
-                        `;
-
-                        var Total = ((element.ConsumoAtual / element.TotalCapacidade) * 100)
-                        const data = {
-                            labels: []
-                            ,
-                            datasets: [{
-                                label: 'Consumo geral de CPU',
-                                data: [Total, (Total - 100)],
-                                backgroundColor: [
-                                    'rgb(158, 106, 225)',
-                                    'rgb(241, 241, 244)'
-                                ],
-                                hoverOffset: 4
-                            }]
-                        };
-
-                        // Criando estrutura para plotar gráfico - config
-                        const config = {
-                            type: 'doughnut',
-                            data: data,
-                            options: {
-                                hoverBorderWidth: 0,
-                                borderWidth: 0,
-                                weight: 1,
-                                cutout: 37,
-                                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
-                                showTooltips: false
-
-
-                            },
-                            plugins: [doughnutLabel]
-                        };
-
-                        const myChart = new Chart(
-                            document.getElementById('myChart'),
-                            config
-                        );
-
-
-
-                    });
-                });
-            }
-        });
-
-fetch("/dashboard/altoConsumoRAM", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                bancoServer: banco,
-            })
-        }).then(function (resposta) {
-            if (resposta.ok) {
-                resposta.json().then(json => {
-                    json.forEach(element => {
-                        altoConsumoRAM = `
-                        <div class="left-bottom-card">
-                            <h1 class="agencia-text">Agência</h1>
-                            <p class="num-agencia">0000001</p>
-                            <h1 class="maquina-text">Máquina</h1>
-                            <p class="num-maquina">00-1</p>
-                        </div>
-                        <div class="chartBox">
                             <canvas id="myChart1"></canvas>
                         </div>
-                        `
-                        // Criando estrutura para plotar gráfico - config
-                        const config = {
-                            type: 'doughnut',
-                            data: data,
-                            options: {
-                                hoverBorderWidth: 0,
-                                borderWidth: 0,
-                                weight: 1,
-                                cutout: 37,
-                                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
-                                showTooltips: false
-
-
-                            },
-                            plugins: [doughnutLabel]
-                        };
-
-                        const myChart = new Chart(
-                            document.getElementById('myChart'),
-                            config
-                        );
-
-
+                        `;
 
                     });
                 });
