@@ -89,7 +89,7 @@
                 <option value="" selected disabled>Selecione a sua maquinas</option>
             </select>
             <div class="container-right" id="maq_foreach">
-                
+
             </div>
             <div class="full-tr">
                 <h1 class="title-tr">Agências</h1>
@@ -271,7 +271,6 @@
                         console.log(e.idMaquina)
                         const idMaq = e.idMaquina
 
-                        machineData = [];
 
                         maq_foreach.innerHTML += `
                         <div class="cards-maquinas" id="cards_maquinas${e.idMaquina}">
@@ -284,8 +283,8 @@
                         agencias.innerHTML += `
                     <option value="${e.idMaquina}">Maquina ${e.idMaquina}</option>
                     `
-                        console.log(e.idMaquina + " teste 01 ")
                         listarStatusMaquinas(idMaq)
+                        machineData = [];
                     })
                 })
             }
@@ -295,6 +294,7 @@
 
 
     function listarStatusMaquinas(idMaquina) {
+        console.log(idMaquina)
         var agencia = sessionStorage.AGENCIA;
         var banco = sessionStorage.BANCO;
         var idMaq = idMaquina;
@@ -316,15 +316,15 @@
                 response.json().then(json => {
                     json.forEach(e => {
                         var max = e.CapacidadeMaxima;
-                        machineData = [];
                         machineData.push(e);
-                    })
-                    var i = 0;
-                    machineData.forEach(maq => {
-                        var Cards_maquinas = document.getElementById(`cards_maquinas${idMaq}`);
+                        console.log(machineData)
+                        var i = 0;
 
-                        if (machineData[i].NomeComponente.includes("Processador")) {
-                            Cards_maquinas.innerHTML = `
+                        machineData.forEach(maq => {
+                            var Cards_maquinas = document.getElementById(`cards_maquinas${idMaq}`);
+
+                            if (machineData[i].NomeComponente.includes("Processador") && machineData[i].IdMaquina == idMaq) {
+                                Cards_maquinas.innerHTML = `
                         <div class="card-maq">
                             <div class="cab-card">
                                 <h3 class="title-card-maq">Maquina</h3>
@@ -335,9 +335,9 @@
                                 <p class="item">CPU</p>
                                 <p class="cons-item">${machineData[i].UsoAtual}%</p>
                             </div>
-                            <div class="info-card" id="card_ram">
+                            <div class="info-card" id="card_ram${machineData[i].IdMaquina}">
                             </div>
-                            <div class="info-card" id="card_disco">
+                            <div class="info-card" id="card_disco${machineData[i].IdMaquina}">
                             </div>
                             </div>
                             <div class="footer-card">
@@ -346,20 +346,23 @@
                                     <p class="situacao-stats desativada">${machineData[i].Status}</p>
                                 </div>
                             </div>
-                        </div>
-                        `
-                        } else if (machineData[i].NomeComponente.includes("RAM")){
-                            card_ram.innerHTML = `
+                            </div>
+                            `
+                            } else if (machineData[i].NomeComponente.includes("RAM") && machineData[i].IdMaquina == idMaq) {
+                                var Cards_ram = document.getElementById(`card_ram${machineData[i].IdMaquina}`);
+                                Cards_ram.innerHTML = `
                             <p class="item">RAM</p>
                             <p class="cons-item">${machineData[i].UsoAtual}%</p>
                             `
-                        } else if (machineData[i].NomeComponente.includes("Disco")) {
-                            card_disco.innerHTML = `
+                            } else if (machineData[i].NomeComponente.includes("Disco") && machineData[i].IdMaquina == idMaq) {
+                                var Cards_disco = document.getElementById(`card_disco${machineData[i].IdMaquina}`);
+                                Cards_disco.innerHTML = `
                             <p class="item">Disco</p>
                             <p class="cons-item">${machineData[i].UsoAtual}%</p>   
                             `
-                        }
-                        i++;
+                            }
+                            i++;
+                        })
                     })
                 })
             }
