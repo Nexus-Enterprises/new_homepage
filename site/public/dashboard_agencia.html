@@ -42,363 +42,196 @@
             <div class="options">
                 <div class="container_options">
                     <a href="index.html" class="text_initial">
-                    <div class="initial item_option ">
-                        <i class="fa fa-home" aria-hidden="true"></i>
+                        <div class="initial item_option ">
+                            <i class="fa fa-home" aria-hidden="true"></i>
                             <p class="text_initial">Página Inicial</p>
-                        </a>
-                    </div>
+                    </a>
                 </div>
-                <div class="container_options">
-                    <a href="dashboard_func.html">
+            </div>
+            <div class="container_options">
+                <a href="dashboard_func.html">
                     <div class="dashboard item_option selected">
                         <i class="fa fa-line-chart" aria-hidden="true"></i>
                         <p class="text_initial">Dashboard</p>
-                    </a>
-                    </div>
-                </div>
-                <div class="container_options">
-                    <a href="historico.html">
-                    <div class="hist item_option ">
-                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                        <p class="text_initial">Histórico</p>
-                    </a>
-                    </div>
-                </div>
-                <div class="container_options">
-                    <a href="lista_func.html">
-                    <div class="list_func item_option ">
-                        <i class="fa fa-book" aria-hidden="true"></i>
-                        <p class="text_initial">Lista Funcionários</p>
-                    </a>
-                    </div>
-                </div>
-                <div class="container_options ">
-                    <a href="login.html">
-                    <div class="logout item_option ">
-                        <i class="fa fa-sign-out" aria-hidden="true"></i>
-                        <p class="text_initial">Sair</p>
-                    </a>
-                    </div>
-                </div>
+                </a>
             </div>
         </div>
-        <div class="right_side">
-            <div class="f-part">
-                <h1 class="title-right-agencia">LISTA DE MAQUINAS</h1>
-                <select name="" id="" class="lista_maquinas">
-                    <option value="" selected disabled>Selecione a sua maquinas</option>
-                    <option value="1">0001</option>
-                    <option value="2">0002</option>
-                    <option value="3">0003</option>
-                    <option value="4">0004</option>
-                    <option value="5">0005</option>
-                    <option value="6">0006</option>
+        <div class="container_options">
+            <a href="historico.html">
+                <div class="hist item_option ">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <p class="text_initial">Histórico</p>
+            </a>
+        </div>
+    </div>
+    <div class="container_options">
+        <a href="lista_func.html">
+            <div class="list_func item_option ">
+                <i class="fa fa-book" aria-hidden="true"></i>
+                <p class="text_initial">Lista Funcionários</p>
+        </a>
+    </div>
+    </div>
+    <div class="container_options ">
+        <a href="login.html">
+            <div class="logout item_option ">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                <p class="text_initial">Sair</p>
+        </a>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="right_side">
+        <div class="f-part">
+            <h1 class="title-right-agencia">LISTA DE MAQUINAS</h1>
+            <select name="" id="select_maquinas" class="lista_maquinas">
+                <option value="" selected disabled>Selecione a sua maquinas</option>
+            </select>
+            <div class="container-right" id="maq_foreach">
+                
+            </div>
+            <div class="full-tr">
+                <h1 class="title-tr">Agências</h1>
+                <table class="tg">
+                    <thead>
+                        <tr>
+                            <th class="tg-baqh">Id da maquina</th>
+                            <th class="tg-baqh" id="nome-tarefa">Nome da tarefa</th>
+                            <th class="tg-baqh cpu" id="">Consumo de Processamento</th>
+                            <th class="tg-baqh" id="horario">Horario</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="tg-baqh">0001</td>
+                            <td class="tg-baqh"><span class="alert-yellow">XPTO</span></td>
+                            <td class="tg-baqh cpu"><span class="alert-yellow">50%</span></td>
+                            <td class="tg-baqh">12:34</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-baqh">0001</td>
+                            <td class="tg-baqh"><span class="alert-blue">XPTO</span></td>
+                            <td class="tg-baqh"><span class="alert-blue">40%</span></td>
+                            <td class="tg-baqh">12:34</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-baqh">0001</td>
+                            <td class="tg-baqh"><span class="alert-red">XPTO</span></td>
+                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                            <td class="tg-baqh">12:34</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-baqh">0001</td>
+                            <td class="tg-baqh"><span class="alert-red">XPTO</span></td>
+                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                            <td class="tg-baqh">12:34</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-baqh">0001</td>
+                            <td class="tg-baqh"><span class="alert-red">XPTO</span></td>
+                            <td class="tg-baqh"><span class="alert-red">80%</span></td>
+                            <td class="tg-baqh">12:34</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="s-part">
+            <div class="container-s-part">
+                <h1 class="title-container-s-part">Maquinas que mais utilizaram os componentes</h1>
+                <select id="agencias">
+                    <option value="" selected disabled>Maquinas</option>
                 </select>
-                <div class="container-right">
-                    <div class="cards-maquinas">
-                        <div class="card-maq">
-                            <div class="cab-card">
-                                <h3 class="title-card-maq">Maquina</h3>
-                                <p class="num-maquina">000001</p>
-                            </div>
-                            <div class="center-card">
-                                <div class="info-card">
-                                    <p class="item">CPU</p>
-                                    <p class="cons-item">75%</p>
-                                </div>
-                                <div class="info-card">
-                                    <p class="item">RAM</p>
-                                    <p class="cons-item">63%</p>
-                                </div>
-                                <div class="info-card">
-                                    <p class="item">Disco</p>
-                                    <p class="cons-item">44%</p>
-                                </div>
-                            </div>
-                            <div class="footer-card">
-                                <div class="info-card">
-                                    <p class="stats">Status</p>
-                                    <p class="situacao-stats desativada">DESATIVADA</p>
-                                </div>
+                <div class="container-alertas">
+                    <div class="alerta-agencia">Agência 00001</div>
+                    <div class="alerta-location">Localização | 192.168.128.2</div>
+                    <div class="alerta">
+                        <div class="t-alerta">
+                            <p class="i-maquina">Máquina 00001</p>
+                            <div class="horario">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                <p class="horario_alerta">12:34</p>
                             </div>
                         </div>
-                        <div class="card-maq">
-                            <div class="cab-card">
-                                <h3 class="title-card-maq">Maquina</h3>
-                                <p class="num-maquina">000001</p>
-                            </div>
-                            <div class="center-card">
-                                <div class="info-card">
-                                    <p class="item">CPU</p>
-                                    <p class="cons-item">75%</p>
-                                </div>
-                                <div class="info-card">
-                                    <p class="item">RAM</p>
-                                    <p class="cons-item">63%</p>
-                                </div>
-                                <div class="info-card">
-                                    <p class="item">Disco</p>
-                                    <p class="cons-item">44%</p>
-                                </div>
-                            </div>
-                            <div class="footer-card">
-                                <div class="info-card">
-                                    <p class="stats">Status</p>
-                                    <p class="situacao-stats manutencao">MANUTENÇÃO</p>
-                                </div>
+                        <div class="b-alerta alert-blue">
+                            <p class="elemento-alerta">CPU</p>
+                            <p class="porcentagem-alerta">20%</p>
+                        </div>
+                    </div>
+                    <div class="alerta">
+                        <div class="t-alerta">
+                            <p class="i-maquina">Máquina 00001</p>
+                            <div class="horario">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                <p class="horario_alerta">12:34</p>
                             </div>
                         </div>
-                        <div class="card-maq">
-                            <div class="cab-card">
-                                <h3 class="title-card-maq">Maquina</h3>
-                                <p class="num-maquina">000001</p>
-                            </div>
-                            <div class="center-card">
-                                <div class="info-card">
-                                    <p class="item">CPU</p>
-                                    <p class="cons-item">75%</p>
-                                </div>
-                                <div class="info-card">
-                                    <p class="item">RAM</p>
-                                    <p class="cons-item">63%</p>
-                                </div>
-                                <div class="info-card">
-                                    <p class="item">Disco</p>
-                                    <p class="cons-item">44%</p>
-                                </div>
-                            </div>
-                            <div class="footer-card">
-                                <div class="info-card">
-                                    <p class="stats">Status</p>
-                                    <p class="situacao-stats ativo">ATIVO</p>
-                                </div>
+                        <div class="b-alerta alert-red">
+                            <p class="elemento-alerta">RAM</p>
+                            <p class="porcentagem-alerta">90%</p>
+                        </div>
+                    </div>
+                    <div class="alerta">
+                        <div class="t-alerta">
+                            <p class="i-maquina">Máquina 00001</p>
+                            <div class="horario">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                <p class="horario_alerta">12:34</p>
                             </div>
                         </div>
-                        <div class="card-maq">
-                            <div class="cab-card">
-                                <h3 class="title-card-maq">Maquina</h3>
-                                <p class="num-maquina">000001</p>
-                            </div>
-                            <div class="center-card">
-                                <div class="info-card">
-                                    <p class="item">CPU</p>
-                                    <p class="cons-item">75%</p>
-                                </div>
-                                <div class="info-card">
-                                    <p class="item">RAM</p>
-                                    <p class="cons-item">63%</p>
-                                </div>
-                                <div class="info-card">
-                                    <p class="item">Disco</p>
-                                    <p class="cons-item">44%</p>
-                                </div>
-                            </div>
-                            <div class="footer-card">
-                                <div class="info-card">
-                                    <p class="stats">Status</p>
-                                    <p class="situacao-stats desativada">DESATIVADA</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-maq">
-                            <div class="cab-card">
-                                <h3 class="title-card-maq">Maquina</h3>
-                                <p class="num-maquina">000001</p>
-                            </div>
-                            <div class="center-card">
-                                <div class="info-card">
-                                    <p class="item">CPU</p>
-                                    <p class="cons-item">75%</p>
-                                </div>
-                                <div class="info-card">
-                                    <p class="item">RAM</p>
-                                    <p class="cons-item">63%</p>
-                                </div>
-                                <div class="info-card">
-                                    <p class="item">Disco</p>
-                                    <p class="cons-item">44%</p>
-                                </div>
-                            </div>
-                            <div class="footer-card">
-                                <div class="info-card">
-                                    <p class="stats">Status</p>
-                                    <p class="situacao-stats manutencao">MANUTENÇÃO</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-maq">
-                            <div class="cab-card">
-                                <h3 class="title-card-maq">Maquina</h3>
-                                <p class="num-maquina">000001</p>
-                            </div>
-                            <div class="center-card">
-                                <div class="info-card">
-                                    <p class="item">CPU</p>
-                                    <p class="cons-item">75%</p>
-                                </div>
-                                <div class="info-card">
-                                    <p class="item">RAM</p>
-                                    <p class="cons-item">63%</p>
-                                </div>
-                                <div class="info-card">
-                                    <p class="item">Disco</p>
-                                    <p class="cons-item">44%</p>
-                                </div>
-                            </div>
-                            <div class="footer-card">
-                                <div class="info-card">
-                                    <p class="stats">Status</p>
-                                    <p class="situacao-stats ativo">ATIVO</p>
-                                </div>
-                            </div>
+                        <div class="b-alerta alert-yellow">
+                            <p class="elemento-alerta">DISCO</p>
+                            <p class="porcentagem-alerta">30%</p>
                         </div>
                     </div>
                 </div>
-                <div class="full-tr">
-                    <h1 class="title-tr">Agências</h1>
-                    <table class="tg">
-                        <thead>
-                            <tr>
-                                <th class="tg-baqh">Id da maquina</th>
-                                <th class="tg-baqh" id="nome-tarefa">Nome da tarefa</th>
-                                <th class="tg-baqh cpu" id="">Consumo de Processamento</th>
-                                <th class="tg-baqh" id="horario">Horario</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="tg-baqh">0001</td>
-                                <td class="tg-baqh"><span class="alert-yellow">XPTO</span></td>
-                                <td class="tg-baqh cpu"><span class="alert-yellow">50%</span></td>
-                                <td class="tg-baqh">12:34</td>
-                            </tr>
-                            <tr>
-                                <td class="tg-baqh">0001</td>
-                                <td class="tg-baqh"><span class="alert-blue">XPTO</span></td>
-                                <td class="tg-baqh"><span class="alert-blue">40%</span></td>
-                                <td class="tg-baqh">12:34</td>
-                            </tr>
-                            <tr>
-                                <td class="tg-baqh">0001</td>
-                                <td class="tg-baqh"><span class="alert-red">XPTO</span></td>
-                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                                <td class="tg-baqh">12:34</td>
-                            </tr>
-                            <tr>
-                                <td class="tg-baqh">0001</td>
-                                <td class="tg-baqh"><span class="alert-red">XPTO</span></td>
-                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                                <td class="tg-baqh">12:34</td>
-                            </tr>
-                            <tr>
-                                <td class="tg-baqh">0001</td>
-                                <td class="tg-baqh"><span class="alert-red">XPTO</span></td>
-                                <td class="tg-baqh"><span class="alert-red">80%</span></td>
-                                <td class="tg-baqh">12:34</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="s-part">
-                <div class="container-s-part">
-                    <h1 class="title-container-s-part">Maquinas que mais utilizaram os componentes</h1>
-                    <select id="agencias">
-                        <option value="" selected disabled>Agencias</option>
-                        <option value="">Agencia 0001</option>
-                        <option value="">Agencia 0002</option>
-                        <option value="">Agencia 0003</option>
-                        <option value="">Agencia 0004</option>
-                    </select>
-                    <div class="container-alertas">
-                        <div class="alerta-agencia">Agência 00001</div>
-                        <div class="alerta-location">Localização | 192.168.128.2</div>
-                        <div class="alerta">
-                            <div class="t-alerta">
-                                <p class="i-maquina">Máquina 00001</p>
-                                <div class="horario">
-                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                    <p class="horario_alerta">12:34</p>
-                                </div>
-                            </div>
-                            <div class="b-alerta alert-blue">
-                                <p class="elemento-alerta">CPU</p>
-                                <p class="porcentagem-alerta">20%</p>
+                <div class="container-alertas">
+                    <div class="alerta-agencia">Agência 00002</div>
+                    <div class="alerta-location">Localização | 192.168.128.2</div>
+                    <div class="alerta">
+                        <div class="t-alerta">
+                            <p class="i-maquina">Máquina 00001</p>
+                            <div class="horario">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                <p class="horario_alerta">12:34</p>
                             </div>
                         </div>
-                        <div class="alerta">
-                            <div class="t-alerta">
-                                <p class="i-maquina">Máquina 00001</p>
-                                <div class="horario">
-                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                    <p class="horario_alerta">12:34</p>
-                                </div>
-                            </div>
-                            <div class="b-alerta alert-red">
-                                <p class="elemento-alerta">RAM</p>
-                                <p class="porcentagem-alerta">90%</p>
-                            </div>
-                        </div>
-                        <div class="alerta">
-                            <div class="t-alerta">
-                                <p class="i-maquina">Máquina 00001</p>
-                                <div class="horario">
-                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                    <p class="horario_alerta">12:34</p>
-                                </div>
-                            </div>
-                            <div class="b-alerta alert-yellow">
-                                <p class="elemento-alerta">DISCO</p>
-                                <p class="porcentagem-alerta">30%</p>
-                            </div>
+                        <div class="b-alerta alert-red">
+                            <p class="elemento-alerta">CPU</p>
+                            <p class="porcentagem-alerta">90%</p>
                         </div>
                     </div>
-                    <div class="container-alertas">
-                        <div class="alerta-agencia">Agência 00002</div>
-                        <div class="alerta-location">Localização | 192.168.128.2</div>
-                        <div class="alerta">
-                            <div class="t-alerta">
-                                <p class="i-maquina">Máquina 00001</p>
-                                <div class="horario">
-                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                    <p class="horario_alerta">12:34</p>
-                                </div>
-                            </div>
-                            <div class="b-alerta alert-red">
-                                <p class="elemento-alerta">CPU</p>
-                                <p class="porcentagem-alerta">90%</p>
+                    <div class="alerta">
+                        <div class="t-alerta">
+                            <p class="i-maquina">Máquina 00001</p>
+                            <div class="horario">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                <p class="horario_alerta">12:34</p>
                             </div>
                         </div>
-                        <div class="alerta">
-                            <div class="t-alerta">
-                                <p class="i-maquina">Máquina 00001</p>
-                                <div class="horario">
-                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                    <p class="horario_alerta">12:34</p>
-                                </div>
-                            </div>
-                            <div class="b-alerta alert-red">
-                                <p class="elemento-alerta">RAM</p>
-                                <p class="porcentagem-alerta">90%</p>
+                        <div class="b-alerta alert-red">
+                            <p class="elemento-alerta">RAM</p>
+                            <p class="porcentagem-alerta">90%</p>
+                        </div>
+                    </div>
+                    <div class="alerta">
+                        <div class="t-alerta">
+                            <p class="i-maquina">Máquina 00001</p>
+                            <div class="horario">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                <p class="horario_alerta">12:34</p>
                             </div>
                         </div>
-                        <div class="alerta">
-                            <div class="t-alerta">
-                                <p class="i-maquina">Máquina 00001</p>
-                                <div class="horario">
-                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                    <p class="horario_alerta">12:34</p>
-                                </div>
-                            </div>
-                            <div class="b-alerta alert-red">
-                                <p class="elemento-alerta">DISCO</p>
-                                <p class="porcentagem-alerta">90%</p>
-                            </div>
+                        <div class="b-alerta alert-red">
+                            <p class="elemento-alerta">DISCO</p>
+                            <p class="porcentagem-alerta">90%</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
     </div>
 </body>
@@ -406,7 +239,7 @@
 </html>
 
 <script>
-        function validarSessao() {
+    function validarSessao() {
         var email = sessionStorage.EMAIL_USUARIO;
         var nome = sessionStorage.NOME_USUARIO;
         var sobrenome = sessionStorage.SOBRENOME;
@@ -417,5 +250,120 @@
         }
     }
 
-    window.onload = validarSessao();    
+    window.onload = validarSessao(), ListarMaquinas();
+    var machineData = [];
+
+    function ListarMaquinas() {
+
+        var agencia = sessionStorage.AGENCIA;
+        fetch("/dashboard/listarMaquinasAg", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                agenciaServer: agencia,
+            })
+        }).then(function (response) {
+            if (response.ok) {
+                response.json().then(json => {
+                    json.forEach(e => {
+                        console.log(e.idMaquina)
+                        const idMaq = e.idMaquina
+
+                        maq_foreach.innerHTML += `
+                        <div class="cards-maquinas" id="cards_maquinas${e.idMaquina}">
+                        </div>
+                        `
+
+                        select_maquinas.innerHTML += `
+                    <option value="${e.idMaquina}">Maquina ${e.idMaquina}</option>
+                    `
+                        agencias.innerHTML += `
+                    <option value="${e.idMaquina}">Maquina ${e.idMaquina}</option>
+                    `
+                        console.log(e.idMaquina + " teste 01 ")
+                        listarStatusMaquinas(idMaq)
+                    })
+                })
+            }
+
+        });
+    }
+
+
+    function listarStatusMaquinas(idMaquina) {
+        var agencia = sessionStorage.AGENCIA;
+        var banco = sessionStorage.BANCO;
+        var idMaq = idMaquina;
+        var nomeComp = "";
+
+        fetch("/dashboard/statusMaquinas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                agenciaServer: agencia,
+                bancoServer: banco,
+                maquinaServer: idMaq,
+
+            })
+        }).then(function (response) {
+            if (response.ok) {
+                response.json().then(json => {
+                    json.forEach(e => {
+                        var max = e.CapacidadeMaxima;
+                        machineData.push(e);
+                    })
+                    var i = 0;
+                    machineData.forEach(maq => {
+                        var Cards_maquinas = document.getElementById(`cards_maquinas${idMaq}`);
+
+                        if (machineData[i].NomeComponente.includes("Processador")) {
+                            Cards_maquinas.innerHTML = `
+                        <div class="card-maq">
+                            <div class="cab-card">
+                                <h3 class="title-card-maq">Maquina</h3>
+                                <p class="num-maquina">${machineData[i].IdMaquina}</p>
+                            </div>
+                            <div class="center-card">
+                            <div class="info-card">
+                                <p class="item">CPU</p>
+                                <p class="cons-item">${machineData[i].UsoAtual}%</p>
+                            </div>
+                            <div class="info-card" id="card_ram">
+                            </div>
+                            <div class="info-card" id="card_disco">
+                            </div>
+                            </div>
+                            <div class="footer-card">
+                                <div class="info-card">
+                                    <p class="stats">Status</p>
+                                    <p class="situacao-stats desativada">${machineData[i].Status}</p>
+                                </div>
+                            </div>
+                        </div>
+                        `
+                        } else if (machineData[i].NomeComponente.includes("RAM")){
+                            card_ram.innerHTML = `
+                            <p class="item">RAM</p>
+                            <p class="cons-item">${machineData[i].UsoAtual}%</p>
+                            `
+                        } else if (machineData[i].NomeComponente.includes("Disco")) {
+                            card_disco.innerHTML = `
+                            <p class="item">Disco</p>
+                            <p class="cons-item">${machineData[i].UsoAtual}%</p>   
+                            `
+                        }
+                        i++;
+                    })
+                })
+            }
+
+        });
+
+        console.log(machineData)
+    }
+
 </script>
