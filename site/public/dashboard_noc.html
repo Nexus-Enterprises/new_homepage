@@ -139,10 +139,6 @@
                 <h1 class="title-container-s-part">Maquinas que mais utilizaram os componentes</h1>
                 <select id="agencias">
                     <option value="" selected disabled>Agencias</option>
-                    <option value="">Agencia 0001</option>
-                    <option value="">Agencia 0002</option>
-                    <option value="">Agencia 0003</option>
-                    <option value="">Agencia 0004</option>
                 </select>
                 <div class="container-alertas" id="agenciaComp">
                 </div>
@@ -180,6 +176,10 @@
                     response.json().then(json => {
                         json.forEach(element => {
                             console.log(element)
+                            agencias.innerHTML += `
+                            <option value="${element.CodigoAgencia}">Agencia ${element.CodigoAgencia}</option>
+                            `;
+
                             agencias_noc.innerHTML += `
                         <tr>
                             <td class="tg-baqh">${element.CodigoAgencia}</td>
@@ -254,73 +254,70 @@
     function plotarGrafico() {
         var banco = sessionStorage.BANCO;
 
-        // fetch("/dashboard/altoConsumoCPU", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify({
-        //         bancoServer: banco,
-        //     })
-        // }).then(function (resposta) {
-        //     if (resposta.ok) {
-        //         resposta.json().then(json => {
-        //             json.forEach(element => {
-        //                 altoConsumoCPU.innerHTML = `
-        //                 <div class="left-bottom-card">
-        //                     <h1 class="agencia-text">Agência</h1>
-        //                     <p class="num-agencia">${element.CodigoAgencia}</p>
-        //                     <h1 class="maquina-text">Máquina</h1>
-        //                     <p class="num-maquina">${element.NumeroMaquina}</p>
-        //                 </div>
-        //                 <div class="chartBox">
-        //                     <canvas id="myChart"></canvas>
-        //                 </div>
-        //                 `;
+        fetch("/dashboard/altoConsumoCPU", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                bancoServer: banco,
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                resposta.json().then(json => {
+                    json.forEach(element => {
+                        altoConsumoCPU.innerHTML = `
+                        <div class="left-bottom-card">
+                            <h1 class="agencia-text">Agência</h1>
+                            <p class="num-agencia">${element.CodigoAgencia}</p>
+                            <h1 class="maquina-text">Máquina</h1>
+                            <p class="num-maquina">${element.NumeroMaquina}</p>
+                        </div>
+                        <div class="chartBox">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                        `;
 
-        //                 var Total = ((element.ConsumoAtual / element.TotalCapacidade) * 100)
-        //                 const data = {
-        //                     labels: []
-        //                     ,
-        //                     datasets: [{
-        //                         label: 'Consumo geral de CPU',
-        //                         data: [Total, (Total - 100)],
-        //                         backgroundColor: [
-        //                             'rgb(158, 106, 225)',
-        //                             'rgb(241, 241, 244)'
-        //                         ],
-        //                         hoverOffset: 4
-        //                     }]
-        //                 };
+                        var Total = ((element.ConsumoAtual / element.TotalCapacidade) * 100)
+                        const data = {
+                            labels: []
+                            ,
+                            datasets: [{
+                                label: 'Consumo geral de CPU',
+                                data: [Total, (Total - 100)],
+                                backgroundColor: [
+                                    'rgb(158, 106, 225)',
+                                    'rgb(241, 241, 244)'
+                                ],
+                                hoverOffset: 4
+                            }]
+                        };
 
-        //                 // Criando estrutura para plotar gráfico - config
-        //                 const config = {
-        //                     type: 'doughnut',
-        //                     data: data,
-        //                     options: {
-        //                         hoverBorderWidth: 0,
-        //                         borderWidth: 0,
-        //                         weight: 1,
-        //                         cutout: 37,
-        //                         events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
-        //                         showTooltips: false
-
-
-        //                     },
-        //                     plugins: [doughnutLabel]
-        //                 };
-
-        //                 const myChart = new Chart(
-        //                     document.getElementById('myChart'),
-        //                     config
-        //                 );
+                        // Criando estrutura para plotar gráfico - config
+                        const config = {
+                            type: 'doughnut',
+                            data: data,
+                            options: {
+                                hoverBorderWidth: 0,
+                                borderWidth: 0,
+                                weight: 1,
+                                cutout: 37,
+                                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
+                                showTooltips: false
 
 
+                            },
+                            plugins: [doughnutLabel]
+                        };
 
-        //             });
-        //         });
-        //     }
-        // });
+                        const myChart = new Chart(
+                            document.getElementById('myChart'),
+                            config
+                        );
+                    });
+                });
+            }
+        });
 
         fetch("/dashboard/altoConsumoRAM", {
             method: "POST",
@@ -346,6 +343,55 @@
                         </div>
                         `;
 
+                        const doughnutLabel1 = {
+                            id: 'doughnutLabel',
+                            beforeDatasetsDraw(chart, args, pluginOptions) {
+                                const { ctx } = chart;
+
+                                ctx.save();
+                                const xCoor1 = chart.getDatasetMeta(0).data[0].x;
+                                const yCoor1 = chart.getDatasetMeta(0).data[0].y;
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle'
+                                ctx.font = 'bold 15px Poppins';
+                                ctx.fillStyle = 'rgb(241, 241, 244)';
+                                ctx.fillText(`${dataDoughnut1.datasets[0].data[0]}%`, xCoor1, yCoor1);
+                            }
+                        };
+
+                        var Total = ((element.ConsumoAtual / element.TotalCapacidade) * 100)
+                        console.log(Total)
+                        const dataDoughnut1 = {
+                            labels: [],
+                            datasets: [{
+                                label: 'Consumo geral de CPU',
+                                data: [Total, (Total - 100)],
+                                backgroundColor: [
+                                    'rgb(158, 106, 225)',
+                                    'rgb(241, 241, 244)'
+                                ],
+                                hoverOffset: 4
+                            }]
+                        };
+
+                        const configDoughnut1 = {
+                            type: 'doughnut',
+                            data: dataDoughnut1,
+                            options: {
+                                hoverBorderWidth: 0,
+                                borderWidth: 0,
+                                weight: 1,
+                                cutout: 37,
+                                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
+                                showTooltips: false
+                            },
+                            plugins: [doughnutLabel1]
+                        };
+
+                        const myChart1 = new Chart(
+                            document.getElementById('myChart1'),
+                            configDoughnut1
+                        );
                     });
                 });
             }
@@ -367,53 +413,8 @@
 
             }
         }
-        const doughnutLabel1 = {
-            id: 'doughnutLabel',
-            beforeDatasetsDraw(chart, args, pluginOptions) {
-                const { ctx } = chart;
 
-                ctx.save();
-                const xCoor1 = chart.getDatasetMeta(0).data[0].x;
-                const yCoor1 = chart.getDatasetMeta(0).data[0].y;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle'
-                ctx.font = 'bold 15px Poppins';
-                ctx.fillStyle = 'rgb(241, 241, 244)';
-                ctx.fillText(`${dataDoughnut1.datasets[0].data[0]}%`, xCoor1, yCoor1);
-            }
-        };
         // Criando estrutura para plotar gráfico - config
-        const dataDoughnut1 = {
-            labels: [],
-            datasets: [{
-                label: 'Consumo geral de CPU',
-                data: [95, 5],
-                backgroundColor: [
-                    'rgb(158, 106, 225)',
-                    'rgb(241, 241, 244)'
-                ],
-                hoverOffset: 4
-            }]
-        };
-
-        const configDoughnut1 = {
-            type: 'doughnut',
-            data: dataDoughnut1,
-            options: {
-                hoverBorderWidth: 0,
-                borderWidth: 0,
-                weight: 1,
-                cutout: 37,
-                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
-                showTooltips: false
-            },
-            plugins: [doughnutLabel1]
-        };
-
-        const myChart1 = new Chart(
-            document.getElementById('myChart1'),
-            configDoughnut1
-        );
 
         const dataDoughnut2 = {
             labels: [],
