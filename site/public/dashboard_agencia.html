@@ -270,7 +270,7 @@
                     json.forEach(e => {
                         console.log(e.idMaquina)
                         const idMaq = e.idMaquina
-                        
+
                         machineData = [];
 
                         maq_foreach.innerHTML += `
@@ -316,6 +316,7 @@
                 response.json().then(json => {
                     json.forEach(e => {
                         var max = e.CapacidadeMaxima;
+                        machineData = [];
                         machineData.push(e);
                     })
                     var i = 0;
