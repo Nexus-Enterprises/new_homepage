@@ -25,6 +25,34 @@ GROUP BY Agencia.idAgencia;
 
 }
 
+function statusMaquinas(agencia, banco, idMaq){
+  var instrucao = `
+  SELECT DISTINCT
+  Componente.nome AS "NomeComponente",
+  Registro.capacidadeMax AS "CapacidadeMaxima",
+  Registro.usoAtual AS "UsoAtual",
+  Maquina.situacao AS "Status",
+  Maquina.idMaquina AS "IdMaquina"
+FROM (
+  SELECT
+      fkComponente,
+      MAX(Registro.dataHora) AS max_dataHora
+  FROM Registro
+  GROUP BY fkComponente
+) AS ultimos_registros
+INNER JOIN Componente ON ultimos_registros.fkComponente = Componente.idComponente
+INNER JOIN Registro ON ultimos_registros.fkComponente = Registro.fkComponente AND ultimos_registros.max_dataHora = Registro.dataHora
+INNER JOIN Maquina ON Registro.fkMaquina = Maquina.idMaquina
+INNER JOIN Agencia ON Maquina.fkAgencia = Agencia.idAgencia
+INNER JOIN Alerta ON Registro.fkAlerta = Alerta.idAlerta
+WHERE Maquina.idMaquina = ${idMaq}
+AND Maquina.fkAgencia = ${agencia}
+AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}');
+  `
+
+  return database.executar(instrucao);
+}
+
 function listarMaquinas(agencia) {
   var instrucao = `
   SELECT * FROM Maquina JOIN Agencia ON Maquina.fkAgencia = Agencia.idAgencia  WHERE Agencia.idAgencia = (SELECT idAgencia FROM Agencia WHERE Agencia.numero = '${agencia}');
@@ -32,6 +60,14 @@ function listarMaquinas(agencia) {
   `;
 
   return database.executar(instrucao);
+}
+
+function listarMaquinasAg(agencia){
+  var instrucao = `
+  SELECT * FROM Maquina JOIN Agencia ON Maquina.fkAgencia = Agencia.idAgencia  WHERE Agencia.idAgencia = '${agencia}';
+  `;
+
+  return database.executar(instrucao)
 }
 
 function altoConsumoCPU(banco) {
@@ -80,9 +116,11 @@ function cadastrar(empresaId, descricao) {
 
 
 module.exports = {
+  listarMaquinasAg,
   listarAgenciasNOC,
   listarMaquinas,
   altoConsumoCPU,
   altoConsumoRAM,
+  statusMaquinas,
   cadastrar
 }

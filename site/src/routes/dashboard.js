@@ -7,8 +7,16 @@ router.post("/listarAgenciasNOC", function (req, res) {
   dashboardController.listarAgenciasNOC(req, res);
 });
 
+router.post("/statusMaquinas", function (req, res) {
+  dashboardController.statusMaquinas(req, res);
+});
+
 router.post("/listarMaquinas", function (req, res) {
   dashboardController.listarMaquinas(req, res);
+});
+
+router.post("/listarMaquinasAg", function (req, res) {
+  dashboardController.listarMaquinasAg(req, res);
 });
 
 router.post("/altoConsumoCPU", function (req, res) {

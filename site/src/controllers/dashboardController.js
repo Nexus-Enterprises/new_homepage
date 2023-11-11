@@ -38,6 +38,47 @@ function listarMaquinas(req, res) {
   );
 }
 
+function listarMaquinasAg(req, res) {
+  const agencia = req.body.agenciaServer;
+  const banco = req.body.bancoServer;
+
+  dashboardModel.listarMaquinasAg(agencia, banco)
+  .then(function (resultado) {
+    if (resultado.length > 0) {
+      res.status(200).json(resultado);
+    } else {
+      res.status(204).send("Nenhum resultado encontrado!")
+    }
+  }).catch(
+    function (erro) {
+      console.log(erro);
+      console.log("Houve um erro ao realizar a consulta! Erro: ", erro.sqlMessage);
+      res.status(500).json(erro.sqlMessage);
+    }
+  );
+}
+
+function statusMaquinas(req, res) {
+  const agencia = req.body.agenciaServer;
+  const banco = req.body.bancoServer;
+  const idMaq = req.body.maquinaServer;
+
+  dashboardModel.statusMaquinas(agencia, banco, idMaq)
+  .then(function (resultado) {
+    if (resultado.length > 0) {
+      res.status(200).json(resultado);
+    } else {
+      res.status(204).send("Nenhum resultado encontrado!")
+    }
+  }).catch(
+    function (erro) {
+      console.log(erro);
+      console.log("Houve um erro ao realizar a consulta! Erro: ", erro.sqlMessage);
+      res.status(500).json(erro.sqlMessage);
+    }
+  );
+}
+
 function altoConsumoCPU(req, res) {
   const banco = req.body.bancoServer;
 
@@ -103,6 +144,8 @@ function cadastrar(req, res) {
 }
 
 module.exports = {
+  statusMaquinas,
+  listarMaquinasAg,
   listarAgenciasNOC,
   listarMaquinas,
   altoConsumoCPU,
