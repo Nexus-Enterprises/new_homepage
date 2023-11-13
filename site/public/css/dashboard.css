@@ -380,10 +380,11 @@ a:hover {
 .container-s-part {
     background-color: #161616;
     max-width: 350px;
+    min-height: 80vh;
     max-height: 80vh;
     overflow-y: scroll;
     display: flex;
-    justify-content: center;
+
     flex-direction: column;
     align-items: center;
     gap: 20px;
@@ -433,9 +434,9 @@ a:hover {
 .t-alerta {
     display: flex;
     gap: 10px;
-    padding-left: 20px;
     margin: 10px;
     border-radius: 10px;
+    justify-content: space-evenly;
 }
 
 .horario {
@@ -457,7 +458,6 @@ a:hover {
 .title-container-s-part {
     font-size: 20px;
     text-align: center;
-    margin-top: 15vh;
 }
 
 

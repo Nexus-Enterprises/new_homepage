@@ -32,7 +32,8 @@ function statusMaquinas(agencia, banco, idMaq){
   Registro.capacidadeMax AS "CapacidadeMaxima",
   Registro.usoAtual AS "UsoAtual",
   Maquina.situacao AS "Status",
-  Maquina.idMaquina AS "IdMaquina"
+  Maquina.idMaquina AS "IdMaquina",
+  TIME_FORMAT(Registro.dataHora, '%H:%i:%s') AS "DataHora"
 FROM (
   SELECT
       fkComponente,

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - NOC</title>
+    <title>Dashboard - Agencia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/dashboard.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -88,9 +88,9 @@
             <select name="" id="select_maquinas" class="lista_maquinas">
                 <option value="" selected disabled>Selecione a sua maquinas</option>
             </select>
-            <div class="container-right" >
+            <div class="container-right">
                 <div class="cards-maquinas" id="cards_maquinas">
-                    
+
                 </div>
             </div>
             <div class="full-tr">
@@ -145,95 +145,10 @@
                 <select id="agencias">
                     <option value="" selected disabled>Maquinas</option>
                 </select>
-                <div class="container-alertas">
-                    <div class="alerta-agencia">Agência 00001</div>
-                    <div class="alerta-location">Localização | 192.168.128.2</div>
-                    <div class="alerta">
-                        <div class="t-alerta">
-                            <p class="i-maquina">Máquina 00001</p>
-                            <div class="horario">
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                <p class="horario_alerta">12:34</p>
-                            </div>
-                        </div>
-                        <div class="b-alerta alert-blue">
-                            <p class="elemento-alerta">CPU</p>
-                            <p class="porcentagem-alerta">20%</p>
-                        </div>
-                    </div>
-                    <div class="alerta">
-                        <div class="t-alerta">
-                            <p class="i-maquina">Máquina 00001</p>
-                            <div class="horario">
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                <p class="horario_alerta">12:34</p>
-                            </div>
-                        </div>
-                        <div class="b-alerta alert-red">
-                            <p class="elemento-alerta">RAM</p>
-                            <p class="porcentagem-alerta">90%</p>
-                        </div>
-                    </div>
-                    <div class="alerta">
-                        <div class="t-alerta">
-                            <p class="i-maquina">Máquina 00001</p>
-                            <div class="horario">
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                <p class="horario_alerta">12:34</p>
-                            </div>
-                        </div>
-                        <div class="b-alerta alert-yellow">
-                            <p class="elemento-alerta">DISCO</p>
-                            <p class="porcentagem-alerta">30%</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="container-alertas">
-                    <div class="alerta-agencia">Agência 00002</div>
-                    <div class="alerta-location">Localização | 192.168.128.2</div>
-                    <div class="alerta">
-                        <div class="t-alerta">
-                            <p class="i-maquina">Máquina 00001</p>
-                            <div class="horario">
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                <p class="horario_alerta">12:34</p>
-                            </div>
-                        </div>
-                        <div class="b-alerta alert-red">
-                            <p class="elemento-alerta">CPU</p>
-                            <p class="porcentagem-alerta">90%</p>
-                        </div>
-                    </div>
-                    <div class="alerta">
-                        <div class="t-alerta">
-                            <p class="i-maquina">Máquina 00001</p>
-                            <div class="horario">
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                <p class="horario_alerta">12:34</p>
-                            </div>
-                        </div>
-                        <div class="b-alerta alert-red">
-                            <p class="elemento-alerta">RAM</p>
-                            <p class="porcentagem-alerta">90%</p>
-                        </div>
-                    </div>
-                    <div class="alerta">
-                        <div class="t-alerta">
-                            <p class="i-maquina">Máquina 00001</p>
-                            <div class="horario">
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                <p class="horario_alerta">12:34</p>
-                            </div>
-                        </div>
-                        <div class="b-alerta alert-red">
-                            <p class="elemento-alerta">DISCO</p>
-                            <p class="porcentagem-alerta">90%</p>
-                        </div>
-                    </div>
+                <div class="container-alertas" id="container_alertas">
                 </div>
             </div>
         </div>
-    </div>
 
     </div>
 </body>
@@ -241,6 +156,7 @@
 </html>
 
 <script>
+
     function validarSessao() {
         var email = sessionStorage.EMAIL_USUARIO;
         var nome = sessionStorage.NOME_USUARIO;
@@ -256,8 +172,8 @@
     var machineData = [];
 
     function ListarMaquinas() {
-
         var agencia = sessionStorage.AGENCIA;
+
         fetch("/dashboard/listarMaquinasAg", {
             method: "POST",
             headers: {
@@ -270,16 +186,13 @@
             if (response.ok) {
                 response.json().then(json => {
                     json.forEach(e => {
-                        console.log(e.idMaquina)
                         const idMaq = e.idMaquina
 
-
-                
                         cards_maquinas.innerHTML += `
                         <div id="receive_i${idMaq}">
                         </div>
                         `;
-                        
+
                         select_maquinas.innerHTML += `
                     <option value="${e.idMaquina}">Maquina ${e.idMaquina}</option>
                     `
@@ -287,7 +200,6 @@
                     <option value="${e.idMaquina}">Maquina ${e.idMaquina}</option>
                     `
                         listarStatusMaquinas(idMaq)
-                        machineData = [];
                     })
                 })
             }
@@ -295,9 +207,17 @@
         });
     }
 
+    var procMoreUsed = 0;
+    var numMaqProc = 0;
+    var dataHoraProc = '';
+    var ramMoreUsed = 0;
+    var numMaqRam = 0;
+    var dataHoraRam = '';
+    var diskMoreUsed = 0;
+    var numMaqDisk = 0;
+    var dataHoraDisk = '';
 
     function listarStatusMaquinas(idMaquina) {
-        console.log(idMaquina)
         var agencia = sessionStorage.AGENCIA;
         var banco = sessionStorage.BANCO;
         var idMaq = idMaquina;
@@ -323,11 +243,19 @@
                         var i = 0;
 
                         machineData.forEach(maq => {
+
                             var Cards_maquinas = document.getElementById(`receive_i${idMaq}`);
 
                             if (machineData[i].NomeComponente.includes("Processador") && machineData[i].IdMaquina == idMaq) {
+
+                                if (machineData[i].UsoAtual >= procMoreUsed) {
+                                    procMoreUsed = machineData[i].UsoAtual
+                                    numMaqProc = machineData[i].IdMaquina;
+                                    dataHoraProc = machineData[i].DataHora;
+                                }
+
                                 Cards_maquinas.innerHTML = `
-                        <div class="card-maq">
+                            <div class="card-maq">
                             <div class="cab-card">
                                 <h3 class="title-card-maq">Maquina</h3>
                                 <p class="num-maquina">${machineData[i].IdMaquina}</p>
@@ -335,7 +263,7 @@
                             <div class="center-card">
                             <div class="info-card">
                                 <p class="item">CPU</p>
-                                <p class="cons-item">${machineData[i].UsoAtual}%</p>
+                                <p class="cons-item">${Math.round(machineData[i].UsoAtual)}%</p>
                             </div>
                             <div class="info-card" id="card_ram${machineData[i].IdMaquina}">
                             </div>
@@ -345,33 +273,103 @@
                             <div class="footer-card">
                                 <div class="info-card">
                                     <p class="stats">Status</p>
-                                    <p class="situacao-stats desativada">${machineData[i].Status}</p>
+                                    <p class="situacao-stats desativada" id="stats_maquina${machineData[i].IdMaquina}">${machineData[i].Status}</p>
                                 </div>
                             </div>
                             </div>
                             `
                             } else if (machineData[i].NomeComponente.includes("RAM") && machineData[i].IdMaquina == idMaq) {
+
+                                if (machineData[i].UsoAtual >= ramMoreUsed) {
+                                    ramMoreUsed = machineData[i].UsoAtual
+                                    numMaqRam = machineData[i].IdMaquina;
+                                    dataHoraRam = machineData[i].DataHora;
+                                }
+
                                 var Cards_ram = document.getElementById(`card_ram${machineData[i].IdMaquina}`);
+
                                 Cards_ram.innerHTML = `
                             <p class="item">RAM</p>
-                            <p class="cons-item">${machineData[i].UsoAtual}%</p>
+                            <p class="cons-item">${Math.round(machineData[i].UsoAtual)}%</p>
                             `
                             } else if (machineData[i].NomeComponente.includes("Disco") && machineData[i].IdMaquina == idMaq) {
+
                                 var cards_disco = document.getElementById(`card_disco${machineData[i].IdMaquina}`);
+                                var calcPercentage = (machineData[i].UsoAtual * 100) / machineData[i].CapacidadeMaxima
+
+                                if (machineData[i].UsoAtual >= diskMoreUsed) {
+                                    diskMoreUsed = machineData[i].UsoAtual
+                                    numMaqDisk = machineData[i].IdMaquina;
+                                    dataHoraDisk = machineData[i].DataHora;
+                                }
+
                                 cards_disco.innerHTML = `
                             <p class="item">Disco</p>
-                            <p class="cons-item">${machineData[i].UsoAtual}%</p>   
+                            <p class="cons-item">${Math.round(calcPercentage)}%</p>   
                             `
+                            }
+
+                            var Cards_status = document.getElementById(`stats_maquina${machineData[i].IdMaquina}`);
+
+                            if (machineData[i].Status == 'Ativa') {
+                                Cards_status.style.color = '#88EF85'
+                            } else if (machineData[i].Status == 'Inativa') {
+                                Cards_status.style.color = '#FF3D3D'
+                            } else if (machineData[i].Status == 'Manutenção') {
+                                Cards_status.style.color = '#FFDE68'
+                            } else {
+                                Cards_status.style.color = 'black';
                             }
                             i++;
                         })
                     })
+
                 })
             }
-
-        });
-
-        console.log(machineData)
+        })
+        // coloque esse timeout pq tava dando bigode
+        setTimeout(function () {
+            container_alertas.innerHTML = `
+            <div class="alerta" id="alerta">
+                        <div class="t-alerta">
+                            <p class="i-maquina">Máquina ${numMaqProc}</p>
+                            <div class="horario">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                <p class="horario_alerta">${dataHoraProc}</p>
+                            </div>
+                        </div>
+                        <div class="b-alerta alert-blue">
+                            <p class="elemento-alerta">CPU</p>
+                            <p class="porcentagem-alerta">${procMoreUsed} %</p>
+                        </div>
+                    </div>
+                    <div class="alerta">
+                        <div class="t-alerta">
+                            <p class="i-maquina">Máquina ${numMaqRam}</p>
+                            <div class="horario">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                <p class="horario_alerta">${dataHoraRam}</p>
+                            </div>
+                        </div>
+                        <div class="b-alerta alert-red">
+                            <p class="elemento-alerta">RAM</p>
+                            <p class="porcentagem-alerta">${ramMoreUsed} GB</p>
+                        </div>
+                    </div>
+                    <div class="alerta">
+                        <div class="t-alerta">
+                            <p class="i-maquina">Máquina ${numMaqDisk}</p>
+                            <div class="horario">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                <p class="horario_alerta">${dataHoraDisk}</p>
+                            </div>
+                        </div>
+                        <div class="b-alerta alert-yellow">
+                            <p class="elemento-alerta">DISCO</p>
+                            <p class="porcentagem-alerta">${diskMoreUsed} GB</p>
+                        </div>
+                    </div>
+            `
+        }, 100);
     }
-
 </script>
