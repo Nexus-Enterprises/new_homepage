@@ -7,6 +7,10 @@ router.post("/listarAgenciasNOC", function (req, res) {
   dashboardController.listarAgenciasNOC(req, res);
 });
 
+router.post("/listarProcessos", function (req, res) {
+  dashboardController.listarProcessos(req, res);
+});
+
 router.post("/statusMaquinas", function (req, res) {
   dashboardController.statusMaquinas(req, res);
 });

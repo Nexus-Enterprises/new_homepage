@@ -339,12 +339,17 @@ a:hover {
 }
 
 .full-tr {
-    max-width: 870px;
+    max-width: 900px;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
     padding-bottom: 10px;
     background-color: #1F1F1F;
-    margin-top: 20px;
+}
+
+.table-wrapper {
+    max-height: 435px; /* Defina a altura máxima desejada */
+    overflow-y: auto;
+    margin-top: 2vh;
 }
 
 .border {
@@ -473,14 +478,8 @@ a:hover {
     border-radius: 11px;
     border: 1px solid #d6d6d6;
     background-color: #454545;
-    width: 90%;
+    width: 96%;
     text-indent: 2px;
-}
-
-
-.lista_maquinas {
-    width: 93%;
-    margin: 0;
 }
 
 #agencias:hover,
@@ -520,7 +519,7 @@ a:hover {
     display: flex;
     gap: 20px;
     overflow-x: scroll;
-    max-width: 870px;
+    max-width: 900px;
     padding: 0 0 20px 0;
 }
 
@@ -1140,6 +1139,14 @@ a:hover {
     font-weight: bold;
     color: rgba(255, 255, 255, 40%);
     margin-right: 100px;
+}
+
+.hidden {
+    display: none;
+}
+
+.show{
+    display: flex;
 }
 
 .num-maquina{
