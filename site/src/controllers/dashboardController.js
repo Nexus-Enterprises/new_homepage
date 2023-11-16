@@ -19,6 +19,25 @@ function listarAgenciasNOC(req, res) {
     );
 }
 
+function listarLocalizacao(req, res) {
+  const empresa = req.body.empresaServer;
+
+  dashboardModel.listarLocalizacao(empresa)
+    .then(function (resultado) {
+      if (resultado.length > 0) {
+        res.status(200).json(resultado);
+      } else {
+        res.status(204).send("Nenhum resultado encontrado!")
+      }
+    }).catch(
+      function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao realizar a consulta! Erro: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+      }
+    );
+}
+
 function listarMaquinas(req, res) {
   const agencia = req.body.agenciaServer;
 
@@ -124,5 +143,6 @@ module.exports = {
   listarAgenciasNOC,
   listarMaquinas,
   altoConsumoCPU,
-  altoConsumoRAM
+  altoConsumoRAM,
+  listarLocalizacao
 }

@@ -27,6 +27,10 @@ router.post("/altoConsumoRAM", function (req, res) {
   dashboardController.altoConsumoRAM(req, res);
 });
 
+router.post("/listarLocalizacao", function (req, res) {
+  dashboardController.listarLocalizacao(req, res);
+});
+
 router.post("/cadastrar", function (req, res) {
   dashboardController.cadastrar(req, res);
 })

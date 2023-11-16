@@ -192,7 +192,9 @@
                         `;
                             agenciaComp.innerHTML += `
                         <div class="alerta-agencia">Agência ${element.CodigoAgencia}</div>
-                        <div class="alerta-location" id="localizacao">Localização |</div>
+                        `;
+                        listarLocalizacao()
+                        agenciaComp.innerHTML += `
                         <div class="alerta" id="maquinasComp${element.CodigoAgencia}">
                         </div>
                         `;
@@ -207,9 +209,39 @@
             window.location = "login.html";
         }
     }
-
-
+    
+    
     window.onload = plotarGrafico(), validarSessao();
+   
+    var endereco = []
+    function listarLocalizacao() {
+        const empresa = sessionStorage.BANCO;
+
+        agenciaVar.forEach(agenciaNumero => {
+            fetch("/dashboard/listarLocalizacao", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    empresaServer: empresa,
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(json => {
+                        json.forEach(element => {
+                            var localizacao = document.getElementById(`localizacao${element.idMaquina}`);
+
+                            localizacao.innerHTML += `
+                            Localização | ${element.endereco}
+                            `;
+
+                        });
+                    });
+                }
+            });
+        });
+    }
 
     function ListarMaquinas() {
         agenciaVar.forEach(agenciaNumero => {
@@ -226,21 +258,19 @@
                     resposta.json().then(json => {
                         json.forEach(element => {
                             var maquinasCompElement = document.getElementById(`maquinasComp${agenciaNumero}`);
-                            maquinasCompElement.innerHTML = `
-                                <div class="t-alerta">
+                            maquinasCompElement.innerHTML += `
+                            <div class="alerta-location" id="localizacao${element.idMaquina}"></div>
+                            <div class="t-alerta">
                                     <p class="i-maquina">Máquina ${element.idMaquina}</p>
                                     <div class="horario">
                                         <i class="fa fa-clock-o" aria-hidden="true"></i>
                                         <p class="horario_alerta">12:34</p>
-                                    </div>
-                                </div>
+                                        </div>
+                                        </div>
                                 <div class="b-alerta alert-blue">
                                     <p class="elemento-alerta">CPU</p>
                                     <p class="porcentagem-alerta">2%</p>
                                 </div>
-                            `;
-                            localizacao.innerHTML = `
-                            
                             `;
                         });
                     });

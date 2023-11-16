@@ -25,6 +25,23 @@ GROUP BY Agencia.idAgencia;
 
 }
 
+function listarLocalizacao(empresa) {
+  var instrucao = `
+  SELECT
+  idMaquina,
+  Registro.enderecoIPV4 AS "endereco",
+  Agencia.digitoAgencia
+  FROM Registro
+  JOIN Maquina ON Maquina.idMaquina = Registro.fkMaquina
+  JOIN Agencia ON Agencia.idAgencia = Maquina.fkAgencia
+WHERE Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${empresa}')
+GROUP BY Maquina.idMaquina, Registro.enderecoIPV4, Agencia.digitoAgencia;
+  `;
+
+  return database.executar(instrucao);
+
+}
+
 function statusMaquinas(agencia, banco, idMaq){
   var instrucao = `
   SELECT DISTINCT
@@ -33,7 +50,8 @@ function statusMaquinas(agencia, banco, idMaq){
   Registro.usoAtual AS "UsoAtual",
   Maquina.situacao AS "Status",
   Maquina.idMaquina AS "IdMaquina",
-  TIME_FORMAT(Registro.dataHora, '%H:%i:%s') AS "DataHora"
+  TIME_FORMAT(Registro.dataHora, '%H:%i:%s') AS "DataHora",
+  Registro.enderecoIPV4 AS "EnderecoIP"
 FROM (
   SELECT
       fkComponente,
@@ -113,5 +131,6 @@ module.exports = {
   listarMaquinas,
   altoConsumoCPU,
   altoConsumoRAM,
-  statusMaquinas
+  statusMaquinas,
+  listarLocalizacao
 }
