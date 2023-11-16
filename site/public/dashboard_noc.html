@@ -190,12 +190,8 @@
                             <td class="tg-baqh">${element.TotalMaquinas}</td>
                         </tr>
                         `;
-                            agenciaComp.innerHTML += `
-                        <div class="alerta-agencia">Agência ${element.CodigoAgencia}</div>
-                        <div class="alerta-location" id="localizacao">Localização |</div>
-                        <div class="alerta" id="maquinasComp${element.CodigoAgencia}">
-                        </div>
-                        `;
+
+                        
                             agenciaVar.push(element.CodigoAgencia);
                         });
 
@@ -238,9 +234,6 @@
                                     <p class="elemento-alerta">CPU</p>
                                     <p class="porcentagem-alerta">2%</p>
                                 </div>
-                            `;
-                            localizacao.innerHTML = `
-                            
                             `;
                         });
                     });
