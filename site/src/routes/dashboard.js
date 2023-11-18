@@ -7,10 +7,6 @@ router.post("/listarAgenciasNOC", function (req, res) {
   dashboardController.listarAgenciasNOC(req, res);
 });
 
-router.post("/listarProcessos", function (req, res) {
-  dashboardController.listarProcessos(req, res);
-});
-
 router.post("/statusMaquinas", function (req, res) {
   dashboardController.statusMaquinas(req, res);
 });
@@ -29,6 +25,10 @@ router.post("/altoConsumoCPU", function (req, res) {
 
 router.post("/altoConsumoRAM", function (req, res) {
   dashboardController.altoConsumoRAM(req, res);
+});
+
+router.post("/listarLocalizacao", function (req, res) {
+  dashboardController.listarLocalizacao(req, res);
 });
 
 router.post("/cadastrar", function (req, res) {

@@ -19,10 +19,10 @@ function listarAgenciasNOC(req, res) {
     );
 }
 
-function listarProcessos(req, res) {
-  const idMaq = req.body.maquinaServer;
+function listarLocalizacao(req, res) {
+  const empresa = req.body.empresaServer;
 
-  dashboardModel.listarProcessos(idMaq)
+  dashboardModel.listarLocalizacao(empresa)
     .then(function (resultado) {
       if (resultado.length > 0) {
         res.status(200).json(resultado);
@@ -138,11 +138,11 @@ function altoConsumoRAM(req, res) {
 
 
 module.exports = {
-  listarProcessos,
   statusMaquinas,
   listarMaquinasAg,
   listarAgenciasNOC,
   listarMaquinas,
   altoConsumoCPU,
-  altoConsumoRAM
+  altoConsumoRAM,
+  listarLocalizacao
 }

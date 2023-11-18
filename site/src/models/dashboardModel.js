@@ -25,7 +25,24 @@ GROUP BY Agencia.idAgencia;
 
 }
 
-function statusMaquinas(agencia, banco, idMaq) {
+function listarLocalizacao(empresa) {
+  var instrucao = `
+  SELECT
+  idMaquina,
+  Registro.enderecoIPV4 AS "endereco",
+  Agencia.digitoAgencia
+  FROM Registro
+  JOIN Maquina ON Maquina.idMaquina = Registro.fkMaquina
+  JOIN Agencia ON Agencia.idAgencia = Maquina.fkAgencia
+WHERE Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${empresa}')
+GROUP BY Maquina.idMaquina, Registro.enderecoIPV4, Agencia.digitoAgencia;
+  `;
+
+  return database.executar(instrucao);
+
+}
+
+function statusMaquinas(agencia, banco, idMaq){
   var instrucao = `
   SELECT DISTINCT
   Componente.nome AS "NomeComponente",
@@ -33,7 +50,8 @@ function statusMaquinas(agencia, banco, idMaq) {
   Registro.usoAtual AS "UsoAtual",
   Maquina.situacao AS "Status",
   Maquina.idMaquina AS "IdMaquina",
-  TIME_FORMAT(Registro.dataHora, '%H:%i:%s') AS "DataHora"
+  TIME_FORMAT(Registro.dataHora, '%H:%i:%s') AS "DataHora",
+  Registro.enderecoIPV4 AS "EnderecoIP"
 FROM (
   SELECT
       fkComponente,
@@ -54,24 +72,6 @@ AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${ba
   return database.executar(instrucao);
 }
 
-function listarProcessos(idMaq) {
-  var instrucao = `
-    SELECT
-      Processo.idProcesso,
-      Processo.fkMaquina,
-      Processo.nome AS NomeProcesso,
-      TIME_FORMAT(Processo.dataHora, '%H:%i:%s') AS DataHora,
-      Processo.usoAtualRAM AS UsoRam,
-      Processo.usoAtualDisco AS UsoDisco,
-      Processo.usoAtualCPU AS UsoCPU
-    FROM Processo
-    WHERE Processo.fkMaquina = '${idMaq}'
-    ORDER BY Processo.usoAtualCPU DESC
-    LIMIT 5;
-    `;
-  return database.executar(instrucao);
-}
-
 function listarMaquinas(agencia) {
   var instrucao = `
   SELECT * FROM Maquina JOIN Agencia ON Maquina.fkAgencia = Agencia.idAgencia  WHERE Agencia.idAgencia = (SELECT idAgencia FROM Agencia WHERE Agencia.numero = '${agencia}');
@@ -81,7 +81,7 @@ function listarMaquinas(agencia) {
   return database.executar(instrucao);
 }
 
-function listarMaquinasAg(agencia) {
+function listarMaquinasAg(agencia){
   var instrucao = `
   SELECT * FROM Maquina JOIN Agencia ON Maquina.fkAgencia = Agencia.idAgencia  WHERE Agencia.idAgencia = '${agencia}';
   `;
@@ -126,11 +126,11 @@ function altoConsumoRAM(banco) {
 }
 
 module.exports = {
-  listarProcessos,
   listarMaquinasAg,
   listarAgenciasNOC,
   listarMaquinas,
   altoConsumoCPU,
   altoConsumoRAM,
-  statusMaquinas
+  statusMaquinas,
+  listarLocalizacao
 }
