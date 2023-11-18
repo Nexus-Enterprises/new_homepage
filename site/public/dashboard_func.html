@@ -100,61 +100,32 @@
                 <div class="card">
                     <div class="top-card">
                         <h1 class="text-card">CPU</h1>
-                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                     </div>
-                    <div class="bottom-card">
-                        <div class="left-bottom-card">
-                            <h1 class="agencia-text">Agência</h1>
-                            <p class="num-agencia">0000001</p>
-                            <h1 class="maquina-text">Máquina</h1>
-                            <p class="num-maquina">00-1</p>
-                        </div>
-                        <div class="chartBox">
-                            <canvas id="myChart"></canvas>
-                        </div>
+                    <div class="bottom-card" id="altoConsumoCPU">
                     </div>
                 </div>
                 <div class="card">
                     <div class="top-card">
                         <h1 class="text-card">RAM</h1>
-                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                     </div>
-                    <div class="bottom-card">
-                        <div class="left-bottom-card">
-                            <h1 class="agencia-text">Agência</h1>
-                            <p class="num-agencia">0000001</p>
-                            <h1 class="maquina-text">Máquina</h1>
-                            <p class="num-maquina">00-1</p>
-                        </div>
-                        <div class="chartBox">
-                            <canvas id="myChart1"></canvas>
-                        </div>
+
+                    <div class="bottom-card" id="altoConsumoRAM">
+
                     </div>
+
                 </div>
                 <div class="card">
                     <div class="top-card">
                         <h1 class="text-card">DISCO</h1>
-                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                     </div>
-                    <div class="bottom-card">
-                        <div class="left-bottom-card">
-                            <h1 class="agencia-text">Agência</h1>
-                            <p class="num-agencia">0000001</p>
-                            <h1 class="maquina-text">Máquina</h1>
-                            <p class="num-maquina">00-1</p>
-                        </div>
-                        <div class="chartBox">
-                            <canvas id="myChart2"></canvas>
-                        </div>
+                    <div class="bottom-card" id="altoConsumoDisco">
+
                     </div>
                 </div>
             </div>
 
-            <div class="grafico">
-                <div class="titulo">
-                    <h2>Gráfico de Desempenho de Recursos da Máquina</h2>
-                </div>
-                <canvas id="myChart3"></canvas>
+            <div class="grafico" id="ultimoRegistro">
+
             </div>
         </div>
         <div class="container-side">
@@ -261,233 +232,309 @@
 </html>
 
 <script>
+    var agenciaVar = [];
 
-function validarSessao() {
-        var email = sessionStorage.EMAIL_USUARIO;
+    function validarSessao() {
         var nome = sessionStorage.NOME_USUARIO;
         var sobrenome = sessionStorage.SOBRENOME;
+
         if (nome != null) {
-            name_user.innerHTML = `${nome} ${sobrenome}`
+            name_user.innerHTML = `${nome} ${sobrenome}`;
         } else {
             window.location = "login.html";
         }
     }
 
+    function listarConsumoMaquina() {
+        var funcionario = sessionStorage.ID_FUNCIONARIO;
+
+        fetch("/dashboard/listarConsumoMaquina", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                funcionarioServer: funcionario,
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                resposta.json().then(json => {
+                    plotarGrafico();
+                    capturarRegistroComponente();
+                });
+            }
+        });
+    }
+
     let proximaAtualizacao;
 
-    window.onload = plotarGrafico(), validarSessao();
+    window.onload = validarSessao(), listarConsumoMaquina();
 
     function plotarGrafico() {
+        var banco = sessionStorage.BANCO;
+        var agencia = sessionStorage.AGENCIA;
+        var funcionario = sessionStorage.ID_FUNCIONARIO;
 
-        const data = {
-            labels: []
-            ,
-            datasets: [{
-                label: 'Consumo geral de CPU',
-                data: [80, 20],
-                backgroundColor: [
-                    'rgb(158, 106, 225)',
-                    'rgb(241, 241, 244)'
-                ],
-                hoverOffset: 4
-            }]
-        };
-
-        const doughnutLabel = {
-            id: 'doughtnutLabel',
-            beforeDatasetsDraw(chart, args, pluginOptions) {
-                const { ctx, data } = chart;
-
-                ctx.save();
-                const xCoor = chart.getDatasetMeta(0).data[0].x;
-                const yCoor = chart.getDatasetMeta(0).data[0].y;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle'
-                ctx.font = 'bold 15px Poppins';
-                ctx.fillStyle = 'rgb(241, 241, 244)';
-                ctx.fillText(`${data.datasets[0].data[0]}%`, xCoor, yCoor);
-
-            }
-        }
-
-        // Criando estrutura para plotar gráfico - config
-        const config = {
-            type: 'doughnut',
-            data: data,
-            options: {
-                hoverBorderWidth: 0,
-                borderWidth: 0,
-                weight: 1,
-                cutout: 37,
-                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
-                showTooltips: false
-
-
+        fetch("/dashboard/altoConsumoCPUFunc", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
             },
-            plugins: [doughnutLabel]
-        };
+            body: JSON.stringify({
+                bancoServer: banco,
+                agenciaServer: agencia,
+                funcionarioServer: funcionario,
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                resposta.json().then(json => {
+                    json.forEach(element => {
 
-        const myChart = new Chart(
-            document.getElementById('myChart'),
-            config
-        );
+                        altoConsumoCPU.innerHTML = `
+                        <div class="left-bottom-card">
+                            <h1 class="maquina-text">Horário</h1>
+                            <p class="num-maquina">${element.DataHora}</p>
+                        </div>
+                        <div class="chartBox">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                        `;
 
-        const dataDoughnut1 = {
-            labels: [],
-            datasets: [{
-                label: 'Consumo geral de CPU',
-                data: [95, 5],
-                backgroundColor: [
-                    'rgb(158, 106, 225)',
-                    'rgb(241, 241, 244)'
-                ],
-                hoverOffset: 4
-            }]
-        };
+                        var totalCapacidade = element.TotalCapacidade;
+                        var consumoAtual = element.ConsumoAtual;
 
-        const doughnutLabel1 = {
-            id: 'doughnutLabel',
-            beforeDatasetsDraw(chart, args, pluginOptions) {
-                const { ctx } = chart;
+                        var porcetagemAtual = Math.round((consumoAtual * 100) / totalCapacidade);
 
-                ctx.save();
-                const xCoor1 = chart.getDatasetMeta(0).data[0].x;
-                const yCoor1 = chart.getDatasetMeta(0).data[0].y;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle'
-                ctx.font = 'bold 15px Poppins';
-                ctx.fillStyle = 'rgb(241, 241, 244)';
-                ctx.fillText(`${dataDoughnut1.datasets[0].data[0]}%`, xCoor1, yCoor1);
+                        const dataDoughnut = {
+                            labels: [],
+                            datasets: [{
+                                label: 'Consumo geral de CPU',
+                                data: [porcetagemAtual, (100 - porcetagemAtual)],
+                                backgroundColor: [
+                                    'rgb(158, 106, 225)',
+                                    'rgb(241, 241, 244)'
+                                ],
+                                hoverOffset: 4
+                            }]
+                        };
+
+                        const doughnutLabel = {
+                            id: 'doughnutLabel',
+                            beforeDatasetsDraw(chart, args, pluginOptions) {
+                                const { ctx } = chart;
+
+                                ctx.save();
+                                const xCoor1 = chart.getDatasetMeta(0).data[0].x;
+                                const yCoor1 = chart.getDatasetMeta(0).data[0].y;
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle'
+                                ctx.font = 'bold 15px Poppins';
+                                ctx.fillStyle = 'rgb(241, 241, 244)';
+                                ctx.fillText(`${dataDoughnut.datasets[0].data[0]}%`, xCoor1, yCoor1);
+                            }
+                        };
+
+                        // Criando estrutura para plotar gráfico - config
+                        const config = {
+                            type: 'doughnut',
+                            data: dataDoughnut,
+                            options: {
+                                hoverBorderWidth: 0,
+                                borderWidth: 0,
+                                weight: 1,
+                                cutout: 37,
+                                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
+                                showTooltips: false
+                            },
+                            plugins: [doughnutLabel]
+                        };
+
+                        const myChart = new Chart(
+                            document.getElementById('myChart'),
+                            config);
+
+                        console.log(json);
+
+                    });
+                });
             }
-        };
+        });
 
-        // Criando estrutura para plotar gráfico - config
-        const configDoughnut1 = {
-            type: 'doughnut',
-            data: dataDoughnut1,
-            options: {
-                hoverBorderWidth: 0,
-                borderWidth: 0,
-                weight: 1,
-                cutout: 37,
-                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
-                showTooltips: false
+        fetch("/dashboard/altoConsumoRAMFunc", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
             },
-            plugins: [doughnutLabel1]
-        };
+            body: JSON.stringify({
+                bancoServer: banco,
+                agenciaServer: agencia,
+                funcionarioServer: funcionario,
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                resposta.json().then(json => {
+                    json.forEach(element => {
+                        altoConsumoRAM.innerHTML = `
+                        <div class="left-bottom-card">
+                            <h1 class="maquina-text">Horário</h1>
+                            <p class="num-maquina">${element.DataHora}</p>
+                        </div>
+                        <div class="chartBox">
+                            <canvas id="myChart1"></canvas>
+                        </div>
+                        `;
 
-        const myChart1 = new Chart(
-            document.getElementById('myChart1'),
-            configDoughnut1
-        );
+                        var totalCapacidade = element.TotalCapacidade;
+                        var consumoAtual = element.ConsumoAtual;
 
-        const dataDoughnut2 = {
-            labels: [],
-            datasets: [{
-                label: 'Consumo geral de CPU',
-                data: [45, 55],
-                backgroundColor: [
-                    'rgb(158, 106, 225)',
-                    'rgb(241, 241, 244)'
-                ],
-                hoverOffset: 4
-            }]
-        };
+                        var porcetagemAtual = Math.round((consumoAtual * 100) / totalCapacidade);
 
-        const doughnutLabel2 = {
-            id: 'doughnutLabel',
-            beforeDatasetsDraw(chart, args, pluginOptions) {
-                const { ctx } = chart;
+                        const dataDoughnut1 = {
+                            labels: [],
+                            datasets: [{
+                                label: 'Consumo geral de RAM',
+                                data: [porcetagemAtual, (100 - porcetagemAtual)],
+                                backgroundColor: [
+                                    'rgb(158, 106, 225)',
+                                    'rgb(241, 241, 244)'
+                                ],
+                                hoverOffset: 4
+                            }]
+                        };
 
-                ctx.save();
-                const xCoor2 = chart.getDatasetMeta(0).data[0].x;
-                const yCoor2 = chart.getDatasetMeta(0).data[0].y;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle'
-                ctx.font = 'bold 15px Poppins';
-                ctx.fillStyle = 'rgb(241, 241, 244)';
-                ctx.fillText(`${dataDoughnut2.datasets[0].data[0]}%`, xCoor2, yCoor2);
+                        const doughnutLabel1 = {
+                            id: 'doughnutLabel',
+                            beforeDatasetsDraw(chart, args, pluginOptions) {
+                                const { ctx } = chart;
+
+                                ctx.save();
+                                const xCoor1 = chart.getDatasetMeta(0).data[0].x;
+                                const yCoor1 = chart.getDatasetMeta(0).data[0].y;
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle'
+                                ctx.font = 'bold 15px Poppins';
+                                ctx.fillStyle = 'rgb(241, 241, 244)';
+                                ctx.fillText(`${dataDoughnut1.datasets[0].data[0]}%`, xCoor1, yCoor1);
+                            }
+                        };
+
+                        // Criando estrutura para plotar gráfico - config
+                        const configDoughnut1 = {
+                            type: 'doughnut',
+                            data: dataDoughnut1,
+                            options: {
+                                hoverBorderWidth: 0,
+                                borderWidth: 0,
+                                weight: 1,
+                                cutout: 37,
+                                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
+                                showTooltips: false
+                            },
+                            plugins: [doughnutLabel1]
+                        };
+
+                        const myChart1 = new Chart(
+                            document.getElementById('myChart1'),
+                            configDoughnut1
+                        );
+
+
+                    });
+                });
             }
-        };
+        });
 
-        // Criando estrutura para plotar gráfico - config
-        const configDoughnut2 = {
-            type: 'doughnut',
-            data: dataDoughnut2,
-            options: {
-                hoverBorderWidth: 0,
-                borderWidth: 0,
-                weight: 1,
-                cutout: 37,
-                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
-                showTooltips: false
+
+        fetch("/dashboard/altoConsumoDiscoFunc", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
             },
-            plugins: [doughnutLabel2]
-        };
+            body: JSON.stringify({
+                bancoServer: banco,
+                agenciaServer: agencia,
+                funcionarioServer: funcionario,
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                resposta.json().then(json => {
+                    json.forEach(element => {
+                        altoConsumoDisco.innerHTML = `
+                        <div class="left-bottom-card">
+                            <h1 class="maquina-text">Horário</h1>
+                            <p class="num-maquina">${element.DataHora}</p>
+                        </div>
+                        <div class="chartBox">
+                            <canvas id="myChart2"></canvas>
+                        </div>
+                        `;
 
-        const myChart2 = new Chart(
-            document.getElementById('myChart2'),
-            configDoughnut2
-        );
+                        var totalCapacidade = element.TotalCapacidade;
+                        var consumoAtual = element.ConsumoAtual;
 
-        const dataLine = {
-            labels: ['Jan', 'Fev', 'Mar', 'Apr', 'Mai', 'Jun'],
-            datasets: [{
-                label: 'CPU',
-                data: [300, 400, 300, 700, 500, 200,],
-                backgroundColor: [
-                    'rgb(22, 91, 170)'
+                        var porcetagemAtual = Math.round((consumoAtual * 100) / totalCapacidade);
 
+                        const dataDoughnut2 = {
+                            labels: [],
+                            datasets: [{
+                                label: 'Consumo geral de CPU',
+                                data: [porcetagemAtual, (100 - porcetagemAtual)],
+                                backgroundColor: [
+                                    'rgb(158, 106, 225)',
+                                    'rgb(241, 241, 244)'
+                                ],
+                                hoverOffset: 4
+                            }]
+                        };
 
-                ],
-                borderColor: [
-                    'rgb(22, 91, 170)'
-                ],
-                hoverOffset: 4
-            }, {
-                label: 'RAM',
-                data: [700, 600, 700, 750, 400, 500],
-                backgroundColor: [
-                    'rgb(247, 101, 163)'
-                ],
-                borderColor: [
-                    'rgb(247, 101, 163)'
-                ],
-                hoverOffset: 4
-            }, {
-                label: 'DISCO',
-                data: [600, 700, 600, 500, 400, 600],
-                color: ['rgb(158, 106, 225)'],
-                backgroundColor: [
-                    'rgb(158, 106, 225)'
-                ],
-                borderColor: [
-                    'rgb(158, 106, 225)'
-                ],
+                        const doughnutLabel2 = {
+                            id: 'doughnutLabel',
+                            beforeDatasetsDraw(chart, args, pluginOptions) {
+                                const { ctx } = chart;
 
-                hoverOffset: 4
-            }]
-        };
+                                ctx.save();
+                                const xCoor2 = chart.getDatasetMeta(0).data[0].x;
+                                const yCoor2 = chart.getDatasetMeta(0).data[0].y;
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle'
+                                ctx.font = 'bold 15px Poppins';
+                                ctx.fillStyle = 'rgb(241, 241, 244)';
+                                ctx.fillText(`${dataDoughnut2.datasets[0].data[0]}%`, xCoor2, yCoor2);
+                            }
+                        };
 
-        const LineLabel = {
-            id: 'LineLabel',
-            beforeDatasetsDraw(chart, args, pluginOptions) {
-                const { ctx } = chart;
+                        // Criando estrutura para plotar gráfico - config
+                        const configDoughnut2 = {
+                            type: 'doughnut',
+                            data: dataDoughnut2,
+                            options: {
+                                hoverBorderWidth: 0,
+                                borderWidth: 0,
+                                weight: 1,
+                                cutout: 37,
+                                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
+                                showTooltips: false
+                            },
+                            plugins: [doughnutLabel2]
+                        };
 
-                ctx.save();
-                const xCoor2 = chart.getDatasetMeta(0).data[0].x;
-                const yCoor2 = chart.getDatasetMeta(0).data[0].y;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle'
-                ctx.font = 'bold 15px Poppins';
-                ctx.fillStyle = 'rgb(241, 241, 244)'
-                // ctx.fillText(`${dataLine.datasets[0].data[0]}`, xCoor2, yCoor2);
+                        const myChart2 = new Chart(
+                            document.getElementById('myChart2'),
+                            configDoughnut2
+                        );
+
+                    });
+                });
             }
+        });
 
-        };
 
-        // Criando estrutura para plotar gráfico - config
-        const configLine = {
+        // --------------------------- CHART LINE -----------------------------
+    }
+
+    function atualizarGrafico(dataLine) {
+        document.getElementById('myChart3'),
+        {
             type: 'line',
             data: dataLine,
             options: {
@@ -501,29 +548,196 @@ function validarSessao() {
                     y: {
                         grid: {
                             color: 'rgba(236, 236, 236, 0.37)'
-                        }
+                        },
+                        suggestedMax: 100,
+                        suggestedMin: 0,
                     },
                     x: {
                         grid: {
                             color: 'rgba(236, 236, 236, 0.37)'
-                        }
+                        },
+                        max: 6,
+                        min: 1,
                     }
                 }
             },
-
-            plugins: [LineLabel]
+            plugins: [{
+                beforeDatasetsDraw(chart, args, pluginOptions) {
+                    const { ctx } = chart;
+                    ctx.save();
+                    const xCoor2 = chart.getDatasetMeta(0).data[0].x;
+                    const yCoor2 = chart.getDatasetMeta(0).data[0].y;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle'
+                    ctx.font = 'bold 15px Poppins';
+                    ctx.fillStyle = 'rgb(241, 241, 244)'
+                }
+            }]
         };
 
-        const myChart3 = new Chart(
-            document.getElementById('myChart3'),
-            configLine
-        );
     }
+
+    function capturarRegistroComponente() {
+        var banco = sessionStorage.BANCO;
+        var agencia = sessionStorage.AGENCIA;
+        var funcionario = sessionStorage.ID_FUNCIONARIO;
+
+        fetch("/dashboard/ultimosRegistros", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                bancoServer: banco,
+                agenciaServer: agencia,
+                funcionarioServer: funcionario,
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+
+                const cpu = []
+                const disco = []
+                const ram = []
+                const hours = []
+
+                resposta.json().then(json => {
+                    json.forEach(element => {
+                        console.log(element);
+                        ultimoRegistro.innerHTML = `
+                    <div class="titulo"">
+                    <h2>Gráfico de Desempenho de Recursos da Máquina</h2>
+                    </div>
+                    <canvas id="myChart3"></canvas>
+                    `
+
+                        const now = new Date();
+                        const currentHour = now.getHours();
+
+                        for (let i = currentHour; i < currentHour + 6; i++) {
+                            hours.push((i - 5) + ":00")
+                        }
+
+                        if (element.NomeComponente.includes("Processador")) {
+                            cpu.push(element.UsoAtual)
+                        }
+
+                        if (element.NomeComponente.includes("Disco rígido")) {
+                            disco.push(element.UsoAtual)
+                        }
+
+                        if (element.NomeComponente.includes("Memória RAM")) {
+                            ram.push(element.UsoAtual)
+                        }
+
+                    });
+
+                    const dataLine = {
+                        labels: hours,
+                        datasets: [{
+                            label: 'CPU',
+                            data: cpu,
+                            backgroundColor: [
+                                'rgb(22, 91, 170)'
+                            ],
+                            borderColor: [
+                                'rgb(22, 91, 170)'
+                            ],
+                            hoverOffset: 4
+                        }, {
+                            label: 'RAM',
+                            data: ram,
+                            backgroundColor: [
+                                'rgb(247, 101, 163)'
+                            ],
+                            borderColor: [
+                                'rgb(247, 101, 163)'
+                            ],
+                            hoverOffset: 4
+                        }, {
+                            label: 'DISCO',
+                            data: disco,
+                            color: ['rgb(158, 106, 225)'],
+                            backgroundColor: [
+                                'rgb(158, 106, 225)'
+                            ],
+                            borderColor: [
+                                'rgb(158, 106, 225)'
+                            ],
+
+                            hoverOffset: 4
+                        }]
+                    };
+
+                    const LineLabel = {
+                        id: 'LineLabel',
+                        beforeDatasetsDraw(chart, args, pluginOptions) {
+                            const { ctx } = chart;
+
+                            ctx.save();
+                            const xCoor2 = chart.getDatasetMeta(0).data[0].x;
+                            const yCoor2 = chart.getDatasetMeta(0).data[0].y;
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'middle'
+                            ctx.font = 'bold 15px Poppins';
+                            ctx.fillStyle = 'rgb(241, 241, 244)'
+                            // ctx.fillText(`${dataLine.datasets[0].data[0]}`, xCoor2, yCoor2);
+                        }
+
+                    };
+
+                    // Criando estrutura para plotar gráfico - config
+                    const configLine = {
+                        type: 'line',
+                        data: dataLine,
+                        options: {
+                            hoverBorderWidth: 0,
+                            borderWidth: 4,
+                            weight: 1,
+                            cutout: 37,
+                            events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
+                            showTooltips: false,
+                            scales: {
+                                y: {
+                                    grid: {
+                                        color: 'rgba(236, 236, 236, 0.37)'
+                                    },
+                                    suggestedMax: 100,
+                                    suggestedMin: 0,
+                                },
+                                x: {
+                                    grid: {
+                                        color: 'rgba(236, 236, 236, 0.37)'
+                                    },
+                                    max: 6,
+                                    min: 1,
+                                }
+                            }
+                        },
+
+                        plugins: [LineLabel]
+                    };
+
+                    const myChart3 = new Chart(
+                        document.getElementById('myChart3'),
+                        configLine
+                    );
+
+                    atualizarGrafico(dataLine);
+                    setTimeout(capturarRegistroComponente, 10000);
+                });
+
+
+            }
+        });
+
+    }
+
 
     window.onload = teste();
 
-    function teste() {
 
+    // --------------------VELOCIMETRO--------------------------
+    function teste() {
 
         // setup
         const data = {

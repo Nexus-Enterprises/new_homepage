@@ -18,12 +18,33 @@ router.post("/listarMaquinas", function (req, res) {
 router.post("/listarMaquinasAg", function (req, res) {
   dashboardController.listarMaquinasAg(req, res);
 });
+
 router.post("/altoConsumoCPU", function (req, res) {
   dashboardController.altoConsumoCPU(req, res);
 });
 
 router.post("/altoConsumoRAM", function (req, res) {
   dashboardController.altoConsumoRAM(req, res);
+});
+
+router.post("/altoConsumoCPUFunc", function (req, res) {
+  dashboardController.altoConsumoCPUFunc(req, res);
+});
+
+router.post("/altoConsumoRAMFunc", function (req, res) {
+  dashboardController.altoConsumoRAMFunc(req, res);
+});
+
+router.post("/altoConsumoDiscoFunc", function (req, res) {
+  dashboardController.altoConsumoDiscoFunc(req, res);
+});
+
+router.post("/listarConsumoMaquina", function (req, res) {
+  dashboardController.listarConsumoMaquina(req, res);
+});
+
+router.post("/ultimosRegistros", function (req, res) {
+  dashboardController.ultimosRegistros(req, res);
 });
 
 router.post("/cadastrar", function (req, res) {

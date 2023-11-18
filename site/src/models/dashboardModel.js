@@ -70,7 +70,75 @@ function altoConsumoRAM(banco) {
   return database.executar(instrucao);
 }
 
-function statusMaquinas(agencia, banco, idMaq){
+function altoConsumoCPUFunc(banco, agencia, funcionario) {
+  var instrucao = `
+  SELECT 
+        Registro.capacidadeMax AS "TotalCapacidade",
+        Registro.usoAtual AS "ConsumoAtual",
+        TIME_FORMAT(Registro.dataHora, '%H:%i:%s') AS "DataHora"
+    FROM Registro
+        JOIN Maquina ON Registro.fkMaquina = Maquina.idMaquina
+        JOIN Agencia ON Maquina.fkAgencia = '${agencia}'
+    WHERE Registro.fkAlerta = (SELECT idAlerta FROM Alerta WHERE causa = 'Sobrecarga de CPU' AND gravidade = 'Alta')
+        AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
+        AND Maquina.fkFuncionario = (SELECT idFuncionario from Funcionario where idFuncionario = '${funcionario}') 
+    ORDER BY (Registro.usoAtual - Registro.capacidadeMax) DESC
+    LIMIT 1;
+  `;
+
+  return database.executar(instrucao);
+}
+
+function altoConsumoRAMFunc(banco, agencia, funcionario) {
+  console.log("entrei no ram teste model");
+  var instrucao = `
+  SELECT 
+       Registro.capacidadeMax AS "TotalCapacidade",
+       Registro.usoAtual AS "ConsumoAtual",
+       TIME_FORMAT(Registro.dataHora, '%H:%i:%s') AS "DataHora"
+  FROM Registro
+    JOIN Maquina ON Registro.fkMaquina = Maquina.idMaquina
+    JOIN Agencia ON Maquina.fkAgencia = '${agencia}'
+  WHERE Registro.fkAlerta = (SELECT idAlerta FROM Alerta WHERE causa = 'Memória insuficiente' AND gravidade = 'Alta')
+    AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
+    AND Maquina.fkFuncionario = (SELECT idFuncionario from Funcionario where idFuncionario = '${funcionario}') 
+  ORDER BY (Registro.usoAtual - Registro.capacidadeMax) DESC
+  LIMIT 1;
+  `;
+
+  return database.executar(instrucao);
+}
+
+function altoConsumoDiscoFunc(banco, agencia, funcionario) {
+  var instrucao = `
+  SELECT 
+        Registro.capacidadeMax AS "TotalCapacidade",
+        Registro.usoAtual AS "ConsumoAtual",
+        TIME_FORMAT(Registro.dataHora, '%H:%i:%s') AS "DataHora"
+    FROM Registro
+        JOIN Maquina ON Registro.fkMaquina = Maquina.idMaquina
+        JOIN Agencia ON Maquina.fkAgencia = '${agencia}'
+    WHERE Registro.fkAlerta = (SELECT idAlerta FROM Alerta WHERE causa = 'Erro de disco rígido' AND gravidade = 'Alta')
+        AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
+        AND Maquina.fkFuncionario = (SELECT idFuncionario from Funcionario where idFuncionario = '${funcionario}') 
+    ORDER BY (Registro.usoAtual - Registro.capacidadeMax) DESC
+    LIMIT 1;
+  `;
+
+  return database.executar(instrucao);
+}
+
+function listarConsumoMaquina(funcionario) {
+
+  var instrucao = `
+  SELECT * FROM Maquina JOIN Funcionario ON Maquina.fkFuncionario = Funcionario.idFuncionario  
+  WHERE Funcionario.idFuncionario = '${funcionario}';
+  `
+
+  return database.executar(instrucao);
+}
+
+function statusMaquinas(agencia, banco, idMaq) {
   var instrucao = `
   SELECT DISTINCT
   Componente.nome AS "NomeComponente",
@@ -98,7 +166,7 @@ AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${ba
   return database.executar(instrucao);
 }
 
-function listarMaquinasAg(agencia){
+function listarMaquinasAg(agencia) {
   var instrucao = `
   SELECT * FROM Maquina JOIN Agencia ON Maquina.fkAgencia = Agencia.idAgencia  WHERE Agencia.idAgencia = '${agencia}';
   `;
@@ -106,11 +174,37 @@ function listarMaquinasAg(agencia){
   return database.executar(instrucao)
 }
 
+function ultimosRegistros(banco, agencia, funcionario) {
+  console.log("entrei no registro");
+  var instrucao = `
+  SELECT 
+  Componente.idComponente AS "IdComponente",
+  Componente.nome AS "NomeComponente",
+  Registro.capacidadeMax AS "CapacidadeMaxima",
+  Registro.usoAtual AS "UsoAtual",
+   TIME_FORMAT(Registro.dataHora, '%H:%i:%s') AS "DataHora"
+FROM Registro
+INNER JOIN Componente ON Registro.fkComponente = Componente.idComponente
+INNER JOIN Maquina ON Registro.fkMaquina = Maquina.idMaquina
+INNER JOIN Agencia ON Maquina.fkAgencia = ${agencia}
+WHERE Maquina.idMaquina = 5
+AND Maquina.fkFuncionario = (SELECT idFuncionario from Funcionario where idFuncionario = '${funcionario}')
+AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}');
+  `;
+
+  return database.executar(instrucao);
+}
+
 module.exports = {
   listarAgenciasNOC,
   listarMaquinas,
   altoConsumoCPU,
   altoConsumoRAM,
+  altoConsumoCPUFunc,
+  altoConsumoRAMFunc,
+  altoConsumoDiscoFunc,
+  listarConsumoMaquina,
   statusMaquinas,
-  listarMaquinasAg
+  listarMaquinasAg,
+  ultimosRegistros,
 }
