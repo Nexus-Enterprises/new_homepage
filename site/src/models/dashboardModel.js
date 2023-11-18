@@ -42,7 +42,25 @@ GROUP BY Maquina.idMaquina, Registro.enderecoIPV4, Agencia.digitoAgencia;
 
 }
 
-function statusMaquinas(agencia, banco, idMaq){
+function listarProcessos(idMaq) {
+  var instrucao = `
+    SELECT
+      Processo.idProcesso,
+      Processo.fkMaquina,
+      Processo.nome AS NomeProcesso,
+      TIME_FORMAT(Processo.dataHora, '%H:%i:%s') AS DataHora,
+      Processo.usoAtualRAM AS UsoRam,
+      Processo.usoAtualDisco AS UsoDisco,
+      Processo.usoAtualCPU AS UsoCPU
+    FROM Processo
+    WHERE Processo.fkMaquina = '${idMaq}'
+    ORDER BY Processo.usoAtualCPU DESC
+    LIMIT 5;
+    ;`
+  return database.executar(instrucao);
+}
+
+function statusMaquinas(agencia, banco, idMaq) {
   var instrucao = `
   SELECT DISTINCT
   Componente.nome AS "NomeComponente",
@@ -81,7 +99,7 @@ function listarMaquinas(agencia) {
   return database.executar(instrucao);
 }
 
-function listarMaquinasAg(agencia){
+function listarMaquinasAg(agencia) {
   var instrucao = `
   SELECT * FROM Maquina JOIN Agencia ON Maquina.fkAgencia = Agencia.idAgencia  WHERE Agencia.idAgencia = '${agencia}';
   `;
@@ -126,6 +144,7 @@ function altoConsumoRAM(banco) {
 }
 
 module.exports = {
+  listarProcessos,
   listarMaquinasAg,
   listarAgenciasNOC,
   listarMaquinas,

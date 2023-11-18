@@ -195,7 +195,7 @@
     var numMaqDisk = 0;
     var dataHoraDisk = '';
 
-    var arrayItems = []; // Declara a lista global
+    var arrayItems = [];
 
     function listarProcessos(idMaq) {
         var tabela_processos = document.getElementById('tabela_processos');
@@ -248,6 +248,10 @@
     }
 
 
+    var listaDiscos = [];
+    var listaProcessadores = [];
+    var listaMemorias = [];
+
     function listarStatusMaquinas(idMaquina) {
         var agencia = sessionStorage.AGENCIA;
         var banco = sessionStorage.BANCO;
@@ -279,11 +283,7 @@
 
                             if (machineData[i].NomeComponente.includes("Processador") && machineData[i].IdMaquina == idMaq) {
 
-                                if (machineData[i].UsoAtual >= procMoreUsed) {
-                                    procMoreUsed = machineData[i].UsoAtual
-                                    numMaqProc = machineData[i].IdMaquina;
-                                    dataHoraProc = machineData[i].DataHora;
-                                }
+                                listaProcessadores.push(machineData[i]);
 
                                 Cards_maquinas.innerHTML = `
                             <div class="card-maq card-maq${idMaq}">
@@ -311,11 +311,8 @@
                             `
                             } else if (machineData[i].NomeComponente.includes("RAM") && machineData[i].IdMaquina == idMaq) {
 
-                                if (machineData[i].UsoAtual >= ramMoreUsed) {
-                                    ramMoreUsed = machineData[i].UsoAtual
-                                    numMaqRam = machineData[i].IdMaquina;
-                                    dataHoraRam = machineData[i].DataHora;
-                                }
+
+                                listaMemorias.push(machineData[i]);
 
                                 var Cards_ram = document.getElementById(`card_ram${machineData[i].IdMaquina}`);
 
@@ -328,12 +325,8 @@
                                 var cards_disco = document.getElementById(`card_disco${machineData[i].IdMaquina}`);
                                 var calcPercentage = (machineData[i].UsoAtual * 100) / machineData[i].CapacidadeMaxima
 
-                                if (machineData[i].UsoAtual >= diskMoreUsed) {
-                                    diskMoreUsed = machineData[i].UsoAtual
-                                    numMaqDisk = machineData[i].IdMaquina;
-                                    dataHoraDisk = machineData[i].DataHora;
-                                }
-
+                                listaDiscos.push(machineData[i]);
+                                
                                 cards_disco.innerHTML = `
                             <p class="item">Disco</p>
                             <p class="cons-item">${Math.round(calcPercentage)}%</p>   

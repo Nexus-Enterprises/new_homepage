@@ -23,6 +23,10 @@ router.post("/altoConsumoCPU", function (req, res) {
   dashboardController.altoConsumoCPU(req, res);
 });
 
+router.post("/listarProcessos", function (req, res) {
+  dashboardController.listarProcessos(req, res);
+});
+
 router.post("/altoConsumoRAM", function (req, res) {
   dashboardController.altoConsumoRAM(req, res);
 });
