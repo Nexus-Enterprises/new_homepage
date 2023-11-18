@@ -91,17 +91,50 @@ function listarMaquinasAg(agencia) {
 
 function altoConsumoCPU(banco) {
   var instrucao = `
-  SELECT Agencia.numero AS "CodigoAgencia",
-       Maquina.idMaquina AS "NumeroMaquina",
-       Registro.capacidadeMax AS "TotalCapacidade",
-       Registro.usoAtual AS "ConsumoAtual"
-  FROM Registro
-    JOIN Maquina ON Registro.fkMaquina = Maquina.idMaquina
-    JOIN Agencia ON Maquina.fkAgencia = Agencia.idAgencia
-  WHERE Registro.fkAlerta = (SELECT idAlerta FROM Alerta WHERE causa = 'Sobrecarga de CPU' AND gravidade = 'Alta')
-    AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
-  ORDER BY (Registro.usoAtual - Registro.capacidadeMax) DESC
-  LIMIT 1;
+  SELECT 
+    CodigoAgencia,
+    NumeroMaquina,
+    TotalCapacidade,
+    ConsumoAtual,
+    Porcentagem,
+    (SELECT AVG(Porcentagem) FROM (
+        -- Sua consulta principal aqui
+        SELECT 
+            Agencia.numero AS "CodigoAgencia",
+            Maquina.idMaquina AS "NumeroMaquina",
+            Registro.capacidadeMax AS "TotalCapacidade",
+            Registro.usoAtual AS "ConsumoAtual",
+            (Registro.usoAtual / Registro.capacidadeMax) * 100 AS "Porcentagem"
+        FROM 
+            Registro
+        JOIN 
+            Maquina ON Registro.fkMaquina = Maquina.idMaquina
+        JOIN 
+            Agencia ON Maquina.fkAgencia = Agencia.idAgencia
+        WHERE 
+            Registro.fkAlerta = (SELECT idAlerta FROM Alerta WHERE causa = 'Sobrecarga de CPU' AND gravidade = 'Alta')
+            AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
+        ORDER BY 
+            (Registro.usoAtual - Registro.capacidadeMax) DESC
+    ) AS subquery) AS "MediaPorcentagem"
+    FROM ( SELECT 
+        Agencia.numero AS "CodigoAgencia",
+        Maquina.idMaquina AS "NumeroMaquina",
+        Registro.capacidadeMax AS "TotalCapacidade",
+        Registro.usoAtual AS "ConsumoAtual",
+        (Registro.usoAtual / Registro.capacidadeMax) * 100 AS "Porcentagem"
+    FROM 
+        Registro
+    JOIN 
+        Maquina ON Registro.fkMaquina = Maquina.idMaquina
+    JOIN 
+        Agencia ON Maquina.fkAgencia = Agencia.idAgencia
+    WHERE 
+        Registro.fkAlerta = (SELECT idAlerta FROM Alerta WHERE causa = 'Sobrecarga de CPU' AND gravidade = 'Alta')
+        AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
+    ORDER BY 
+        (Registro.usoAtual - Registro.capacidadeMax) DESC
+) AS principal LIMIT 1;
   `;
 
   return database.executar(instrucao);
@@ -109,17 +142,50 @@ function altoConsumoCPU(banco) {
 
 function altoConsumoRAM(banco) {
   var instrucao = `
-  SELECT Agencia.numero AS "CodigoAgencia",
-       Maquina.idMaquina AS "NumeroMaquina",
-       Registro.capacidadeMax AS "TotalCapacidade",
-       Registro.usoAtual AS "ConsumoAtual"
-  FROM Registro
-    JOIN Maquina ON Registro.fkMaquina = Maquina.idMaquina
-    JOIN Agencia ON Maquina.fkAgencia = Agencia.idAgencia
-  WHERE Registro.fkAlerta = (SELECT idAlerta FROM Alerta WHERE causa = 'Memória insuficiente' AND gravidade = 'Alta')
-    AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
-  ORDER BY (Registro.usoAtual - Registro.capacidadeMax) DESC
-  LIMIT 1;
+  SELECT 
+  CodigoAgencia,
+  NumeroMaquina,
+  TotalCapacidade,
+  ConsumoAtual,
+  Porcentagem,
+  (SELECT AVG(Porcentagem) FROM (
+      -- Sua consulta principal aqui
+      SELECT 
+          Agencia.numero AS "CodigoAgencia",
+          Maquina.idMaquina AS "NumeroMaquina",
+          Registro.capacidadeMax AS "TotalCapacidade",
+          Registro.usoAtual AS "ConsumoAtual",
+          (Registro.usoAtual / Registro.capacidadeMax) * 100 AS "Porcentagem"
+      FROM 
+          Registro
+      JOIN 
+          Maquina ON Registro.fkMaquina = Maquina.idMaquina
+      JOIN 
+          Agencia ON Maquina.fkAgencia = Agencia.idAgencia
+      WHERE 
+          Registro.fkAlerta = (SELECT idAlerta FROM Alerta WHERE causa = 'Memória insuficiente' AND gravidade = 'Alta')
+          AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
+      ORDER BY 
+          (Registro.usoAtual - Registro.capacidadeMax) DESC
+  ) AS subquery) AS "MediaPorcentagem"
+  FROM ( SELECT 
+      Agencia.numero AS "CodigoAgencia",
+      Maquina.idMaquina AS "NumeroMaquina",
+      Registro.capacidadeMax AS "TotalCapacidade",
+      Registro.usoAtual AS "ConsumoAtual",
+      (Registro.usoAtual / Registro.capacidadeMax) * 100 AS "Porcentagem"
+  FROM 
+      Registro
+  JOIN 
+      Maquina ON Registro.fkMaquina = Maquina.idMaquina
+  JOIN 
+      Agencia ON Maquina.fkAgencia = Agencia.idAgencia
+  WHERE 
+      Registro.fkAlerta = (SELECT idAlerta FROM Alerta WHERE causa = 'Memória insuficiente' AND gravidade = 'Alta')
+      AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
+  ORDER BY 
+      (Registro.usoAtual - Registro.capacidadeMax) DESC
+) AS principal LIMIT 1;
   `;
 
   return database.executar(instrucao);

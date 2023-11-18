@@ -183,16 +183,17 @@
                             agencias_noc.innerHTML += `
                         <tr>
                             <td class="tg-baqh">${element.CodigoAgencia}</td>
-                            <td class="tg-baqh"><span class="alert-red">${element.TotalUsoCPU}%</span></td>
-                            <td class="tg-baqh"><span class "alert-yellow">${element.TotalUsoRAM}%</span></td>
+                            <td class="tg-baqh"><span class="alert-red" id="altaCPU${element.CodigoAgencia}"></span></td>
+                            <td class="tg-baqh"><span class "alert-yellow" id="altaRAM${element.CodigoAgencia}"></span></td>
                             <td class="tg-baqh"><span class="alert-red">${element.TotalUsoDisco}%</span></td>
                             <td class="tg-baqh">${element.MáquinasAcimaDe70Percent}</td>
                             <td class="tg-baqh">${element.TotalMaquinas}</td>
                         </tr>
                         `;
 
-                        
+
                             agenciaVar.push(element.CodigoAgencia);
+                            plotarGrafico(element.CodigoAgencia)
                         });
 
                         ListarMaquinas();
@@ -205,7 +206,7 @@
     }
 
 
-    window.onload = plotarGrafico(), validarSessao();
+    window.onload = validarSessao();
 
     function ListarMaquinas() {
         agenciaVar.forEach(agenciaNumero => {
@@ -221,20 +222,20 @@
                 if (resposta.ok) {
                     resposta.json().then(json => {
                         json.forEach(element => {
-                            var maquinasCompElement = document.getElementById(`maquinasComp${agenciaNumero}`);
-                            maquinasCompElement.innerHTML = `
-                                <div class="t-alerta">
-                                    <p class="i-maquina">Máquina ${element.idMaquina}</p>
-                                    <div class="horario">
-                                        <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                        <p class="horario_alerta">12:34</p>
-                                    </div>
-                                </div>
-                                <div class="b-alerta alert-blue">
-                                    <p class="elemento-alerta">CPU</p>
-                                    <p class="porcentagem-alerta">2%</p>
-                                </div>
-                            `;
+                            // var maquinasCompElement = document.getElementById(`maquinasComp${agenciaNumero}`);
+                            // maquinasCompElement.innerHTML = `
+                            //     <div class="t-alerta">
+                            //         <p class="i-maquina">Máquina ${element.idMaquina}</p>
+                            //         <div class="horario">
+                            //             <i class="fa fa-clock-o" aria-hidden="true"></i>
+                            //             <p class="horario_alerta">12:34</p>
+                            //         </div>
+                            //     </div>
+                            //     <div class="b-alerta alert-blue">
+                            //         <p class="elemento-alerta">CPU</p>
+                            //         <p class="porcentagem-alerta">2%</p>
+                            //     </div>
+                            // `;
                         });
                     });
                 }
@@ -244,7 +245,7 @@
     }
 
     let proximaAtualizacao;
-    function plotarGrafico() {
+    function plotarGrafico(codigoAgencia) {
         var banco = sessionStorage.BANCO;
 
         fetch("/dashboard/altoConsumoCPU", {
@@ -259,6 +260,12 @@
             if (resposta.ok) {
                 resposta.json().then(json => {
                     json.forEach(element => {
+                        var porcentagem = (element.MediaPorcentagem).toFixed(2)
+                        var altaCPU = document.getElementById(`altaCPU${codigoAgencia}`);
+                        altaCPU.innerHTML = `
+                        ${porcentagem}%
+                        `;
+
                         altoConsumoCPU.innerHTML = `
                         <div class="left-bottom-card">
                             <h1 class="agencia-text">Agência</h1>
@@ -271,13 +278,13 @@
                         </div>
                         `;
 
-                        var Total = ((element.ConsumoAtual / element.TotalCapacidade) * 100)
+
                         const data = {
                             labels: []
                             ,
                             datasets: [{
                                 label: 'Consumo geral de CPU',
-                                data: [Total, (Total - 100)],
+                                data: [porcentagem, (porcentagem - 100)],
                                 backgroundColor: [
                                     'rgb(158, 106, 225)',
                                     'rgb(241, 241, 244)'
@@ -324,6 +331,12 @@
             if (resposta.ok) {
                 resposta.json().then(json => {
                     json.forEach(element => {
+                        var porcentagem = (element.MediaPorcentagem).toFixed(2)
+                        var altaRAM = document.getElementById(`altaRAM${codigoAgencia}`);
+                        altaRAM.innerHTML = `
+                        ${porcentagem}%
+                        `;
+
                         altoConsumoRAM.innerHTML = `
                         <div class="left-bottom-card">
                             <h1 class="agencia-text">Agência</h1>
@@ -352,13 +365,11 @@
                             }
                         };
 
-                        var Total = ((element.ConsumoAtual / element.TotalCapacidade) * 100)
-                        console.log(Total)
                         const dataDoughnut1 = {
                             labels: [],
                             datasets: [{
                                 label: 'Consumo geral de CPU',
-                                data: [Total, (Total - 100)],
+                                data: [porcentagem, (porcentagem - 100)],
                                 backgroundColor: [
                                     'rgb(158, 106, 225)',
                                     'rgb(241, 241, 244)'
