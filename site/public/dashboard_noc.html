@@ -200,12 +200,10 @@
             window.location = "login.html";
         }
     }
-
     window.onload = validarSessao();
 
     function listarLocalizacao() {
         const empresa = sessionStorage.BANCO;
-
         agenciaVar.forEach(agenciaNumero => {
             fetch("/dashboard/listarLocalizacao", {
                 method: "POST",
@@ -220,11 +218,10 @@
                     resposta.json().then(json => {
                         json.forEach(element => {
                             var localizacao = document.getElementById(`localizacao${element.idMaquina}`);
-
+                          
                             localizacao.innerHTML += `
                             Localização | ${element.endereco}
                             `;
-
                         });
                     });
                 }
@@ -470,7 +467,7 @@
                             <canvas id="myChart2"></canvas>
                         </div>
                         `;
-
+                      
                         // Criando estrutura para plotar gráfico - config
                         const dataDoughnut2 = {
                             labels: [],

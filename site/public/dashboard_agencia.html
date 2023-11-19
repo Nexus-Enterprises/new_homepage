@@ -115,9 +115,9 @@
         <div class="s-part">
             <div class="container-s-part">
                 <h1 class="title-container-s-part">Maquinas que mais utilizaram os componentes</h1>
-                <select id="agencias">
+                <!-- <select id="agencias">
                     <option value="" selected disabled>Maquinas</option>
-                </select>
+                </select> -->
                 <div class="container-alertas" id="container_alertas">
                 </div>
             </div>
@@ -169,9 +169,9 @@
                         select_maquinas.innerHTML += `
                             <option value="${e.idMaquina}">Maquina ${e.idMaquina}</option>
                             `
-                        agencias.innerHTML += `
-                            <option value="${e.idMaquina}">Maquina ${e.idMaquina}</option>
-                            `
+                        // agencias.innerHTML += `
+                        //     <option value="${e.idMaquina}">Maquina ${e.idMaquina}</option>
+                        //     `
                         listarStatusMaquinas(idMaq)
 
                         setTimeout(() => {
@@ -195,7 +195,7 @@
     var numMaqDisk = 0;
     var dataHoraDisk = '';
 
-    var arrayItems = []; // Declara a lista global
+    var arrayItems = [];
 
     function listarProcessos(idMaq) {
         var tabela_processos = document.getElementById('tabela_processos');
@@ -215,7 +215,7 @@
                     arrayItems = arrayItems.concat(json);
 
                     arrayItems.sort((a, b) => b.UsoCPU - a.UsoCPU);
-                    
+
                     tabela_processos.innerHTML = "";
 
                     arrayItems.forEach(e => {
@@ -248,6 +248,10 @@
     }
 
 
+    var listaDiscos = [];
+    var listaProcessadores = [];
+    var listaMemorias = [];
+    
     function listarStatusMaquinas(idMaquina) {
         var agencia = sessionStorage.AGENCIA;
         var banco = sessionStorage.BANCO;

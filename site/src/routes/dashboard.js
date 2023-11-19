@@ -69,9 +69,4 @@ router.post("/listarProcessos", function (req, res) {
   dashboardController.listarProcessos(req, res);
 });
 
-router.post("/listarLocalizacao", function (req, res) {
-  dashboardController.listarLocalizacao(req, res);
-});
-
-
 module.exports = router;
