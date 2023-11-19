@@ -403,8 +403,6 @@ ORDER BY Componente.idComponente;
 module.exports = {
   listarProcessos,
   listarMaquinasAg,
-  listarProcessos,
-  listarMaquinasAg,
   listarAgenciasNOC,
   listarMaquinas,
   altoConsumoCPU,
