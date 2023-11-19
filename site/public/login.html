@@ -7,6 +7,7 @@
     <title>Nexus - Login</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="./assets/img-nexus/favicon-32x32.png" type="image/x-icon">
     <link rel="stylesheet" href="./css/cadastro04.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/swiper@10.2.0/swiper-bundle.min.css" rel="stylesheet">
@@ -80,6 +81,7 @@
             console.log("ESTOU NO THEN DO entrar()!")
 
             if (resposta.status === 200) {
+                console.log(resposta);
                 resposta.json().then(element => {
                     sessionStorage.EMAIL_USUARIO = element.emailCorporativo;
                     sessionStorage.NOME_USUARIO = element.nome;
@@ -104,7 +106,7 @@
                     } else {
                         window.location = "dashboard_func.html";
                     }
-                }, 1000); // apenas para exibir o loading
+                }, 10); // apenas para exibir o loading
 
             } else {
                 console.log("Houve um erro ao tentar realizar o login!");

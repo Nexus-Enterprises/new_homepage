@@ -339,12 +339,17 @@ a:hover {
 }
 
 .full-tr {
-    max-width: 870px;
+    max-width: 900px;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
     padding-bottom: 10px;
     background-color: #1F1F1F;
-    margin-top: 20px;
+}
+
+.table-wrapper {
+    max-height: 435px; /* Defina a altura máxima desejada */
+    overflow-y: auto;
+    margin-top: 2vh;
 }
 
 .border {
@@ -380,10 +385,11 @@ a:hover {
 .container-s-part {
     background-color: #161616;
     max-width: 350px;
+    min-height: 80vh;
     max-height: 80vh;
     overflow-y: scroll;
     display: flex;
-    justify-content: center;
+
     flex-direction: column;
     align-items: center;
     gap: 20px;
@@ -407,8 +413,8 @@ a:hover {
     text-align: left;
     padding: 10px 30px;
     max-width: 220px;
+    min-width: 220px;
     text-align: center;
-
 }
 
 .alerta-agencia {
@@ -427,14 +433,15 @@ a:hover {
     flex-direction: column;
     max-width: 280px;
     border-radius: 10px;
+    min-width: 280px;
 }
 
 .t-alerta {
     display: flex;
     gap: 10px;
-    padding-left: 20px;
     margin: 10px;
     border-radius: 10px;
+    justify-content: space-evenly;
 }
 
 .horario {
@@ -456,7 +463,6 @@ a:hover {
 .title-container-s-part {
     font-size: 20px;
     text-align: center;
-    margin-top: 35vh;
 }
 
 
@@ -472,14 +478,8 @@ a:hover {
     border-radius: 11px;
     border: 1px solid #d6d6d6;
     background-color: #454545;
-    width: 90%;
+    width: 96%;
     text-indent: 2px;
-}
-
-
-.lista_maquinas {
-    width: 93%;
-    margin: 0;
 }
 
 #agencias:hover,
@@ -519,7 +519,7 @@ a:hover {
     display: flex;
     gap: 20px;
     overflow-x: scroll;
-    max-width: 870px;
+    max-width: 900px;
     padding: 0 0 20px 0;
 }
 
@@ -1139,6 +1139,14 @@ a:hover {
     font-weight: bold;
     color: rgba(255, 255, 255, 40%);
     margin-right: 100px;
+}
+
+.hidden {
+    display: none;
+}
+
+.show{
+    display: flex;
 }
 
 .num-maquina{
