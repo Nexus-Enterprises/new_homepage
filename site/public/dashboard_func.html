@@ -23,8 +23,8 @@
             <h2 class="left_side_title">Nexus.</h2>
         </div>
         <div class="left-side">
-            <div class="num-funcional">Agência 001</div>
-            <div class="num-maquina">Máquina 001</div>
+            <div class="num-funcional" id="agenciaFunc">Agência 0</div>
+            <div class="num-maquina" id="maquinaFunc">Máquina 00</div>
         </div>
         <div class="right-side">
             <div class="container-status">
@@ -139,86 +139,8 @@
             <div class="s-part">
                 <div class="container-s-part3">
                     <h1 class="title-container-s-part2">Tarefas em Primeiro Plano</h1>
-                    <div class="container-alertas2">
+                    <div class="container-alertas2" id="alertaAtual">
                         <div class="alerta2">
-                            <div class="t-alerta">
-                                <p class="i-maquina">Nome Tarefa</p>
-                                <div class="horario">
-                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                    <p class="horario_alerta">12:34</p>
-                                </div>
-                            </div>
-                            <div class="b-alerta alert-blue">
-                                <p class="elemento-alerta">CPU</p>
-                                <p class="porcentagem-alerta">20%</p>
-                            </div>
-                        </div>
-                        <div class="alerta2">
-                            <div class="t-alerta">
-                                <p class="i-maquina">Nome Tarefa</p>
-                                <div class="horario">
-                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                    <p class="horario_alerta">12:34</p>
-                                </div>
-                            </div>
-                            <div class="b-alerta alert-red">
-                                <p class="elemento-alerta">RAM</p>
-                                <p class="porcentagem-alerta">90%</p>
-                            </div>
-                        </div>
-                        <div class="alerta2">
-                            <div class="t-alerta">
-                                <p class="i-maquina">Nome Tarefa</p>
-                                <div class="horario">
-                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                    <p class="horario_alerta">12:34</p>
-                                </div>
-                            </div>
-                            <div class="b-alerta alert-yellow">
-                                <p class="elemento-alerta">DISCO</p>
-                                <p class="porcentagem-alerta">30%</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container-alertas">
-                        <div class="alerta2">
-                            <div class="t-alerta">
-                                <p class="i-maquina">Nome Tarefa</p>
-                                <div class="horario">
-                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                    <p class="horario_alerta">12:34</p>
-                                </div>
-                            </div>
-                            <div class="b-alerta alert-red">
-                                <p class="elemento-alerta">CPU</p>
-                                <p class="porcentagem-alerta">90%</p>
-                            </div>
-                        </div>
-                        <div class="alerta2">
-                            <div class="t-alerta">
-                                <p class="i-maquina">Nome Tarefa</p>
-                                <div class="horario">
-                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                    <p class="horario_alerta">12:34</p>
-                                </div>
-                            </div>
-                            <div class="b-alerta alert-red">
-                                <p class="elemento-alerta">RAM</p>
-                                <p class="porcentagem-alerta">90%</p>
-                            </div>
-                        </div>
-                        <div class="alerta2">
-                            <div class="t-alerta">
-                                <p class="i-maquina">Nome Tarefa</p>
-                                <div class="horario">
-                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                    <p class="horario_alerta">12:34</p>
-                                </div>
-                            </div>
-                            <div class="b-alerta alert-red">
-                                <p class="elemento-alerta">DISCO</p>
-                                <p class="porcentagem-alerta">90%</p>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -238,9 +160,15 @@
     function validarSessao() {
         var nome = sessionStorage.NOME_USUARIO;
         var sobrenome = sessionStorage.SOBRENOME;
+        var agencia = sessionStorage.AGENCIA;
+        var maquina =  sessionStorage.ID_MAQUINA;
+
+        console.log(maquina);
 
         if (nome != null) {
             name_user.innerHTML = `${nome} ${sobrenome}`;
+            agenciaFunc.innerHTML += `${agencia}`;
+            maquinaFunc.innerHTML += `${maquina}`;
         } else {
             window.location = "login.html";
         }
@@ -269,7 +197,7 @@
 
     let proximaAtualizacao;
 
-    window.onload = validarSessao(), listarConsumoMaquina();
+    window.onload = validarSessao(), listarConsumoMaquina(), listarTarefas(), verificarAgilidade();
 
     function plotarGrafico() {
         var banco = sessionStorage.BANCO;
@@ -603,13 +531,16 @@
 
                 resposta.json().then(json => {
                     json.forEach(element => {
-                        console.log(element);
                         ultimoRegistro.innerHTML = `
                     <div class="titulo"">
                     <h2>Gráfico de Desempenho de Recursos da Máquina</h2>
                     </div>
                     <canvas id="myChart3"></canvas>
                     `
+
+                        var totalCapacidade = element.CapacidadeMaxima;
+                        var usoAtual= element.UsoAtual;
+                        var porcetagemAtual = Math.round((usoAtual * 100) / totalCapacidade);
 
                         const now = new Date();
                         const currentHour = now.getHours();
@@ -619,15 +550,15 @@
                         }
 
                         if (element.NomeComponente.includes("Processador")) {
-                            cpu.push(element.UsoAtual)
+                            cpu.push(porcetagemAtual)
                         }
 
                         if (element.NomeComponente.includes("Disco rígido")) {
-                            disco.push(element.UsoAtual)
+                            disco.push(porcetagemAtual)
                         }
 
                         if (element.NomeComponente.includes("Memória RAM")) {
-                            ram.push(element.UsoAtual)
+                            ram.push(porcetagemAtual)
                         }
 
                     });
@@ -724,7 +655,7 @@
                     );
 
                     atualizarGrafico(dataLine);
-                    setTimeout(capturarRegistroComponente, 10000);
+                    // setTimeout(capturarRegistroComponente, 10000);
                 });
 
 
@@ -733,119 +664,354 @@
 
     }
 
+    // ------------------------ PRIMEIRO PLANO -------------------------
 
-    window.onload = teste();
+    function listarTarefas() {
+        var banco = sessionStorage.BANCO;
+        var agencia = sessionStorage.AGENCIA;
+        var funcionario = sessionStorage.ID_FUNCIONARIO;
 
-
-    // --------------------VELOCIMETRO--------------------------
-    function teste() {
-
-        // setup
-        const data = {
-            labels: ["Bom", "Ok", "Ruim"],
-            datasets: [
-                {
-                    label: "Gauge",
-                    data: [100, 65, 35],
-                    backgroundColor: [
-                        "rgba(255, 26, 104, 0.8)",
-                        "rgba(255, 206, 86, 0.8)",
-                        "rgba(75, 192, 192, 0.8)",
-                    ],
-                    needleValue: 70,
-                    borderColor: "white",
-                    borderWidth: 0,
-                    cutout: "70%",
-                    circumference: 180,
-                    rotation: 270,
-                    borderRadius: 1,
-
-                },
-            ],
-        };
-
-
-
-        //gaugeNeedle
-        const gaugeNeedle = {
-            id: "gaugeNeedle",
-            afterDatasetDraw(chart, args, options) {
-                const {
-                    ctx,
-                    config,
-                    data,
-                    chartArea: { top, right, bottom, left, width, height },
-                } = chart;
-                ctx.save();
-                const needleValue = data.datasets[0].needleValue;
-                const dataTotal = data.datasets[0].data.reduce((a, b) => a + b, 0);
-
-                if (needleValue >= 0 && needleValue <= 100) {
-                    var angle = Math.PI + (needleValue / 100) * Math.PI;
-                } else {
-                    var angle = 0;
-                }
-
-                const cx = width / 2;
-                const cy = chart._metasets[0].data[0].y;
-
-                //needle
-                ctx.translate(cx, cy);
-                ctx.rotate(angle);
-                ctx.beginPath();
-                ctx.moveTo(0, -10);
-                ctx.lineTo(height - ctx.canvas.offsetTop + 15, 0); // change 160 value if the needle size gets changed
-                ctx.lineTo(0, 10);
-                ctx.fillStyle = "#444";
-                ctx.fill();
-                //needle dot -- bolinha do ponteiro
-                ctx.translate(-cx, -cy);
-                ctx.beginPath();
-                ctx.arc(cx, cy, 10, 0, 10);
-                ctx.fill();
-                ctx.restore();
-
-                //text
-                ctx.font = "bold 30px Poppins";
-                ctx.fillStyle = "white";
-                ctx.fillText(needleValue + "%", cx, cy + 50);
-                ctx.font = "bold 12px Poppins";
-                ctx.fillText("Pessimo", 25, cy + 40);
-                // ctx.fillText("OK", cx, 90);
-                // ctx.fillText("Ruim", cx + 185, 200); // change values if the position gets changed
-                ctx.fillText("Bom", cx + 130, 265); // change values if the position gets changed
-                ctx.textAlign = "center";
-                ctx.restore();
+        fetch("/dashboard/ultimasTarefas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
             },
-        };
-        // config
-        const config = {
-            type: "doughnut",
-            data,
-            options: {
-                plugins: {
-                    legend: {
-                        display: false,
-                    },
-                    tooltip: {
-                        yAlign: "bottom",
-                        displayColors: false,
-                        callbacks: {
-                            label: function (tooltipItem, data, value) {
-                                return tooltipItem.label;
-                            },
-                        },
-                    },
-                },
-            },
-            plugins: [gaugeNeedle],
-        };
-        
-        const myChart4 = new Chart(
-            document.getElementById('gauge'),
-            config
-        );
+            body: JSON.stringify({
+                bancoServer: banco,
+                agenciaServer: agencia,
+                funcionarioServer: funcionario,
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                resposta.json().then(json => {
+                    var i = 0;
+                    json.forEach(element => {
+                        var totalCapacidade = element.CapacidadeMaxima;
+                        var usoAtualRAM = element.UsoAtualRAM;
+                        var usoAtualDisco = element.UsoAtualDisco;
+                        var usoAtualCPU = element.UsoAtualCPU;
+
+                        alertaAtual.innerHTML += `
+                            <div class="alerta2">
+                            <div class="t-alerta" id="listaTarefas${i}">
+                            </div>
+                            <div class="b-alerta " id="alerta${i}">
+                            </div>
+                            </div>
+                            `
+                        if (element.NomeComponente === "Memória RAM") {
+                            var porcetagemAtual = Math.round((usoAtualRAM * 100) / totalCapacidade);
+
+                            if (porcetagemAtual <= 50) {
+                                var tarefaDaVez = document.querySelector(`#listaTarefas${i}`);
+                                tarefaDaVez.innerHTML = `
+                                        <p class="i-maquina">${element.NomeProcesso}</p>
+                                        <div class="horario">
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                            <p class="horario_alerta">${element.DataHora}</p>
+                                        </div>
+                                    `;
+                                document.querySelector(`#alerta${i}`).classList.add("alert-blue");
+                                document.querySelector(`#alerta${i}`).innerHTML = `
+                                        <p class="elemento-alerta">RAM</p>
+                                        <p class="porcentagem-alerta">${porcetagemAtual}%</p>
+                                    `
+                                document.querySelector(`#alerta${i}`).classList.remove("alert-yellow");
+                                document.querySelector(`#alerta${i}`).classList.remove("alert-red");
+
+                            } else if (porcetagemAtual > 50 && porcetagemAtual <= 75) {
+                                var tarefaDaVez = document.querySelector(`#listaTarefas${i}`);
+                                tarefaDaVez.innerHTML = `
+                                        <p class="i-maquina">${element.NomeProcesso}</p>
+                                        <div class="horario">
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                            <p class="horario_alerta">${element.DataHora}</p>
+                                        </div>
+                                    `;
+                                document.querySelector(`#alerta${i}`).classList.add("alert-yellow");
+                                document.querySelector(`#alerta${i}`).innerHTML = `
+                                        <p class="elemento-alerta">RAM</p>
+                                        <p class="porcentagem-alerta">${porcetagemAtual}%</p>
+                                    `
+                                document.querySelector(`#alerta${i}`).classList.remove("alert-blue");
+                                document.querySelector(`#alerta${i}`).classList.remove("alert-red");
+                            } else if (porcetagemAtual > 75) {
+                                var tarefaDaVez = document.querySelector(`#listaTarefas${i}`);
+                                tarefaDaVez.innerHTML = `
+                                        <p class="i-maquina">${element.NomeProcesso}</p>
+                                        <div class="horario">
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                            <p class="horario_alerta">${element.DataHora}</p>
+                                        </div>
+                                    `;
+                                document.querySelector(`#alerta${i}`).classList.add("alert-red");
+                                document.querySelector(`#alerta${i}`).innerHTML = `
+                                        <p class="elemento-alerta">RAM</p>
+                                        <p class="porcentagem-alerta">${porcetagemAtual}%</p>
+                                    `
+                                document.querySelector(`#alerta${i}`).classList.remove("alert-yellow");
+                                document.querySelector(`#alerta${i}`).classList.remove("alert-blue");
+                            }
+
+                        } else if (element.NomeComponente === "Disco rígido") {
+                            var porcetagemAtual = Math.round((usoAtualDisco * 100) / totalCapacidade);
+
+                            if (porcetagemAtual <= 50) {
+                                var tarefaDaVez = document.querySelector(`#listaTarefas${i}`);
+                                tarefaDaVez.innerHTML = `
+                                        <p class="i-maquina">${element.NomeProcesso}</p>
+                                        <div class="horario">
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                            <p class="horario_alerta">${element.DataHora}</p>
+                                        </div>
+                                    `;
+                                document.querySelector(`#alerta${i}`).classList.add("alert-blue");
+                                document.querySelector(`#alerta${i}`).innerHTML = `
+                                        <p class="elemento-alerta">DISCO</p>
+                                        <p class="porcentagem-alerta">${porcetagemAtual}%</p>
+                                    `
+                                document.querySelector(`#alerta${i}`).classList.remove("alert-yellow");
+                                document.querySelector(`#alerta${i}`).classList.remove("alert-red");
+
+                            } else if (porcetagemAtual > 50 && porcetagemAtual <= 75) {
+                                var tarefaDaVez = document.querySelector(`#listaTarefas${i}`);
+                                tarefaDaVez.innerHTML = `
+                                        <p class="i-maquina">${element.NomeProcesso}</p>
+                                        <div class="horario">
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                            <p class="horario_alerta">${element.DataHora}</p>
+                                        </div>
+                                    `;
+                                document.querySelector(`#alerta${i}`).classList.add("alert-yellow");
+                                document.querySelector(`#alerta${i}`).innerHTML = `
+                                        <p class="elemento-alerta">DISCO</p>
+                                        <p class="porcentagem-alerta">${porcetagemAtual}%</p>
+                                    `
+                                document.querySelector(`#alerta${i}`).classList.remove("alert-blue");
+                                document.querySelector(`#alerta${i}`).classList.remove("alert-red");
+                            } else if (porcetagemAtual > 75) {
+                                var tarefaDaVez = document.querySelector(`#listaTarefas${i}`);
+                                tarefaDaVez.innerHTML = `
+                                        <p class="i-maquina">${element.NomeProcesso}</p>
+                                        <div class="horario">
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                            <p class="horario_alerta">${element.DataHora}</p>
+                                        </div>
+                                    `;
+                                document.querySelector(`#alerta${i}`).classList.add("alert-red");
+                                document.querySelector(`#alerta${i}`).innerHTML = `
+                                        <p class="elemento-alerta">DISCO</p>
+                                        <p class="porcentagem-alerta">${porcetagemAtual}%</p>
+                                    `
+                                document.querySelector(`#alerta${i}`).classList.remove("alert-yellow");
+                                document.querySelector(`#alerta${i}`).classList.remove("alert-blue");
+                            }
+
+                        } else if (element.NomeComponente === "Processador") {
+                            var porcetagemAtual = Math.round((usoAtualDisco * 100) / totalCapacidade);
+
+                            if (porcetagemAtual <= 50) {
+                                var tarefaDaVez = document.querySelector(`#listaTarefas${i}`);
+                                tarefaDaVez.innerHTML = `
+                                        <p class="i-maquina">${element.NomeProcesso}</p>
+                                        <div class="horario">
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                            <p class="horario_alerta">${element.DataHora}</p>
+                                        </div>
+                                    `;
+                                document.querySelector(`#alerta${i}`).classList.add("alert-blue");
+                                document.querySelector(`#alerta${i}`).innerHTML = `
+                                        <p class="elemento-alerta">CPU</p>
+                                        <p class="porcentagem-alerta">${porcetagemAtual}%</p>
+                                    `
+                                document.querySelector(`#alerta${i}`).classList.remove("alert-yellow");
+                                document.querySelector(`#alerta${i}`).classList.remove("alert-red");
+
+                            } else if (porcetagemAtual > 50 && porcetagemAtual <= 75) {
+                                var tarefaDaVez = document.querySelector(`#listaTarefas${i}`);
+                                tarefaDaVez.innerHTML = `
+                                        <p class="i-maquina">${element.NomeProcesso}</p>
+                                        <div class="horario">
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                            <p class="horario_alerta">${element.DataHora}</p>
+                                        </div>
+                                    `;
+                                document.querySelector(`#alerta${i}`).classList.add("alert-yellow");
+                                document.querySelector(`#alerta${i}`).innerHTML = `
+                                        <p class="elemento-alerta">CPU</p>
+                                        <p class="porcentagem-alerta">${porcetagemAtual}%</p>
+                                    `
+                                document.querySelector(`#alerta${i}`).classList.remove("alert-blue");
+                                document.querySelector(`#alerta${i}`).classList.remove("alert-red");
+                            } else if (porcetagemAtual > 75) {
+                                var tarefaDaVez = document.querySelector(`#listaTarefas${i}`);
+                                tarefaDaVez.innerHTML = `
+                                        <p class="i-maquina">${element.NomeProcesso}</p>
+                                        <div class="horario">
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                            <p class="horario_alerta">${element.DataHora}</p>
+                                        </div>
+                                    `;
+                                document.querySelector(`#alerta${i}`).classList.add("alert-red");
+                                document.querySelector(`#alerta${i}`).innerHTML = `
+                                        <p class="elemento-alerta">CPU</p>
+                                        <p class="porcentagem-alerta">${porcetagemAtual}%</p>
+                                    `
+                                document.querySelector(`#alerta${i}`).classList.remove("alert-yellow");
+                                document.querySelector(`#alerta${i}`).classList.remove("alert-blue");
+                            }
+
+                        }
+                        i++;
+                    })
+                });
+            }
+        });
     }
 
+    // ------------------------ VELOCIMETRO -------------------------
+    function verificarAgilidade() {
+
+        var banco = sessionStorage.BANCO;
+        var agencia = sessionStorage.AGENCIA;
+        var funcionario = sessionStorage.ID_FUNCIONARIO;
+
+        fetch("/dashboard/verificarAgilidade", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                bancoServer: banco,
+                agenciaServer: agencia,
+                funcionarioServer: funcionario,
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                resposta.json().then(json => {
+                    var usoAtual = 0;
+                    var totalCapacidade = 0;
+                    var velocidadeTotal = 0;
+                    json.forEach(element => {
+                        console.log(element);
+
+                        totalCapacidade += element.CapacidadeMaxima;
+
+                        usoAtual += element.UsoAtual;
+
+                        var porcetagemAtual = Math.round((usoAtual * 100) / totalCapacidade);
+
+                        velocidadeTotal = 100 - (porcetagemAtual / 200) * 100;
+
+                        console.log(porcetagemAtual);
+                        console.log(velocidadeTotal);
+                    })
+
+                    const data = {
+                        labels: ["Bom", "Ok", "Ruim"],
+                        datasets: [
+                            {
+                                label: "Gauge",
+                                data: [100, 65, 35],
+                                backgroundColor: [
+                                    "rgba(255, 26, 104, 0.8)",
+                                    "rgba(255, 206, 86, 0.8)",
+                                    "rgba(75, 192, 192, 0.8)",
+                                ],
+                                needleValue: velocidadeTotal,
+                                borderColor: "white",
+                                borderWidth: 0,
+                                cutout: "70%",
+                                circumference: 180,
+                                rotation: 270,
+                                borderRadius: 1,
+
+                            },
+                        ],
+                    };
+
+                    const gaugeNeedle = {
+                        id: "gaugeNeedle",
+                        afterDatasetDraw(chart, args, options) {
+                            const {
+                                ctx,
+                                config,
+                                data,
+                                chartArea: { top, right, bottom, left, width, height },
+                            } = chart;
+                            ctx.save();
+                            const needleValue = data.datasets[0].needleValue;
+                            const dataTotal = data.datasets[0].data.reduce((a, b) => a + b, 0);
+
+                            if (needleValue >= 0 && needleValue <= 100) {
+                                var angle = Math.PI + (needleValue / 100) * Math.PI;
+                            } else {
+                                var angle = 0;
+                            }
+
+                            const cx = width / 2;
+                            const cy = chart._metasets[0].data[0].y;
+
+                            ctx.translate(cx, cy);
+                            ctx.rotate(angle);
+                            ctx.beginPath();
+                            ctx.moveTo(0, -10);
+                            ctx.lineTo(height - ctx.canvas.offsetTop + 15, 0);
+                            ctx.lineTo(0, 10);
+                            ctx.fillStyle = "#444";
+                            ctx.fill();
+                            //needle dot -- bolinha do ponteiro
+                            ctx.translate(-cx, -cy);
+                            ctx.beginPath();
+                            ctx.arc(cx, cy, 10, 0, 10);
+                            ctx.fill();
+                            ctx.restore();
+
+                            //text
+                            ctx.font = "bold 30px Poppins";
+                            ctx.fillStyle = "white";
+                            ctx.fillText(needleValue + "%", cx, cy + 50);
+                            ctx.font = "bold 12px Poppins";
+                            ctx.fillText("Pessimo", 25, cy + 40);
+                            ctx.fillText("Bom", cx + 130, 265); // change values if the position gets changed
+                            ctx.textAlign = "center";
+                            ctx.restore();
+                        },
+                    };
+                    // config
+                    const config = {
+                        type: "doughnut",
+                        data,
+                        options: {
+                            plugins: {
+                                legend: {
+                                    display: false,
+                                },
+                                tooltip: {
+                                    yAlign: "bottom",
+                                    displayColors: false,
+                                    callbacks: {
+                                        label: function (tooltipItem, data, value) {
+                                            return tooltipItem.label;
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        plugins: [gaugeNeedle],
+                    };
+
+                    const myChart4 = new Chart(
+                        document.getElementById('gauge'),
+                        config
+                    );
+
+                    
+                },
+                // setTimeout(verificarAgilidade(), 10000)
+                );
+            }
+        });
+    }
 
 </script>

@@ -340,7 +340,6 @@ function verificarAgilidade(req, res) {
     }
   );
 }
-
 module.exports = {
   listarProcessos,
   listarAgenciasNOC,
