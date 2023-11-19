@@ -103,16 +103,7 @@
                         <h1 class="text-card">DISCO</h1>
                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                     </div>
-                    <div class="bottom-card">
-                        <div class="left-bottom-card">
-                            <h1 class="agencia-text">Agência</h1>
-                            <p class="num-agencia">0000001</p>
-                            <h1 class="maquina-text">Máquina</h1>
-                            <p class="num-maquina">00-1</p>
-                        </div>
-                        <div class="chartBox">
-                            <canvas id="myChart2"></canvas>
-                        </div>
+                    <div class="bottom-card" id="altoConsumoDisco">
                     </div>
                 </div>
             </div>
@@ -138,7 +129,7 @@
             <div class="container-s-part">
                 <h1 class="title-container-s-part">Maquinas que mais utilizaram os componentes</h1>
                 <select id="agencias">
-                    <option value="" selected disabled>Agencias</option>
+                    <option value="" selected>Agencias</option>
                 </select>
                 <div class="container-alertas" id="agenciaComp">
                 </div>
@@ -183,9 +174,9 @@
                             agencias_noc.innerHTML += `
                         <tr>
                             <td class="tg-baqh">${element.CodigoAgencia}</td>
-                            <td class="tg-baqh"><span class="alert-red">${element.TotalUsoCPU}%</span></td>
-                            <td class="tg-baqh"><span class "alert-yellow">${element.TotalUsoRAM}%</span></td>
-                            <td class="tg-baqh"><span class="alert-red">${element.TotalUsoDisco}%</span></td>
+                            <td class="tg-baqh"><span class="alert-red" id="altaCPU${element.CodigoAgencia}"></span></td>
+                            <td class="tg-baqh"><span class "alert-yellow" id="altaRAM${element.CodigoAgencia}"></span></td>
+                            <td class="tg-baqh"><span class="alert-red" id="altaDisco${element.CodigoAgencia}"></span></td>
                             <td class="tg-baqh">${element.MáquinasAcimaDe70Percent}</td>
                             <td class="tg-baqh">${element.TotalMaquinas}</td>
                         </tr>
@@ -193,11 +184,12 @@
                             agenciaComp.innerHTML += `
                         <div class="alerta-agencia">Agência ${element.CodigoAgencia}</div>
                         `;
-                        agenciaComp.innerHTML += `
+                            agenciaComp.innerHTML += `
                         <div class="alerta" id="maquinasComp${element.CodigoAgencia}">
                         </div>
                         `;
                             agenciaVar.push(element.CodigoAgencia);
+                            plotarGrafico(element.CodigoAgencia)
                         });
                         ListarMaquinas();
                         listarLocalizacao();
@@ -208,14 +200,10 @@
             window.location = "login.html";
         }
     }
-    
-    
-    window.onload = plotarGrafico(), validarSessao();
-   
-    var endereco = []
+    window.onload = validarSessao();
+
     function listarLocalizacao() {
         const empresa = sessionStorage.BANCO;
-
         agenciaVar.forEach(agenciaNumero => {
             fetch("/dashboard/listarLocalizacao", {
                 method: "POST",
@@ -230,11 +218,10 @@
                     resposta.json().then(json => {
                         json.forEach(element => {
                             var localizacao = document.getElementById(`localizacao${element.idMaquina}`);
-
+                          
                             localizacao.innerHTML += `
                             Localização | ${element.endereco}
                             `;
-
                         });
                     });
                 }
@@ -276,12 +263,28 @@
                 }
             });
         });
-
     }
 
     let proximaAtualizacao;
-    function plotarGrafico() {
+    function plotarGrafico(codigoAgencia) {
         var banco = sessionStorage.BANCO;
+
+        const doughnutLabel = {
+            id: 'doughtnutLabel',
+            beforeDatasetsDraw(chart, args, pluginOptions) {
+                const { ctx, data } = chart;
+
+                ctx.save();
+                const xCoor = chart.getDatasetMeta(0).data[0].x;
+                const yCoor = chart.getDatasetMeta(0).data[0].y;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle'
+                ctx.font = 'bold 15px Poppins';
+                ctx.fillStyle = 'rgb(241, 241, 244)';
+                ctx.fillText(`${data.datasets[0].data[0]}%`, xCoor, yCoor);
+
+            }
+        }
 
         fetch("/dashboard/altoConsumoCPU", {
             method: "POST",
@@ -295,6 +298,12 @@
             if (resposta.ok) {
                 resposta.json().then(json => {
                     json.forEach(element => {
+                        var porcentagem = (element.MediaPorcentagem).toFixed(2)
+                        var altaCPU = document.getElementById(`altaCPU${codigoAgencia}`);
+                        altaCPU.innerHTML = `
+                        ${porcentagem}%
+                        `;
+
                         altoConsumoCPU.innerHTML = `
                         <div class="left-bottom-card">
                             <h1 class="agencia-text">Agência</h1>
@@ -307,13 +316,12 @@
                         </div>
                         `;
 
-                        var Total = ((element.ConsumoAtual / element.TotalCapacidade) * 100)
                         const data = {
                             labels: []
                             ,
                             datasets: [{
                                 label: 'Consumo geral de CPU',
-                                data: [Total, (Total - 100)],
+                                data: [porcentagem, (porcentagem - 100)],
                                 backgroundColor: [
                                     'rgb(158, 106, 225)',
                                     'rgb(241, 241, 244)'
@@ -360,6 +368,12 @@
             if (resposta.ok) {
                 resposta.json().then(json => {
                     json.forEach(element => {
+                        var porcentagem = (element.MediaPorcentagem).toFixed(2)
+                        var altaRAM = document.getElementById(`altaRAM${codigoAgencia}`);
+                        altaRAM.innerHTML = `
+                        ${porcentagem}%
+                        `;
+
                         altoConsumoRAM.innerHTML = `
                         <div class="left-bottom-card">
                             <h1 class="agencia-text">Agência</h1>
@@ -388,13 +402,11 @@
                             }
                         };
 
-                        var Total = ((element.ConsumoAtual / element.TotalCapacidade) * 100)
-                        console.log(Total)
                         const dataDoughnut1 = {
                             labels: [],
                             datasets: [{
                                 label: 'Consumo geral de CPU',
-                                data: [Total, (Total - 100)],
+                                data: [porcentagem, (porcentagem - 100)],
                                 backgroundColor: [
                                     'rgb(158, 106, 225)',
                                     'rgb(241, 241, 244)'
@@ -426,75 +438,88 @@
             }
         });
 
-        const doughnutLabel = {
-            id: 'doughtnutLabel',
-            beforeDatasetsDraw(chart, args, pluginOptions) {
-                const { ctx, data } = chart;
-
-                ctx.save();
-                const xCoor = chart.getDatasetMeta(0).data[0].x;
-                const yCoor = chart.getDatasetMeta(0).data[0].y;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle'
-                ctx.font = 'bold 15px Poppins';
-                ctx.fillStyle = 'rgb(241, 241, 244)';
-                ctx.fillText(`${data.datasets[0].data[0]}%`, xCoor, yCoor);
-
-            }
-        }
-
-        // Criando estrutura para plotar gráfico - config
-
-        const dataDoughnut2 = {
-            labels: [],
-            datasets: [{
-                label: 'Consumo geral de CPU',
-                data: [45, 55],
-                backgroundColor: [
-                    'rgb(158, 106, 225)',
-                    'rgb(241, 241, 244)'
-                ],
-                hoverOffset: 4
-            }]
-        };
-
-        const doughnutLabel2 = {
-            id: 'doughnutLabel',
-            beforeDatasetsDraw(chart, args, pluginOptions) {
-                const { ctx } = chart;
-
-                ctx.save();
-                const xCoor2 = chart.getDatasetMeta(0).data[0].x;
-                const yCoor2 = chart.getDatasetMeta(0).data[0].y;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle'
-                ctx.font = 'bold 15px Poppins';
-                ctx.fillStyle = 'rgb(241, 241, 244)';
-                ctx.fillText(`${dataDoughnut2.datasets[0].data[0]}%`, xCoor2, yCoor2);
-            }
-        };
-
-        // Criando estrutura para plotar gráfico - config
-        const configDoughnut2 = {
-            type: 'doughnut',
-            data: dataDoughnut2,
-            options: {
-                hoverBorderWidth: 0,
-                borderWidth: 0,
-                weight: 1,
-                cutout: 37,
-                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
-                showTooltips: false
+        fetch("/dashboard/altoConsumoDisco", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
             },
-            plugins: [doughnutLabel2]
-        };
+            body: JSON.stringify({
+                bancoServer: banco,
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                resposta.json().then(json => {
+                    json.forEach(element => {
+                        var porcentagem = (element.MediaPorcentagem).toFixed(2)
+                        var altaDisco = document.getElementById(`altaDisco${codigoAgencia}`);
+                        altaDisco.innerHTML = `
+                        ${porcentagem}%
+                        `;
 
-        const myChart2 = new Chart(
-            document.getElementById('myChart2'),
-            configDoughnut2
-        );
+                        altoConsumoDisco.innerHTML = `
+                        <div class="left-bottom-card">
+                            <h1 class="agencia-text">Agência</h1>
+                            <p class="num-agencia">${element.CodigoAgencia}</p>
+                            <h1 class="maquina-text">Máquina</h1>
+                            <p class="num-maquina">${element.NumeroMaquina}</p>
+                        </div>
+                        <div class="chartBox">
+                            <canvas id="myChart2"></canvas>
+                        </div>
+                        `;
+                      
+                        // Criando estrutura para plotar gráfico - config
+                        const dataDoughnut2 = {
+                            labels: [],
+                            datasets: [{
+                                label: 'Consumo geral de CPU',
+                                data: [porcentagem, (porcentagem - 100)],
+                                backgroundColor: [
+                                    'rgb(158, 106, 225)',
+                                    'rgb(241, 241, 244)'
+                                ],
+                                hoverOffset: 4
+                            }]
+                        };
 
+                        const doughnutLabel2 = {
+                            id: 'doughnutLabel',
+                            beforeDatasetsDraw(chart, args, pluginOptions) {
+                                const { ctx } = chart;
+
+                                ctx.save();
+                                const xCoor2 = chart.getDatasetMeta(0).data[0].x;
+                                const yCoor2 = chart.getDatasetMeta(0).data[0].y;
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle'
+                                ctx.font = 'bold 15px Poppins';
+                                ctx.fillStyle = 'rgb(241, 241, 244)';
+                                ctx.fillText(`${dataDoughnut2.datasets[0].data[0]}%`, xCoor2, yCoor2);
+                            }
+                        };
+
+                        // Criando estrutura para plotar gráfico - config
+                        const configDoughnut2 = {
+                            type: 'doughnut',
+                            data: dataDoughnut2,
+                            options: {
+                                hoverBorderWidth: 0,
+                                borderWidth: 0,
+                                weight: 1,
+                                cutout: 37,
+                                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
+                                showTooltips: false
+                            },
+                            plugins: [doughnutLabel2]
+                        };
+
+                        const myChart2 = new Chart(
+                            document.getElementById('myChart2'),
+                            configDoughnut2
+                        );
+                    });
+                });
+            }
+        });
     }
-
-
 </script>
