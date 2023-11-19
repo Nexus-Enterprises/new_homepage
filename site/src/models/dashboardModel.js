@@ -175,7 +175,6 @@ function listarMaquinasAg(agencia) {
 }
 
 function ultimosRegistros(banco, agencia, funcionario) {
-  console.log("entrei no registro");
   var instrucao = `
   SELECT 
   Componente.idComponente AS "IdComponente",
@@ -195,6 +194,51 @@ AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${ba
   return database.executar(instrucao);
 }
 
+function ultimasTarefas(banco, agencia, funcionario) {
+  var instrucao = `
+  SELECT DISTINCT
+  Componente.nome AS "NomeComponente",
+  Registro.capacidadeMax AS "CapacidadeMaxima",
+  Processo.nome AS "NomeProcesso",
+  Processo.usoAtualRAM AS "UsoAtualRAM",
+  Processo.usoAtualDisco AS "UsoAtualDisco",
+  Processo.usoAtualCPU AS "UsoAtualCPU",
+  TIME_FORMAT(Processo.dataHora, '%H:%i:%s') AS "DataHora"
+FROM Processo
+INNER JOIN Maquina ON Processo.fkMaquina = Maquina.idMaquina
+INNER JOIN Registro ON Maquina.idMaquina = Registro.fkMaquina
+INNER JOIN Componente ON Registro.fkComponente = Componente.idComponente
+INNER JOIN Agencia ON Maquina.fkAgencia = ${agencia}
+WHERE Maquina.idMaquina = 5
+AND Maquina.fkFuncionario = (SELECT idFuncionario FROM Funcionario WHERE idFuncionario = ${funcionario})
+AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
+ORDER BY Processo.usoAtualRAM, Processo.usoAtualDisco, Processo.usoAtualCPU DESC;
+  `;
+
+  return database.executar(instrucao);
+}
+
+
+function verificarAgilidade(banco, agencia, funcionario) {
+  var instrucao = `
+  SELECT DISTINCT
+  Componente.idComponente AS "IdComponente",
+  Componente.nome AS "NomeComponente",
+  AVG(Registro.capacidadeMax) AS "CapacidadeMaxima",
+  AVG(Registro.usoAtual) AS "UsoAtual"
+FROM Registro
+INNER JOIN Componente ON Registro.fkComponente = Componente.idComponente
+INNER JOIN Maquina ON Registro.fkMaquina = Maquina.idMaquina
+INNER JOIN Agencia ON Maquina.fkAgencia = ${agencia}
+WHERE Maquina.idMaquina = 5 AND Componente.idComponente = 1 OR Componente.idComponente = 2
+AND Maquina.fkFuncionario = (SELECT idFuncionario from Funcionario where idFuncionario = ${funcionario})
+AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
+GROUP BY Componente.idComponente, Componente.nome, Registro.capacidadeMax
+ORDER BY Componente.idComponente;
+`
+  return database.executar(instrucao);
+}
+
 module.exports = {
   listarAgenciasNOC,
   listarMaquinas,
@@ -207,4 +251,6 @@ module.exports = {
   statusMaquinas,
   listarMaquinasAg,
   ultimosRegistros,
+  ultimasTarefas,
+  verificarAgilidade,
 }

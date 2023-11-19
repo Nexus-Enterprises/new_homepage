@@ -47,6 +47,14 @@ router.post("/ultimosRegistros", function (req, res) {
   dashboardController.ultimosRegistros(req, res);
 });
 
+router.post("/ultimasTarefas", function (req, res) {
+  dashboardController.ultimasTarefas(req, res);
+});
+
+router.post("/verificarAgilidade", function (req, res) {
+  dashboardController.verificarAgilidade(req, res);
+});
+
 router.post("/cadastrar", function (req, res) {
   dashboardController.cadastrar(req, res);
 })
