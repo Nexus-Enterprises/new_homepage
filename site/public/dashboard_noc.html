@@ -218,10 +218,26 @@
                     resposta.json().then(json => {
                         json.forEach(element => {
                             var localizacao = document.getElementById(`localizacao${element.idMaquina}`);
-                          
-                            localizacao.innerHTML += `
-                            Localização | ${element.endereco}
-                            `;
+
+
+                            fetch(`http://api.ipstack.com/${element.endereco}?access_key=6cb3df8633d1fbbee18b56a24bfbfd01`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log(data);
+                                    if (data.city != "São Paulo") {
+
+                                        localizacao.innerHTML += `
+                                        Localização | <a style='color: red;'>${element.endereco}</a>
+                                        `;
+                                    } else {
+                                        localizacao.innerHTML += `
+                                        Localização | <a style="color: green;">${element.endereco}</a>
+                                        `;
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Erro ao obter a localizacao: ', error);
+                                })
                         });
                     });
                 }
@@ -285,26 +301,28 @@
 
             }
         }
+        agenciaVar.forEach(agenciaNumero => {
+            fetch("/dashboard/altoConsumoCPU", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    bancoServer: banco,
+                    agenciaServer: agenciaNumero
 
-        fetch("/dashboard/altoConsumoCPU", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                bancoServer: banco,
-            })
-        }).then(function (resposta) {
-            if (resposta.ok) {
-                resposta.json().then(json => {
-                    json.forEach(element => {
-                        var porcentagem = (element.MediaPorcentagem).toFixed(2)
-                        var altaCPU = document.getElementById(`altaCPU${codigoAgencia}`);
-                        altaCPU.innerHTML = `
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(json => {
+                        json.forEach(element => {
+                            var porcentagem = (element.MediaPorcentagem).toFixed(2)
+                            var altaCPU = document.getElementById(`altaCPU${agenciaNumero}`);
+                            altaCPU.innerHTML = `
                         ${porcentagem}%
                         `;
 
-                        altoConsumoCPU.innerHTML = `
+                            altoConsumoCPU.innerHTML = `
                         <div class="left-bottom-card">
                             <h1 class="agencia-text">Agência</h1>
                             <p class="num-agencia">${element.CodigoAgencia}</p>
@@ -316,65 +334,66 @@
                         </div>
                         `;
 
-                        const data = {
-                            labels: []
-                            ,
-                            datasets: [{
-                                label: 'Consumo geral de CPU',
-                                data: [porcentagem, (porcentagem - 100)],
-                                backgroundColor: [
-                                    'rgb(158, 106, 225)',
-                                    'rgb(241, 241, 244)'
-                                ],
-                                hoverOffset: 4
-                            }]
-                        };
+                            const data = {
+                                labels: []
+                                ,
+                                datasets: [{
+                                    label: 'Consumo geral de CPU',
+                                    data: [porcentagem, (porcentagem - 100)],
+                                    backgroundColor: [
+                                        'rgb(158, 106, 225)',
+                                        'rgb(241, 241, 244)'
+                                    ],
+                                    hoverOffset: 4
+                                }]
+                            };
 
-                        // Criando estrutura para plotar gráfico - config
-                        const config = {
-                            type: 'doughnut',
-                            data: data,
-                            options: {
-                                hoverBorderWidth: 0,
-                                borderWidth: 0,
-                                weight: 1,
-                                cutout: 37,
-                                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
-                                showTooltips: false
+                            // Criando estrutura para plotar gráfico - config
+                            const config = {
+                                type: 'doughnut',
+                                data: data,
+                                options: {
+                                    hoverBorderWidth: 0,
+                                    borderWidth: 0,
+                                    weight: 1,
+                                    cutout: 37,
+                                    events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
+                                    showTooltips: false
 
 
-                            },
-                            plugins: [doughnutLabel]
-                        };
+                                },
+                                plugins: [doughnutLabel]
+                            };
 
-                        const myChart = new Chart(
-                            document.getElementById('myChart'),
-                            config
-                        );
+                            const myChart = new Chart(
+                                document.getElementById('myChart'),
+                                config
+                            );
+                        });
                     });
-                });
-            }
-        });
+                }
+            });
 
-        fetch("/dashboard/altoConsumoRAM", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                bancoServer: banco,
-            })
-        }).then(function (resposta) {
-            if (resposta.ok) {
-                resposta.json().then(json => {
-                    json.forEach(element => {
-                        var porcentagem = (element.MediaPorcentagem).toFixed(2)
-                        var altaRAM = document.getElementById(`altaRAM${codigoAgencia}`);
-                        altaRAM.innerHTML = `
+            fetch("/dashboard/altoConsumoRAM", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    bancoServer: banco,
+                    agenciaServer: agenciaNumero
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(json => {
+                        json.forEach(element => {
+                            var porcentagem = (element.MediaPorcentagem).toFixed(2)
+                            var altaRAM = document.getElementById(`altaRAM${agenciaNumero}`);
+                            altaRAM.innerHTML = `
                         ${porcentagem}%
                         `;
 
-                        altoConsumoRAM.innerHTML = `
+                            altoConsumoRAM.innerHTML = `
                         <div class="left-bottom-card">
                             <h1 class="agencia-text">Agência</h1>
                             <p class="num-agencia">${element.CodigoAgencia}</p>
@@ -386,77 +405,78 @@
                         </div>
                         `;
 
-                        const doughnutLabel1 = {
-                            id: 'doughnutLabel',
-                            beforeDatasetsDraw(chart, args, pluginOptions) {
-                                const { ctx } = chart;
+                            const doughnutLabel1 = {
+                                id: 'doughnutLabel',
+                                beforeDatasetsDraw(chart, args, pluginOptions) {
+                                    const { ctx } = chart;
 
-                                ctx.save();
-                                const xCoor1 = chart.getDatasetMeta(0).data[0].x;
-                                const yCoor1 = chart.getDatasetMeta(0).data[0].y;
-                                ctx.textAlign = 'center';
-                                ctx.textBaseline = 'middle'
-                                ctx.font = 'bold 15px Poppins';
-                                ctx.fillStyle = 'rgb(241, 241, 244)';
-                                ctx.fillText(`${dataDoughnut1.datasets[0].data[0]}%`, xCoor1, yCoor1);
-                            }
-                        };
+                                    ctx.save();
+                                    const xCoor1 = chart.getDatasetMeta(0).data[0].x;
+                                    const yCoor1 = chart.getDatasetMeta(0).data[0].y;
+                                    ctx.textAlign = 'center';
+                                    ctx.textBaseline = 'middle'
+                                    ctx.font = 'bold 15px Poppins';
+                                    ctx.fillStyle = 'rgb(241, 241, 244)';
+                                    ctx.fillText(`${dataDoughnut1.datasets[0].data[0]}%`, xCoor1, yCoor1);
+                                }
+                            };
 
-                        const dataDoughnut1 = {
-                            labels: [],
-                            datasets: [{
-                                label: 'Consumo geral de CPU',
-                                data: [porcentagem, (porcentagem - 100)],
-                                backgroundColor: [
-                                    'rgb(158, 106, 225)',
-                                    'rgb(241, 241, 244)'
-                                ],
-                                hoverOffset: 4
-                            }]
-                        };
+                            const dataDoughnut1 = {
+                                labels: [],
+                                datasets: [{
+                                    label: 'Consumo geral de CPU',
+                                    data: [porcentagem, (porcentagem - 100)],
+                                    backgroundColor: [
+                                        'rgb(158, 106, 225)',
+                                        'rgb(241, 241, 244)'
+                                    ],
+                                    hoverOffset: 4
+                                }]
+                            };
 
-                        const configDoughnut1 = {
-                            type: 'doughnut',
-                            data: dataDoughnut1,
-                            options: {
-                                hoverBorderWidth: 0,
-                                borderWidth: 0,
-                                weight: 1,
-                                cutout: 37,
-                                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
-                                showTooltips: false
-                            },
-                            plugins: [doughnutLabel1]
-                        };
+                            const configDoughnut1 = {
+                                type: 'doughnut',
+                                data: dataDoughnut1,
+                                options: {
+                                    hoverBorderWidth: 0,
+                                    borderWidth: 0,
+                                    weight: 1,
+                                    cutout: 37,
+                                    events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
+                                    showTooltips: false
+                                },
+                                plugins: [doughnutLabel1]
+                            };
 
-                        const myChart1 = new Chart(
-                            document.getElementById('myChart1'),
-                            configDoughnut1
-                        );
+                            const myChart1 = new Chart(
+                                document.getElementById('myChart1'),
+                                configDoughnut1
+                            );
+                        });
                     });
-                });
-            }
-        });
+                }
+            });
 
-        fetch("/dashboard/altoConsumoDisco", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                bancoServer: banco,
-            })
-        }).then(function (resposta) {
-            if (resposta.ok) {
-                resposta.json().then(json => {
-                    json.forEach(element => {
-                        var porcentagem = (element.MediaPorcentagem).toFixed(2)
-                        var altaDisco = document.getElementById(`altaDisco${codigoAgencia}`);
-                        altaDisco.innerHTML = `
+            fetch("/dashboard/altoConsumoDisco", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    bancoServer: banco,
+                    agenciaServer: agenciaNumero
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(json => {
+                        json.forEach(element => {
+                            var porcentagem = (element.MediaPorcentagem).toFixed(2)
+                            var altaDisco = document.getElementById(`altaDisco${agenciaNumero}`);
+                            altaDisco.innerHTML = `
                         ${porcentagem}%
                         `;
 
-                        altoConsumoDisco.innerHTML = `
+                            altoConsumoDisco.innerHTML = `
                         <div class="left-bottom-card">
                             <h1 class="agencia-text">Agência</h1>
                             <p class="num-agencia">${element.CodigoAgencia}</p>
@@ -467,59 +487,60 @@
                             <canvas id="myChart2"></canvas>
                         </div>
                         `;
-                      
-                        // Criando estrutura para plotar gráfico - config
-                        const dataDoughnut2 = {
-                            labels: [],
-                            datasets: [{
-                                label: 'Consumo geral de CPU',
-                                data: [porcentagem, (porcentagem - 100)],
-                                backgroundColor: [
-                                    'rgb(158, 106, 225)',
-                                    'rgb(241, 241, 244)'
-                                ],
-                                hoverOffset: 4
-                            }]
-                        };
 
-                        const doughnutLabel2 = {
-                            id: 'doughnutLabel',
-                            beforeDatasetsDraw(chart, args, pluginOptions) {
-                                const { ctx } = chart;
+                            // Criando estrutura para plotar gráfico - config
+                            const dataDoughnut2 = {
+                                labels: [],
+                                datasets: [{
+                                    label: 'Consumo geral de CPU',
+                                    data: [porcentagem, (porcentagem - 100)],
+                                    backgroundColor: [
+                                        'rgb(158, 106, 225)',
+                                        'rgb(241, 241, 244)'
+                                    ],
+                                    hoverOffset: 4
+                                }]
+                            };
 
-                                ctx.save();
-                                const xCoor2 = chart.getDatasetMeta(0).data[0].x;
-                                const yCoor2 = chart.getDatasetMeta(0).data[0].y;
-                                ctx.textAlign = 'center';
-                                ctx.textBaseline = 'middle'
-                                ctx.font = 'bold 15px Poppins';
-                                ctx.fillStyle = 'rgb(241, 241, 244)';
-                                ctx.fillText(`${dataDoughnut2.datasets[0].data[0]}%`, xCoor2, yCoor2);
-                            }
-                        };
+                            const doughnutLabel2 = {
+                                id: 'doughnutLabel',
+                                beforeDatasetsDraw(chart, args, pluginOptions) {
+                                    const { ctx } = chart;
 
-                        // Criando estrutura para plotar gráfico - config
-                        const configDoughnut2 = {
-                            type: 'doughnut',
-                            data: dataDoughnut2,
-                            options: {
-                                hoverBorderWidth: 0,
-                                borderWidth: 0,
-                                weight: 1,
-                                cutout: 37,
-                                events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
-                                showTooltips: false
-                            },
-                            plugins: [doughnutLabel2]
-                        };
+                                    ctx.save();
+                                    const xCoor2 = chart.getDatasetMeta(0).data[0].x;
+                                    const yCoor2 = chart.getDatasetMeta(0).data[0].y;
+                                    ctx.textAlign = 'center';
+                                    ctx.textBaseline = 'middle'
+                                    ctx.font = 'bold 15px Poppins';
+                                    ctx.fillStyle = 'rgb(241, 241, 244)';
+                                    ctx.fillText(`${dataDoughnut2.datasets[0].data[0]}%`, xCoor2, yCoor2);
+                                }
+                            };
 
-                        const myChart2 = new Chart(
-                            document.getElementById('myChart2'),
-                            configDoughnut2
-                        );
+                            // Criando estrutura para plotar gráfico - config
+                            const configDoughnut2 = {
+                                type: 'doughnut',
+                                data: dataDoughnut2,
+                                options: {
+                                    hoverBorderWidth: 0,
+                                    borderWidth: 0,
+                                    weight: 1,
+                                    cutout: 37,
+                                    events: ["mouseout", "click", "touchstart", "touchmove", "touchend"],
+                                    showTooltips: false
+                                },
+                                plugins: [doughnutLabel2]
+                            };
+
+                            const myChart2 = new Chart(
+                                document.getElementById('myChart2'),
+                                configDoughnut2
+                            );
+                        });
                     });
-                });
-            }
-        });
+                }
+            });
+        })
     }
 </script>

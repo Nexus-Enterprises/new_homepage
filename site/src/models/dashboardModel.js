@@ -121,7 +121,7 @@ function listarMaquinasAg(agencia) {
   return database.executar(instrucao)
 }
 
-function altoConsumoCPU(banco) {
+function altoConsumoCPU(banco, agencia) {
   var instrucao = `
   SELECT 
     CodigoAgencia,
@@ -145,6 +145,7 @@ function altoConsumoCPU(banco) {
         WHERE 
             Registro.fkAlerta = (SELECT idAlerta FROM Alerta WHERE causa = 'Sobrecarga de CPU' AND gravidade = 'Alta')
             AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
+            AND Agencia.idAgencia = (SELECT idAgencia FROM Agencia WHERE numero = '${agencia}')
         ORDER BY 
             (Registro.usoAtual - Registro.capacidadeMax) DESC
     ) AS subquery) AS "MediaPorcentagem"
@@ -163,6 +164,7 @@ function altoConsumoCPU(banco) {
     WHERE 
         Registro.fkAlerta = (SELECT idAlerta FROM Alerta WHERE causa = 'Sobrecarga de CPU' AND gravidade = 'Alta')
         AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
+        AND Agencia.idAgencia = (SELECT idAgencia FROM Agencia WHERE numero = '${agencia}')
     ORDER BY 
         (Registro.usoAtual - Registro.capacidadeMax) DESC
 ) AS principal LIMIT 1;
@@ -171,7 +173,7 @@ function altoConsumoCPU(banco) {
   return database.executar(instrucao);
 }
 
-function altoConsumoRAM(banco) {
+function altoConsumoRAM(banco, agencia) {
   var instrucao = `
   SELECT 
   CodigoAgencia,
@@ -196,6 +198,7 @@ function altoConsumoRAM(banco) {
       WHERE 
           Registro.fkAlerta = (SELECT idAlerta FROM Alerta WHERE causa = 'Memória insuficiente' AND gravidade = 'Alta')
           AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
+          AND Agencia.idAgencia = (SELECT idAgencia FROM Agencia WHERE numero = '${agencia}')
       ORDER BY 
           (Registro.usoAtual - Registro.capacidadeMax) DESC
   ) AS subquery) AS "MediaPorcentagem"
@@ -214,6 +217,7 @@ function altoConsumoRAM(banco) {
   WHERE 
       Registro.fkAlerta = (SELECT idAlerta FROM Alerta WHERE causa = 'Memória insuficiente' AND gravidade = 'Alta')
       AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
+      AND Agencia.idAgencia = (SELECT idAgencia FROM Agencia WHERE numero = '${agencia}')
   ORDER BY 
       (Registro.usoAtual - Registro.capacidadeMax) DESC
 ) AS principal LIMIT 1;
@@ -222,7 +226,7 @@ function altoConsumoRAM(banco) {
   return database.executar(instrucao);
 }
 
-function altoConsumoDisco(banco) {
+function altoConsumoDisco(banco, agencia) {
   var instrucao = `
   SELECT 
   CodigoAgencia,
@@ -247,6 +251,7 @@ function altoConsumoDisco(banco) {
       WHERE 
           Registro.fkAlerta = (SELECT idAlerta FROM Alerta WHERE causa = 'Erro de disco rígido' AND gravidade = 'Alta')
           AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
+          AND Agencia.idAgencia = (SELECT idAgencia FROM Agencia WHERE numero = '${agencia}')
       ORDER BY 
           (Registro.usoAtual - Registro.capacidadeMax) DESC
   ) AS subquery) AS "MediaPorcentagem"
@@ -265,6 +270,7 @@ function altoConsumoDisco(banco) {
   WHERE 
       Registro.fkAlerta = (SELECT idAlerta FROM Alerta WHERE causa = 'Erro de disco rígido' AND gravidade = 'Alta')
       AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
+      AND Agencia.idAgencia = (SELECT idAgencia FROM Agencia WHERE numero = '${agencia}')
   ORDER BY 
       (Registro.usoAtual - Registro.capacidadeMax) DESC
 ) AS principal LIMIT 1;

@@ -118,8 +118,9 @@ function statusMaquinas(req, res) {
 
 function altoConsumoCPU(req, res) {
   const banco = req.body.bancoServer;
+  const agencia = req.body.agenciaServer;
 
-  dashboardModel.altoConsumoCPU(banco)
+  dashboardModel.altoConsumoCPU(banco, agencia)
   .then(function (resultado) {
     if (resultado.length > 0) {
       res.status(200).json(resultado);
@@ -137,8 +138,9 @@ function altoConsumoCPU(req, res) {
 
 function altoConsumoRAM(req, res) {
   const banco = req.body.bancoServer;
+  const agencia = req.body.agenciaServer;
 
-  dashboardModel.altoConsumoRAM(banco)
+  dashboardModel.altoConsumoRAM(banco, agencia)
   .then(function (resultado) {
     if (resultado.length > 0) {
       res.status(200).json(resultado);
@@ -156,8 +158,9 @@ function altoConsumoRAM(req, res) {
 
 function altoConsumoDisco(req, res) {
   const banco = req.body.bancoServer;
-
-  dashboardModel.altoConsumoDisco(banco)
+  const agencia = req.body.agenciaServer;
+  
+  dashboardModel.altoConsumoDisco(banco, agencia)
   .then(function (resultado) {
     if (resultado.length > 0) {
       res.status(200).json(resultado);
