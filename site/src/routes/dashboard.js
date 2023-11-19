@@ -19,6 +19,10 @@ router.post("/listarMaquinasAg", function (req, res) {
   dashboardController.listarMaquinasAg(req, res);
 });
 
+router.post("/listarMaquinasAg", function (req, res) {
+  dashboardController.listarMaquinasAg(req, res);
+});
+
 router.post("/altoConsumoCPU", function (req, res) {
   dashboardController.altoConsumoCPU(req, res);
 });

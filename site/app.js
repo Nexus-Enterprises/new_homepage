@@ -6,7 +6,7 @@ var cors = require("cors");
 var path = require("path");
 var PORTA = process.env.AMBIENTE_PROCESSO == "desenvolvimento" ? 3333 : 8080;
 
-var app = express();
+var app = express(3333);
 
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");

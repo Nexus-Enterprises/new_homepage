@@ -342,6 +342,7 @@ function verificarAgilidade(req, res) {
 }
 
 module.exports = {
+  listarProcessos,
   listarAgenciasNOC,
   listarMaquinas,
   altoConsumoCPU,
@@ -354,7 +355,6 @@ module.exports = {
   statusMaquinas,
   listarMaquinasAg,
   ultimosRegistros,
-  listarProcessos,
   listarLocalizacao,
   ultimasTarefas,
   verificarAgilidade,

@@ -107,6 +107,14 @@ function listarMaquinasAg(agencia) {
   return database.executar(instrucao)
 }
 
+function listarMaquinasAg(agencia) {
+  var instrucao = `
+  SELECT * FROM Maquina JOIN Agencia ON Maquina.fkAgencia = Agencia.idAgencia  WHERE Agencia.idAgencia = '${agencia}';
+  `;
+
+  return database.executar(instrucao)
+}
+
 function altoConsumoCPU(banco) {
   var instrucao = `
   SELECT 
@@ -393,6 +401,8 @@ ORDER BY Componente.idComponente;
 }
 
 module.exports = {
+  listarProcessos,
+  listarMaquinasAg,
   listarProcessos,
   listarMaquinasAg,
   listarAgenciasNOC,
