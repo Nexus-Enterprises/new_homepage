@@ -219,7 +219,6 @@
                         json.forEach(element => {
                             var localizacao = document.getElementById(`localizacao${element.idMaquina}`);
 
-
                             fetch(`http://api.ipstack.com/${element.endereco}?access_key=6cb3df8633d1fbbee18b56a24bfbfd01`)
                                 .then(response => response.json())
                                 .then(data => {
@@ -231,7 +230,7 @@
                                         `;
                                     } else {
                                         localizacao.innerHTML += `
-                                        Localização | <a style="color: green;">${element.endereco}</a>
+                                        Localização | <a style="color: white;">${element.endereco}</a>
                                         `;
                                     }
                                 })
@@ -261,14 +260,15 @@
                         json.forEach(element => {
                             var maquinasCompElement = document.getElementById(`maquinasComp${agenciaNumero}`);
                             maquinasCompElement.innerHTML += `
-                            <div class="alerta-location" id="localizacao${element.idMaquina}"></div>
+
                             <div class="t-alerta">
                                     <p class="i-maquina">Máquina ${element.idMaquina}</p>
                                     <div class="horario">
                                         <i class="fa fa-clock-o" aria-hidden="true"></i>
                                         <p class="horario_alerta">12:34</p>
                                         </div>
-                                        </div>
+                                    </div>
+                                <div class="b-alerta alert-locale" id="localizacao${element.idMaquina}"></div>
                                 <div class="b-alerta alert-blue">
                                     <p class="elemento-alerta">CPU</p>
                                     <p class="porcentagem-alerta">2%</p>
