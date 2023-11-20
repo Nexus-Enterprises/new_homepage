@@ -223,7 +223,7 @@
                         <tr>
                             <td class="tg-baqh">${e.fkMaquina}</td>
                             <td class="tg-baqh"><i><b>${e.NomeProcesso}</b></i></td>
-                            <td class="tg-baqh cpu"><span>${e.UsoCPU}%</span></td>
+                            <td class="tg-baqh cpu"><span>${Math.round(e.UsoCPU)}%</span></td>
                             <td class="tg-baqh">${e.DataHora}</td>
                         </tr>
                     `;
@@ -375,7 +375,7 @@
                         </div>
                         <div class="b-alerta alert-blue">
                             <p class="elemento-alerta">CPU</p>
-                            <p class="porcentagem-alerta">${procMoreUsed} %</p>
+                            <p class="porcentagem-alerta">${Math.round(procMoreUsed)} %</p>
                         </div>
                     </div>
                     <div class="alerta">
@@ -388,7 +388,7 @@
                         </div>
                         <div class="b-alerta alert-red">
                             <p class="elemento-alerta">RAM</p>
-                            <p class="porcentagem-alerta">${ramMoreUsed} GB</p>
+                            <p class="porcentagem-alerta">${Math.round(ramMoreUsed)} GB</p>
                         </div>
                     </div>
                     <div class="alerta">
@@ -401,7 +401,7 @@
                         </div>
                         <div class="b-alerta alert-yellow">
                             <p class="elemento-alerta">DISCO</p>
-                            <p class="porcentagem-alerta">${diskMoreUsed} GB</p>
+                            <p class="porcentagem-alerta">${Math.round(diskMoreUsed)} GB</p>
                         </div>
                     </div>
             `
