@@ -187,7 +187,7 @@
                 resposta.json().then(json => {
                     json.forEach(element => {
 
-                        if (element.SituacaoMaquina === "Ativo") {
+                        if (element.SituacaoMaquina === "Ativa") {
                             statusTeste.classList.add(`status-green`);
                             statusTeste.classList.remove(`status-yellow`);
                             statusTeste.classList.remove(`status-red`);
