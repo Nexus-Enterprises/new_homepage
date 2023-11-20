@@ -316,7 +316,7 @@
                 if (resposta.ok) {
                     resposta.json().then(json => {
                         json.forEach(element => {
-                            var porcentagem = (element.MediaPorcentagem).toFixed(2)
+                            var porcentagem = Math.round(element.MediaPorcentagem);
                             var altaCPU = document.getElementById(`altaCPU${agenciaNumero}`);
                             altaCPU.innerHTML = `
                         ${porcentagem}%
@@ -387,7 +387,7 @@
                 if (resposta.ok) {
                     resposta.json().then(json => {
                         json.forEach(element => {
-                            var porcentagem = (element.MediaPorcentagem).toFixed(2)
+                            var porcentagem = Math.round(element.MediaPorcentagem);
                             var altaRAM = document.getElementById(`altaRAM${agenciaNumero}`);
                             altaRAM.innerHTML = `
                         ${porcentagem}%
@@ -470,7 +470,7 @@
                 if (resposta.ok) {
                     resposta.json().then(json => {
                         json.forEach(element => {
-                            var porcentagem = (element.MediaPorcentagem).toFixed(2)
+                            var porcentagem = Math.round(element.MediaPorcentagem);
                             var altaDisco = document.getElementById(`altaDisco${agenciaNumero}`);
                             altaDisco.innerHTML = `
                         ${porcentagem}%
