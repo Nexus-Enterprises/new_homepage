@@ -19,12 +19,20 @@ router.post("/listarMaquinasAg", function (req, res) {
   dashboardController.listarMaquinasAg(req, res);
 });
 
+router.post("/listarMaquinasAg", function (req, res) {
+  dashboardController.listarMaquinasAg(req, res);
+});
+
 router.post("/altoConsumoCPU", function (req, res) {
   dashboardController.altoConsumoCPU(req, res);
 });
 
 router.post("/altoConsumoRAM", function (req, res) {
   dashboardController.altoConsumoRAM(req, res);
+});
+
+router.post("/altoConsumoDisco", function (req, res) {
+  dashboardController.altoConsumoDisco(req, res);
 });
 
 router.post("/altoConsumoCPUFunc", function (req, res) {
@@ -34,7 +42,6 @@ router.post("/altoConsumoCPUFunc", function (req, res) {
 router.post("/altoConsumoRAMFunc", function (req, res) {
   dashboardController.altoConsumoRAMFunc(req, res);
 });
-
 router.post("/altoConsumoDiscoFunc", function (req, res) {
   dashboardController.altoConsumoDiscoFunc(req, res);
 });
@@ -54,9 +61,12 @@ router.post("/ultimasTarefas", function (req, res) {
 router.post("/verificarAgilidade", function (req, res) {
   dashboardController.verificarAgilidade(req, res);
 });
+router.post("/ultimosRegistros", function (req, res) {
+  dashboardController.ultimosRegistros(req, res);
+});
 
-router.post("/cadastrar", function (req, res) {
-  dashboardController.cadastrar(req, res);
-})
+router.post("/listarProcessos", function (req, res) {
+  dashboardController.listarProcessos(req, res);
+});
 
 module.exports = router;
