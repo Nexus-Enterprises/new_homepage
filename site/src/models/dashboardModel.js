@@ -79,7 +79,7 @@ function altoConsumoCPUFunc(banco, agencia, funcionario) {
     FROM Registro
         JOIN Maquina ON Registro.fkMaquina = Maquina.idMaquina
         JOIN Agencia ON Maquina.fkAgencia = '${agencia}'
-    WHERE Registro.fkAlerta = (SELECT idAlerta FROM Alerta WHERE causa = 'Sobrecarga de CPU' AND gravidade = 'Alta')
+        WHERE Registro.fkAlerta IN (SELECT idAlerta FROM Alerta WHERE causa = 'Erro de disco rígido' AND gravidade IN ('Alta', 'Media', 'Baixa'))
         AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
         AND Maquina.fkFuncionario = (SELECT idFuncionario from Funcionario where idFuncionario = '${funcionario}') 
     ORDER BY (Registro.usoAtual - Registro.capacidadeMax) DESC
@@ -99,7 +99,7 @@ function altoConsumoRAMFunc(banco, agencia, funcionario) {
   FROM Registro
     JOIN Maquina ON Registro.fkMaquina = Maquina.idMaquina
     JOIN Agencia ON Maquina.fkAgencia = '${agencia}'
-  WHERE Registro.fkAlerta = (SELECT idAlerta FROM Alerta WHERE causa = 'Memória insuficiente' AND gravidade = 'Alta')
+    WHERE Registro.fkAlerta IN (SELECT idAlerta FROM Alerta WHERE causa = 'Erro de disco rígido' AND gravidade IN ('Alta', 'Media', 'Baixa'))
     AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
     AND Maquina.fkFuncionario = (SELECT idFuncionario from Funcionario where idFuncionario = '${funcionario}') 
   ORDER BY (Registro.usoAtual - Registro.capacidadeMax) DESC
@@ -118,7 +118,7 @@ function altoConsumoDiscoFunc(banco, agencia, funcionario) {
     FROM Registro
         JOIN Maquina ON Registro.fkMaquina = Maquina.idMaquina
         JOIN Agencia ON Maquina.fkAgencia = '${agencia}'
-    WHERE Registro.fkAlerta = (SELECT idAlerta FROM Alerta WHERE causa = 'Erro de disco rígido' AND gravidade = 'Alta')
+        WHERE Registro.fkAlerta IN (SELECT idAlerta FROM Alerta WHERE causa = 'Erro de disco rígido' AND gravidade IN ('Alta', 'Media', 'Baixa'))
         AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
         AND Maquina.fkFuncionario = (SELECT idFuncionario from Funcionario where idFuncionario = '${funcionario}') 
     ORDER BY (Registro.usoAtual - Registro.capacidadeMax) DESC
@@ -131,8 +131,32 @@ function altoConsumoDiscoFunc(banco, agencia, funcionario) {
 function listarConsumoMaquina(funcionario) {
 
   var instrucao = `
-  SELECT * FROM Maquina JOIN Funcionario ON Maquina.fkFuncionario = Funcionario.idFuncionario  
-  WHERE Funcionario.idFuncionario = '${funcionario}';
+  SELECT 
+  Maquina.idMaquina,
+  Maquina.marca,
+  Maquina.modelo,
+  Maquina.situacao AS "SituacaoMaquina",
+  Maquina.sistemaOperacional,
+  Maquina.fkFuncionario,
+  Maquina.fkAgencia,
+  Maquina.fkEmpresa,
+  Funcionario.idFuncionario,
+  Funcionario.nome,
+  Funcionario.sobrenome, 
+  Funcionario.emailCorporativo,
+  Funcionario.token,
+  Funcionario.ddd,
+  Funcionario.telefone,
+  Funcionario.cargo,
+  Funcionario.situacao,
+  Funcionario.fkAgencia,
+  Funcionario.fkEmpresa, 
+  Funcionario.fkFuncionario
+FROM Maquina
+JOIN Funcionario ON Maquina.fkFuncionario = Funcionario.idFuncionario
+JOIN Agencia ON Maquina.fkAgencia = Agencia.idAgencia
+JOIN Empresa ON Agencia.fkEmpresa = Empresa.idEmpresa
+WHERE Funcionario.idFuncionario = ${funcionario};
   `
 
   return database.executar(instrucao);
@@ -186,7 +210,7 @@ FROM Registro
 INNER JOIN Componente ON Registro.fkComponente = Componente.idComponente
 INNER JOIN Maquina ON Registro.fkMaquina = Maquina.idMaquina
 INNER JOIN Agencia ON Maquina.fkAgencia = ${agencia}
-WHERE Maquina.idMaquina = 5
+WHERE Maquina.idMaquina = Registro.fkMaquina
 AND Maquina.fkFuncionario = (SELECT idFuncionario from Funcionario where idFuncionario = '${funcionario}')
 AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}');
   `;
@@ -209,10 +233,10 @@ INNER JOIN Maquina ON Processo.fkMaquina = Maquina.idMaquina
 INNER JOIN Registro ON Maquina.idMaquina = Registro.fkMaquina
 INNER JOIN Componente ON Registro.fkComponente = Componente.idComponente
 INNER JOIN Agencia ON Maquina.fkAgencia = ${agencia}
-WHERE Maquina.idMaquina = 5
+WHERE Maquina.idMaquina = Registro.fkMaquina
 AND Maquina.fkFuncionario = (SELECT idFuncionario FROM Funcionario WHERE idFuncionario = ${funcionario})
 AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
-ORDER BY Processo.usoAtualRAM, Processo.usoAtualDisco, Processo.usoAtualCPU DESC;
+ORDER BY Processo.usoAtualRAM DESC, Processo.usoAtualDisco DESC, Processo.usoAtualCPU DESC;
   `;
 
   return database.executar(instrucao);
@@ -230,7 +254,7 @@ FROM Registro
 INNER JOIN Componente ON Registro.fkComponente = Componente.idComponente
 INNER JOIN Maquina ON Registro.fkMaquina = Maquina.idMaquina
 INNER JOIN Agencia ON Maquina.fkAgencia = ${agencia}
-WHERE Maquina.idMaquina = 5 AND Componente.idComponente = 1 OR Componente.idComponente = 2
+WHERE Maquina.idMaquina = Registro.fkMaquina AND Componente.idComponente = 1 OR Componente.idComponente = 2
 AND Maquina.fkFuncionario = (SELECT idFuncionario from Funcionario where idFuncionario = ${funcionario})
 AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
 GROUP BY Componente.idComponente, Componente.nome, Registro.capacidadeMax

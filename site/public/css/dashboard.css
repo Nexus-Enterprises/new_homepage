@@ -1105,7 +1105,6 @@ a:hover {
     font-weight: bold;
 }
 .container-status {
-    background-color: #88EF85 ;
     width: 120px;
     height: 40px;
     display: flex;
@@ -1113,6 +1112,19 @@ a:hover {
     align-items: center;
     border-radius: 13px;
 }
+
+.status-green{
+    background-color: #88EF85 ;
+}
+
+.status-yellow{
+    background-color: #E1B000;
+}
+
+.status-red{
+    background-color: #FF3D3D;
+}
+
 .container-status p {
     font-weight: bold;
 }

@@ -26,8 +26,7 @@
             <div class="num-maquina" id="maquinaFunc">Máquina 00</div>
         </div>
         <div class="right-side">
-            <div class="container-status">
-                <p class="text-status">Ativo</p>
+            <div class="container-status" id="statusTeste">
             </div>
 
             <div class="container-notify">
@@ -160,9 +159,7 @@
         var nome = sessionStorage.NOME_USUARIO;
         var sobrenome = sessionStorage.SOBRENOME;
         var agencia = sessionStorage.AGENCIA;
-        var maquina =  sessionStorage.ID_MAQUINA;
-
-        console.log(maquina);
+        var maquina = sessionStorage.ID_MAQUINA;
 
         if (nome != null) {
             name_user.innerHTML = `${nome} ${sobrenome}`;
@@ -187,6 +184,27 @@
         }).then(function (resposta) {
             if (resposta.ok) {
                 resposta.json().then(json => {
+                    json.forEach(element => {
+
+                        if (element.SituacaoMaquina === "Ativo") {
+                            statusTeste.classList.add(`status-green`);
+                            statusTeste.classList.remove(`status-yellow`);
+                            statusTeste.classList.remove(`status-red`);
+                        } else if (element.SituacaoMaquina === "Inativa") {
+                            statusTeste.classList.add(`status-red`);
+                            statusTeste.classList.remove(`status-yellow`);
+                            statusTeste.classList.remove(`status-green`);
+                        } else {
+                            statusTeste.classList.add(`status-yellow`);
+                            statusTeste.classList.remove(`status-green`);
+                            statusTeste.classList.remove(`status-red`);
+                        }
+
+                        statusTeste.innerHTML = `
+                        <p class="text-status">${element.SituacaoMaquina}</p>
+                        `;
+
+                    })
                     plotarGrafico();
                     capturarRegistroComponente();
                 });
@@ -280,8 +298,6 @@
                         const myChart = new Chart(
                             document.getElementById('myChart'),
                             config);
-
-                        console.log(json);
 
                     });
                 });
@@ -538,7 +554,7 @@
                     `
 
                         var totalCapacidade = element.CapacidadeMaxima;
-                        var usoAtual= element.UsoAtual;
+                        var usoAtual = element.UsoAtual;
                         var porcetagemAtual = Math.round((usoAtual * 100) / totalCapacidade);
 
                         const now = new Date();
@@ -698,6 +714,7 @@
                             </div>
                             </div>
                             `
+
                         if (element.NomeComponente === "Memória RAM") {
                             var porcetagemAtual = Math.round((usoAtualRAM * 100) / totalCapacidade);
 
@@ -868,6 +885,7 @@
         });
     }
 
+
     // ------------------------ VELOCIMETRO -------------------------
     function verificarAgilidade() {
 
@@ -892,7 +910,6 @@
                     var totalCapacidade = 0;
                     var velocidadeTotal = 0;
                     json.forEach(element => {
-                        console.log(element);
 
                         totalCapacidade += element.CapacidadeMaxima;
 
@@ -902,8 +919,6 @@
 
                         velocidadeTotal = 100 - (porcetagemAtual / 200) * 100;
 
-                        console.log(porcetagemAtual);
-                        console.log(velocidadeTotal);
                     })
 
                     const data = {
@@ -1005,9 +1020,9 @@
                         config
                     );
 
-                    
+
                 },
-                // setTimeout(verificarAgilidade(), 10000)
+                    // setTimeout(verificarAgilidade(), 10000)
                 );
             }
         });
