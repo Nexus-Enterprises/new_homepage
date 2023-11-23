@@ -98,6 +98,8 @@
     var dddVar = document.getElementById("id_ddd").value;
     var telefoneVar = document.getElementById("id_telefone").value;
     var enderecoVar = sessionStorage.Endereco
+    var emailFunc = sessionStorage.Email
+    console.log(emailFunc)
 
 
     if (agenciaVar == "" || digitoVar == "" || organizacaoVar == "" || emailVar == "" || dddVar == "" || telefoneVar == "") {
@@ -117,7 +119,9 @@
         emailServer: emailVar,
         dddServer: dddVar,
         telefoneServer: telefoneVar,
-        enderecoServer: enderecoVar
+        enderecoServer: enderecoVar,
+        emailFuncServer: emailFunc
+
       })
     }).then(function (response) {
       if (response.status === 200) {
@@ -125,7 +129,7 @@
         console.log("Cadastro realizado com sucesso!");
         setTimeout(() => {
           window.location = "cadastro04.html";
-        }, "2000")
+        }, "200000000000000000000")
       } else {
         console.log("Erro ao realizar o cadastro.");
       }

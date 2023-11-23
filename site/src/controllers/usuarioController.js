@@ -1,39 +1,38 @@
 var usuarioModel = require("../models/usuarioModel");
-
 function autenticar(req, res) {
     var email = req.body.emailServer;
     var token = req.body.tokenServer;
 
-    if (email == undefined) {
-        res.status(400).send("Seu email está undefined!");
-    } else if (token == undefined) {
-        res.status(400).send("Sua senha está indefinida!");
-    } else {
-
-        usuarioModel.autenticar(email, token)
-            .then(
-                function (resultado) {
-                    console.log(`\nResultados encontrados: ${resultado.length}`);
-                    console.log(`Resultados: ${JSON.stringify(resultado)}`); // transforma JSON em String
-
-                    if (resultado.length == 1) {
-                        console.log(resultado);
-                        res.json(resultado[0]);
-                    } else if (resultado.length == 0) {
-                        res.status(403).send("Email e/ou senha inválido(s)");
-                    } else {
-                        res.status(403).send("Mais de um usuário com o mesmo login e senha!");
-                    }
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
+    if (email == "") {
+        return res.status(400).send("O email não foi fornecido.");
+    } else if (token == "") {
+        return res.status(400).send("O token não foi fornecido.");
     }
 
+    usuarioModel.autenticar(email, token)
+        .then(function (resultado) {
+            console.log(`\nResultados encontrados: ${resultado.length}`);
+            console.log(`Resultados: ${JSON.stringify(resultado)}`); // transforma JSON em String
+
+            if (resultado.length === 1) {
+                console.log(resultado);
+                res.json(resultado[0]);
+            } else if (resultado.length === 0) {
+                res.status(403).send("Email e/ou senha inválido(s)");
+            } else {
+                res.status(403).send("Mais de um usuário com o mesmo login e senha!");
+            }
+        })
+        .catch(function (erro) {
+            console.error("Erro ao realizar o login:", erro);
+
+            // Verifica se é um erro conhecido (pode adicionar mais verificações conforme necessário)
+            if (erro instanceof SomeSpecificError) {
+                return res.status(400).json({ erro: "Algo de errado aconteceu." });
+            }
+
+            res.status(500).json({ erro: "Houve um erro ao realizar o login." });
+        });
 }
 
 function cadastrarFuncionario(req, res) {
@@ -101,6 +100,7 @@ function cadastrarAgencia(req, res) {
     const ddd = req.body.dddServer;
     const telefone = req.body.telefoneServer;
     const endereco = req.body.enderecoServer;
+    const emailFunc = req.body.emailFuncServer;
 
     // Validar os valores
     if (!agencia || !digito || !organizacao || !email || !ddd || !telefone) {
@@ -108,7 +108,7 @@ function cadastrarAgencia(req, res) {
     }
 
     // Passar os valores como parâmetros para o modelo de usuário (usuarioModel)
-    usuarioModel.cadastrarAgencia(agencia, digito, organizacao, email, ddd, telefone, endereco)
+    usuarioModel.cadastrarAgencia(agencia, digito, organizacao, email, ddd, telefone, endereco, emailFunc)
         .then(function (resultado) {
             console.log("Cadastro realizado com sucesso!");
             res.json(resultado);
@@ -123,7 +123,9 @@ function cadastrarAgencia(req, res) {
 
 function listarFuncionario(req, res) {
     const agencia = req.body.agenciaServer;
-    usuarioModel.listarFuncionario(agencia)
+    const empresa = req.body.empresaServer;
+    console.log("controller")
+    usuarioModel.listarFuncionario(agencia, empresa)
         .then(function (resultado) {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);

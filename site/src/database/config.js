@@ -1,11 +1,11 @@
-var mysql = require("mysql2");
+var mysql = require("mysql2");  
 var sql = require('mssql');
 
 // CONEXÃO DO SQL SERVER - AZURE (NUVEM)
 var sqlServerConfig = {
-    server: "34.194.243.14",
+    server: "localhost",
     database: "NEXUS",
-    user: "sa",
+    user: "nexus",
     password: "nexus123",
     pool: {
         max: 10,
@@ -14,6 +14,7 @@ var sqlServerConfig = {
     },
     options: {
         encrypt: true, // for azure
+        trustServerCertificate: true,
     }
 }
 

@@ -120,6 +120,9 @@
 
   function funcionario() {
     var agencia = sessionStorage.Agencia;
+    var banco = sessionStorage.Banco;
+    var email =
+
     fetch("/usuarios/listarFuncionario", {
       method: "POST",
       headers: {
@@ -127,6 +130,7 @@
       },
       body: JSON.stringify({
         agenciaServer: agencia,
+        empresaServer: banco,
       })
     }).then(function (response) {
       if (response.ok) {

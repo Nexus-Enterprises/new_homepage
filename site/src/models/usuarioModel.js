@@ -13,7 +13,7 @@ function autenticar(email, token) {
 
 // Coloque os mesmos parâmetros aqui. Vá para a var instrucao
 function cadastrarFuncionario(firstName, lastName, email, phoneDDD, phoneNumber, role, agencyEmpre) {
-
+    console.log("model")
     var instrucao = `
         INSERT INTO Funcionario (nome, sobrenome, emailCorporativo, ddd, telefone, cargo, situacao, fkAgencia, fkEmpresa) VALUES ('${firstName}', '${lastName}', '${email}', '${phoneDDD}', '${phoneNumber}', '${role}', 'Ativo', 1, (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${agencyEmpre}'));
     `;
@@ -23,30 +23,40 @@ function cadastrarFuncionario(firstName, lastName, email, phoneDDD, phoneNumber,
 
 function cadastrarEndAgencia(cep, endereco, bairro, cidade, uf, complemento) {
     var instrucao = `
-    INSERT IGNORE INTO Endereco (cep, logradouro, bairro, localidade, uf, complemento)
+    INSERT INTO Endereco (cep, logradouro, bairro, localidade, uf, complemento)
     VALUES ('${cep}', '${endereco}', '${bairro}', '${cidade}', '${uf}', '${complemento}');
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }
 
-function cadastrarAgencia(agencia, digito, organizacao, email, ddd, telefone, endereco) {
+function cadastrarAgencia(agencia, digito, organizacao, email, ddd, telefone, endereco, emailFunc) {
     var instrucao = `
-    INSERT IGNORE INTO Agencia (numero, digitoAgencia, ddd, telefone, email, fkEmpresa, fkEndereco)
+    INSERT INTO Agencia (numero, digitoAgencia, ddd, telefone, email, fkEmpresa, fkEndereco)
     VALUES
-      ('${agencia}', '${digito}', '${ddd}', '${telefone}', '${email}', (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${organizacao}'), (SELECT LAST_INSERT_ID(idEndereco) AS idEndereco FROM Endereco WHERE logradouro = '${endereco}'));
+    ('${agencia}', '${digito}', '${ddd}', '${telefone}', '${email}', (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${organizacao}'), (SELECT idEndereco FROM Endereco WHERE logradouro = '${endereco}'));
+    UPDATE Funcionario
+    SET fkAgencia = (SELECT idAgencia FROM Agencia WHERE numero = '${agencia}')
+    WHERE idFuncionario = (SELECT idFuncionario FROM Funcionario WHERE emailCorporativo = '${emailFunc}');
     `;
+
+
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }
 
-function listarFuncionario(agencia) {
+function listarFuncionario(agencia, empresa) {
+    console.log(agencia);
 
     var instrucao = `
-    SELECT idFuncionario, nome FROM Funcionario JOIN Agencia 
-    JOIN Empresa ON Agencia.fkEmpresa = Empresa.idEmpresa
-    WHERE numero = ${agencia};
+        SELECT Funcionario.idFuncionario, Funcionario.nome
+        FROM Funcionario
+        INNER JOIN Agencia ON Funcionario.fkAgencia = Agencia.idAgencia
+        INNER JOIN Empresa ON Agencia.fkEmpresa = Empresa.idEmpresa
+        WHERE Agencia.numero = '${agencia}'
+        AND Empresa.nomeEmpresa = '${empresa}';
     `;
+
     return database.executar(instrucao);
 }
 
@@ -64,10 +74,7 @@ function cadastrarMaquina(brand, model, situation, funcionario, agencia, banco, 
     INSERT INTO Maquina (marca, modelo, situacao, fkFuncionario, fkAgencia, fkEmpresa) VALUES ('${brand}', '${model}', '${situation}', (SELECT idFuncionario FROM Funcionario WHERE emailCorporativo = '${email}'), (SELECT idAgencia FROM Agencia WHERE numero = ${agencia}), (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}'));
     `;
 
-    var instrucao2 = `
-    UPDATE Funcionario AS Func JOIN ( SELECT idFuncionario, (SELECT idAgencia FROM Agencia WHERE numero = '${agencia}') AS atualizaAgencia FROM Funcionario WHERE emailCorporativo = '${email}') AS SubQuery ON Func.idFuncionario = SubQuery.idFuncionario SET Func.fkAgencia = SubQuery.atualizaAgencia;`;
-
-    return (database.executar(instrucao), database.executar(instrucao2));
+    return database.executar(instrucao);
 }
 
 function cadastrarToken(email, token) {
