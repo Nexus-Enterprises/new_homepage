@@ -46,47 +46,52 @@ GROUP BY Maquina.idMaquina, Registro.enderecoIPV4, Agencia.digitoAgencia;
 
 function listarProcessos(idMaq) {
   var instrucao = `
-    SELECT
-      Processo.idProcesso,
-      Processo.fkMaquina,
-      Processo.nome AS NomeProcesso,
-      TIME_FORMAT(Processo.dataHora, '%H:%i:%s') AS DataHora,
-      Processo.usoAtualRAM AS UsoRam,
-      Processo.usoAtualDisco AS UsoDisco,
-      Processo.usoAtualCPU AS UsoCPU
-    FROM Processo
-    WHERE Processo.fkMaquina = '${idMaq}'
-    ORDER BY Processo.usoAtualCPU DESC
-    LIMIT 5;
-    ;`
+  SELECT
+  Processo.idProcesso,
+  Processo.fkMaquina,
+  Processo.nome AS NomeProcesso,
+  FORMAT(Processo.dataHora, 'HH:mm:ss') AS DataHora,
+  Processo.usoAtualRAM AS UsoRam,
+  Processo.usoAtualDisco AS UsoDisco,
+  Processo.usoAtualCPU AS UsoCPU
+FROM 
+  Processo
+WHERE 
+  Processo.fkMaquina = '${idMaq}'
+ORDER BY 
+  Processo.usoAtualCPU DESC
+OFFSET 0 ROWS
+FETCH NEXT 5 ROWS ONLY;`
+
   return database.executar(instrucao);
 }
 
 function statusMaquinas(agencia, banco, idMaq) {
   var instrucao = `
   SELECT DISTINCT
-  Componente.nome AS "NomeComponente",
-  Registro.capacidadeMax AS "CapacidadeMaxima",
-  Registro.usoAtual AS "UsoAtual",
-  Maquina.situacao AS "Status",
-  Maquina.idMaquina AS "IdMaquina",
-  TIME_FORMAT(Registro.dataHora, '%H:%i:%s') AS "DataHora",
-  Registro.enderecoIPV4 AS "EnderecoIP"
+    Componente.nome AS NomeComponente,
+    Registro.capacidadeMax AS CapacidadeMaxima,
+    Registro.usoAtual AS UsoAtual,
+    Maquina.situacao AS Status,
+    Maquina.idMaquina AS IdMaquina,
+    FORMAT(Registro.dataHora, 'HH:mm:ss') AS DataHora,
+    Registro.enderecoIPV4 AS EnderecoIP
 FROM (
-  SELECT
-      fkComponente,
-      MAX(Registro.dataHora) AS max_dataHora
-  FROM Registro
-  GROUP BY fkComponente
+    SELECT
+        fkComponente,
+        MAX(Registro.dataHora) AS max_dataHora
+    FROM Registro
+    GROUP BY fkComponente
 ) AS ultimos_registros
 INNER JOIN Componente ON ultimos_registros.fkComponente = Componente.idComponente
 INNER JOIN Registro ON ultimos_registros.fkComponente = Registro.fkComponente AND ultimos_registros.max_dataHora = Registro.dataHora
 INNER JOIN Maquina ON Registro.fkMaquina = Maquina.idMaquina
 INNER JOIN Agencia ON Maquina.fkAgencia = Agencia.idAgencia
 INNER JOIN Alerta ON Registro.fkAlerta = Alerta.idAlerta
-WHERE Maquina.idMaquina = ${idMaq}
-AND Maquina.fkAgencia = ${agencia}
-AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}');
+WHERE 
+    Maquina.idMaquina = ${idMaq}
+    AND Maquina.fkAgencia = ${agencia}
+    AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}');
   `
 
   return database.executar(instrucao);
@@ -298,9 +303,13 @@ function ultimosRegistros(banco, agencia, funcionario) {
 FROM Registro
 INNER JOIN Componente ON Registro.fkComponente = Componente.idComponente
 INNER JOIN Maquina ON Registro.fkMaquina = Maquina.idMaquina
-INNER JOIN Agencia ON Maquina.fkAgencia = ${agencia} -- Substitua ${agencia} pelo valor desejado
+INNER JOIN Agencia ON Maquina.fkAgencia = Agencia.idAgencia
 WHERE 
-    Maquina.idMaquina = 5
+    Maquina.idMaquina IN (
+        SELECT idMaquina 
+        FROM Maquina 
+        WHERE fkFuncionario = (SELECT idFuncionario FROM Funcionario WHERE idFuncionario = ${funcionario})
+    )
     AND Maquina.fkFuncionario = (SELECT idFuncionario FROM Funcionario WHERE idFuncionario = ${funcionario})
     AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}');
     `;
@@ -322,34 +331,45 @@ FROM Processo
 INNER JOIN Maquina ON Processo.fkMaquina = Maquina.idMaquina
 INNER JOIN Registro ON Maquina.idMaquina = Registro.fkMaquina
 INNER JOIN Componente ON Registro.fkComponente = Componente.idComponente
-INNER JOIN Agencia ON Maquina.fkAgencia = ${agencia}
+INNER JOIN Agencia ON Maquina.fkAgencia = Agencia.idAgencia
 WHERE 
-    Maquina.idMaquina = 5
+    Maquina.idMaquina IN (
+        SELECT idMaquina 
+        FROM Maquina 
+        WHERE fkFuncionario = (SELECT idFuncionario FROM Funcionario WHERE idFuncionario = ${funcionario})
+    )
     AND Maquina.fkFuncionario = (SELECT idFuncionario FROM Funcionario WHERE idFuncionario = ${funcionario})
     AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
 ORDER BY 
     Processo.usoAtualRAM,
     Processo.usoAtualDisco,
-    Processo.usoAtualCPU DESC; `;
+    Processo.usoAtualCPU DESC;
+    `;
 
   return database.executar(instrucao);
 }
 
 function verificarAgilidade(banco, agencia, funcionario) {
   var instrucao = `
-  SELECT DISTINCT
-  Componente.idComponente AS "IdComponente",
-  Componente.nome AS "NomeComponente",
-  AVG(Registro.capacidadeMax) AS "CapacidadeMaxima",
-  AVG(Registro.usoAtual) AS "UsoAtual"
+  SELECT
+    Componente.idComponente AS IdComponente,
+    Componente.nome AS NomeComponente,
+    AVG(Registro.capacidadeMax) AS CapacidadeMaxima,
+    AVG(Registro.usoAtual) AS UsoAtual
 FROM Registro
 INNER JOIN Componente ON Registro.fkComponente = Componente.idComponente
 INNER JOIN Maquina ON Registro.fkMaquina = Maquina.idMaquina
-INNER JOIN Agencia ON Maquina.fkAgencia = ${agencia}
-WHERE Maquina.idMaquina = 5 AND Componente.idComponente = 1 OR Componente.idComponente = 2
-AND Maquina.fkFuncionario = (SELECT idFuncionario from Funcionario where idFuncionario = ${funcionario})
-AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
-GROUP BY Componente.idComponente, Componente.nome, Registro.capacidadeMax
+INNER JOIN Agencia ON Maquina.fkAgencia = Agencia.idAgencia
+WHERE 
+    Maquina.idMaquina IN (
+        SELECT idMaquina 
+        FROM Maquina 
+        WHERE fkFuncionario = (SELECT idFuncionario FROM Funcionario WHERE idFuncionario = ${funcionario})
+    ) 
+    AND (Componente.idComponente = 1 OR Componente.idComponente = 2)
+    AND Maquina.fkFuncionario = (SELECT idFuncionario FROM Funcionario WHERE idFuncionario = ${funcionario})
+    AND Agencia.fkEmpresa = (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}')
+GROUP BY Componente.idComponente, Componente.nome
 ORDER BY Componente.idComponente;
 `
   return database.executar(instrucao);
