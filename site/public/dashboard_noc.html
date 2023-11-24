@@ -225,11 +225,11 @@
                                     console.log(data);
                                     if (data.city != "São Paulo") {
 
-                                        localizacao.innerHTML += `
+                                        localizacao.innerHTML = `
                                         Localização | <a style='color: red;'>${element.endereco}</a>
                                         `;
                                     } else {
-                                        localizacao.innerHTML += `
+                                        localizacao.innerHTML = `
                                         Localização | <a style="color: white;">${element.endereco}</a>
                                         `;
                                     }

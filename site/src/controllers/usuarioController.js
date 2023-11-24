@@ -11,9 +11,6 @@ function autenticar(req, res) {
 
     usuarioModel.autenticar(email, token)
         .then(function (resultado) {
-            console.log(`\nResultados encontrados: ${resultado.length}`);
-            console.log(`Resultados: ${JSON.stringify(resultado)}`); // transforma JSON em String
-
             if (resultado.length === 1) {
                 console.log(resultado);
                 res.json(resultado[0]);
@@ -26,7 +23,6 @@ function autenticar(req, res) {
         .catch(function (erro) {
             console.error("Erro ao realizar o login:", erro);
 
-            // Verifica se é um erro conhecido (pode adicionar mais verificações conforme necessário)
             if (erro instanceof SomeSpecificError) {
                 return res.status(400).json({ erro: "Algo de errado aconteceu." });
             }
