@@ -19,6 +19,14 @@ router.post("/listarMaquinasAg", function (req, res) {
   dashboardController.listarMaquinasAg(req, res);
 });
 
+router.post("/atualizarFuncionario", function (req, res) {
+  dashboardController.atualizarFuncionario(req, res);
+});
+
+router.post("/deletarFuncionario", function (req, res) {
+  dashboardController.deletarFuncionario(req, res);
+});
+
 router.post("/listarMaquinasAg", function (req, res) {
   dashboardController.listarMaquinasAg(req, res);
 });

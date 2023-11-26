@@ -19,6 +19,42 @@ function listarAgenciasNOC(req, res) {
     );
 }
 
+function atualizarFuncionario(req, res) {
+  var nome = req.body.nomeServer;
+  var sobrenome = req.body.sobrenomeServer;
+  var email = req.body.emailServer;
+  var telefone = req.body.telefoneServer;
+  var cargo = req.body.cargoServer;
+  var idFuncionario = req.body.idFuncionarioServer;
+
+
+  dashboardModel.atualizarFuncionario(nome,sobrenome,email,telefone,cargo, idFuncionario)
+    .then(function (resultado) {
+      console.log("O update foi realizado com sucesso!")
+    }).catch(
+      function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao realizar ao atualizar! Erro: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+      }
+    );
+}
+
+function deletarFuncionario(req, res){
+  var idFuncionario = req.body.idFuncionarioServer
+
+  dashboardModel.deletarFuncionario(idFuncionario)
+    .then(function (resultado) {
+      console.log("O update foi realizado com sucesso!")
+    }).catch(
+      function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao realizar ao atualizar! Erro: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+      }
+    );
+}
+
 function listarLocalizacao(req, res) {
   const empresa = req.body.empresaServer;
 
@@ -360,6 +396,8 @@ function verificarAgilidade(req, res) {
   );
 }
 module.exports = {
+  deletarFuncionario,
+  atualizarFuncionario,
   listarFuncionarios,
   listarProcessos,
   listarAgenciasNOC,

@@ -409,11 +409,14 @@ ORDER BY Componente.idComponente;
 function listarFuncionarios(agencia, banco) {
   var instrucao = `
   SELECT 
+    Funcionario.idFuncionario AS idFuncionario,
     Funcionario.nome AS NomeFuncionario,
+    Funcionario.sobrenome AS SobrenomeFuncionario,
     Funcionario.emailCorporativo AS EmailFuncionario,
     Funcionario.telefone AS TelefoneFuncionario,
     Funcionario.situacao AS SituacaoFuncionario,
-    Maquina.idMaquina AS NumeracaoMaquina
+    Maquina.idMaquina AS NumeracaoMaquina,
+    Funcionario.cargo AS CargoFuncionario
   FROM Funcionario 
   JOIN Maquina ON Maquina.fkFuncionario = Funcionario.idFuncionario
   WHERE Funcionario.fkAgencia = ${agencia}
@@ -422,8 +425,28 @@ function listarFuncionarios(agencia, banco) {
   return database.executar(instrucao);
 }
 
+function atualizarFuncionario(nome, sobrenome, email, telefone, cargo, idFuncionario) {
+  var instrucao = `
+  UPDATE Funcionario
+  SET nome = '${nome}', sobrenome = '${sobrenome}', emailCorporativo = '${email}', telefone = '${telefone}', cargo = '${cargo}'
+  WHERE idFuncionario = ${idFuncionario};
+`
+  return database.executar(instrucao);
+}
+
+function deletarFuncionario(idFuncionario){
+  var instrucao = `
+  UPDATE Funcionario
+  SET situacao = 'Inativo'
+  WHERE idFuncionario = ${idFuncionario};
+`
+  return database.executar(instrucao);
+}
+
 
 module.exports = {
+  deletarFuncionario,
+  atualizarFuncionario,
   listarFuncionarios,
   listarProcessos,
   listarMaquinasAg,

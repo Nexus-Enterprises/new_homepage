@@ -87,74 +87,9 @@
         <h1>Nome</h1>
         <h1>Status</h1>
       </div>
-      <div class="card-container">
-        <div class="card-details">
-          <div class="row row-infos">
-            <h1 class="card-nome">${e.NomeFuncionario}</h1>
-            <h1 class="card-status ativo">${e.SituacaoFuncionario}</h1>
-            <div class="icon-plus" id="icon_plus">
-              <i class="fa fa-plus" aria-hidden="true"></i>
-            </div>
-          </div>
-          <div class="row hidden">
-            <div class="card-email">
-              <h2>Email:</h2>
-              <p>${e.EmailFuncionario}</p>
-            </div>
-            <div class="card-telefone">
-              <h2>Telefone:</h2>
-              <p>${e.TelefoneFuncionario}</p>
-            </div>
-            <div class="card-maquina">
-              <h2>Máquina:</h2>
-              <p>${e.NumeracaoMaquina}</p>
-            </div>
-          </div>
-        </div>
-        <div class="icons" id="#icons">
-          <i class="fa fa-pencil" aria-hidden="true" onclick="openModal()"></i>
-          <i class="fa fa-trash" aria-hidden="true"></i>
-        </div>
-      </div>
     </div>
   </div>
   <div class="modal" id="modal">
-    <div class="container-modal">
-      <div class="top-side-modal">
-        <h2 class="title-modal">ATUALIZANDO DADOS</h2>
-        <p class="close-button"><i class="fa fa-times" aria-hidden="true"></i></p>
-      </div>
-      <div class="bottom-side-modal">
-        <div class="left-side-modal">
-          <div class="name-input">
-            <p id="title-input">Nome</p>
-            <input type="text" class="inputs-modal" value="Marcos">
-          </div>
-          <div class="lastname-input">
-            <p id="title-input">Sobrenome</p>
-            <input type="text" class="inputs-modal" value="Trajano">
-          </div>
-          <div class="email-input">
-            <p id="title-input">Email Corporativo</p>
-            <input type="text" class="inputs-modal" value="marcos.vt.souza@bradesco.com.br">
-          </div>
-          <div class="tel-input">
-            <p id="title-input">Telefone</p>
-            <input type="text" class="inputs-modal" value="9-9999-9999">
-          </div>
-          <div class="role-input">
-            <p id="title-input">Cargo</p>
-            <input type="text" class="inputs-modal" value="Gerente">
-          </div>
-        </div>
-        <div class="right-side-modal">
-          <div class="button-modal">
-            <p>Atualizar funcionário <i class="fa fa-pencil" aria-hidden="true" id="botao-fechar"></i></p>
-          </div>
-        </div>
-
-      </div>
-    </div>
   </div>
 
   </div>
@@ -166,15 +101,18 @@
 
 <script>
 
-  // window.onload = validarSessao(), listarFuncionarios();
+  window.onload = validarSessao(), listarFuncionarios();
 
-  function openModal() {
-    var modal = document.getElementById("modal");
-    modal.style.display = 'flex';
+  function openModal(idFuncionario) {
+    var modalFuncionario = document.getElementById(`modal${idFuncionario}`);
+    var modalPai = document.getElementById("modal")
+    modalFuncionario.style.display = 'flex';
+    modalPai.style.display = 'flex';
 
-    var closeButton = document.querySelector("#modal .close-button");
-    closeButton.addEventListener('click', function () {
-      modal.style.display = 'none';
+    var closeButtonFuncionario = document.querySelector(`#modal${idFuncionario} .close-button`);
+    closeButtonFuncionario.addEventListener('click', function () {
+      modalPai.style.display = 'none';
+      modalFuncionario.style.display = 'none';
     });
   }
 
@@ -188,6 +126,55 @@
     } else {
       window.location = "login.html";
     }
+  }
+
+  function atualizarFuncionario(idFuncionario) {
+    var nome = document.getElementById(`input-nome-${idFuncionario}`).value
+    var sobrenome = document.getElementById(`input-sobrenome-${idFuncionario}`).value
+    var email = document.getElementById(`input-email-${idFuncionario}`).value
+    var telefone = document.getElementById(`input-telefone-${idFuncionario}`).value
+    var cargo = document.getElementById(`input-cargo-${idFuncionario}`).value
+
+    fetch("/dashboard/atualizarFuncionario", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        nomeServer: nome,
+        sobrenomeServer: sobrenome,
+        emailServer: email,
+        telefoneServer: telefone,
+        cargoServer: cargo,
+        idFuncionarioServer: idFuncionario
+      })
+    }).then(function (resposta) {
+      if (resposta.ok) {
+        
+        console.log("Update realizado com sucesso")
+
+      }
+    })
+  }
+
+  function deletarFuncionario(idFuncionario){
+
+    fetch("/dashboard/deletarFuncionario", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        idFuncionarioServer: idFuncionario
+      })
+    }).then(function (resposta) {
+      if (resposta.ok) {
+        
+        console.log("Update realizado com sucesso")
+
+      }
+    })
+
   }
 
   function listarFuncionarios() {
@@ -208,9 +195,9 @@
       if (resposta.ok) {
         var contador = 0;
         resposta.json().then(json => {
+
           json.forEach(e => {
             console.log(e)
-
             listaDeFuncionarios.innerHTML += `
             <div class="card-container">
                   <div class="card-details">
@@ -234,14 +221,56 @@
                         <h2>Máquina:</h2>
                         <p>${e.NumeracaoMaquina}</p>
                       </div>
-                      <div class="icons"> 
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                        <i class="fa fa-trash" aria-hidden="true"></i>
-                        </div>
                     </div>
+                  </div>
+                  <div class="icons" id="#icons">
+                    <i class="fa fa-pencil" aria-hidden="true" onclick="openModal(${contador})"></i>
+                    <i class="fa fa-trash" aria-hidden="true" onclick="deletarFuncionario(${e.idFuncionario})"></i>
                   </div>
                 </div>
                 `
+
+            modal.innerHTML += `
+                <div class="modal" id="modal${contador}">
+                </div>`
+            var modalAtual = document.getElementById(`modal${contador}`)
+            modalAtual.innerHTML += `
+              <div class="container-modal">
+                <div class="top-side-modal">
+                  <h2 class="title-modal">ATUALIZANDO DADOS</h2>
+                  <p class="close-button"><i class="fa fa-times" aria-hidden="true"></i></p>
+                </div>
+                <div class="bottom-side-modal">
+                  <div class="left-side-modal">
+                    <div class="name-input">
+                      <p id="title-input">Nome</p>
+                      <input type="text" class="inputs-modal" value="${e.NomeFuncionario}" id="input-nome-${e.idFuncionario}">
+                    </div>
+                    <div class="lastname-input">
+                      <p id="title-input">Sobrenome</p>
+                      <input type="text" class="inputs-modal" value="${e.SobrenomeFuncionario}" id="input-sobrenome-${e.idFuncionario}">
+                    </div>
+                    <div class="email-input">
+                      <p id="title-input">Email Corporativo</p>
+                      <input type="text" class="inputs-modal" value="${e.EmailFuncionario}" id="input-email-${e.idFuncionario}">
+                    </div>
+                    <div class="tel-input">
+                      <p id="title-input">Telefone</p>
+                      <input type="text" class="inputs-modal" value="${e.TelefoneFuncionario}" id="input-telefone-${e.idFuncionario}">
+                    </div>
+                    <div class="role-input">
+                      <p id="title-input">Cargo</p>
+                      <input type="text" class="inputs-modal" value="${e.CargoFuncionario}" id="input-cargo-${e.idFuncionario}">
+                    </div>
+                  </div>
+                  <div class="right-side-modal">
+                    <div class="button-modal" onclick="atualizarFuncionario(${e.idFuncionario})">
+                      <p>Atualizar funcionário <i class="fa fa-pencil" aria-hidden="true" id="botao-fechar"></i></p>
+                    </div>
+                  </div>
+                </div>
+              </div>`
+
             contador++
           })
           var cardContents = document.querySelectorAll('.icon-plus');
