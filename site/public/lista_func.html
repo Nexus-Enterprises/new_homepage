@@ -88,13 +88,13 @@
     <div class="t-container func" id="listaDeFuncionarios">
       <div class="title-cards">
         <h1>Nome</h1>
-          <h1>Status</h1>
+        <h1>Status</h1>
       </div>
       <div class="card-container">
         <div class="card-details">
           <div class="row row-infos">
-            <h1 class="card-nome">${e.NomeFuncionario}</h1>
-            <h1 class="card-status ativo">${e.SituacaoFuncionario}</h1>
+            <h1 class="card-nome">Marcos</h1>
+            <h1 class="card-status ativo">Ativo</h1>
             <div class="icon-plus" id="icon_plus">
               <i class="fa fa-plus" aria-hidden="true"></i>
             </div>
@@ -102,15 +102,15 @@
           <div class="row hidden">
             <div class="card-email">
               <h2>Email:</h2>
-              <p>${e.EmailFuncionario}</p>
+              <p>marcos@email.com</p>
             </div>
             <div class="card-telefone">
               <h2>Telefone:</h2>
-              <p>${e.TelefoneFuncionario}</p>
+              <p>9-9999-9999</p>
             </div>
             <div class="card-maquina">
               <h2>Máquina:</h2>
-              <p>${e.NumeracaoMaquina}</p>
+              <p>1</p>
             </div>
           </div>
         </div>
@@ -124,7 +124,7 @@
 
 <script>
 
-  window.onload = validarSessao(), listarFuncionarios();
+  window.onload
 
   function validarSessao() {
     var email = sessionStorage.EMAIL_USUARIO;

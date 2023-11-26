@@ -261,14 +261,14 @@ a:hover {
 
 .card-container {
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     flex-direction: column;
     gap: 5vh;
-    width: 88%;
+    width: 90%;
     color: white;
     background-color: #131313;
     display: flex;
-    justify-content: space-around;
+    /* justify-content: space-around; */
     border-radius: 9px;
     font-size: 10px;
     padding: 17px;
@@ -277,13 +277,20 @@ a:hover {
 }
 
 .card-details {
-    max-height: 4vh;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 3.5vh;
 }
 
 .card-details .row {
     display: flex;
-    justify-content: space-around;
+    width: 90%;
+    gap: 24%;
+}
+
+.card-email, .card-telefone, .card-maquina{
+    width: 33%;
 }
 
 /* lista de funcionario */
@@ -294,8 +301,11 @@ a:hover {
 } */
 
 .card-details .card-funcional,
-.card-details .card-maquina {
-    padding: 0 11vh;
+.card-details .card-maquina, .card-details .card-telefone,
+.card-details .card-email {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
 }
 
 .icon-plus {
@@ -404,6 +414,9 @@ i {
 
 .row-infos{
     width: 90%;
+    align-items: center;
+    display: flex;
+    gap: 35.6%;
 }
 
 .card-nome, .card-status, .icon-plus{
