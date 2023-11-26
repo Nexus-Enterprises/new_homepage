@@ -141,10 +141,10 @@
         }
     }
 
-    window.onload = validarSessao(), ListarMaquinas();
+    window.onload = validarSessao(), listarMaquinas();
     var machineData = [];
 
-    function ListarMaquinas() {
+    function listarMaquinas() {
         var agencia = sessionStorage.AGENCIA;
 
         fetch("/dashboard/listarMaquinasAg", {
@@ -160,7 +160,6 @@
                 response.json().then(json => {
                     json.forEach(e => {
                         const idMaq = e.idMaquina
-
                         cards_maquinas.innerHTML += `
                         <div id="receive_i${idMaq}">
                         </div>
@@ -210,12 +209,12 @@
             })
         }).then(function (response) {
             if (response.ok) {
-                response.json().then(json => {
+                    response.json().then(item => {
 
-                    arrayItems = arrayItems.concat(json);
-
+                    arrayItems = arrayItems.concat(item);
+                    
                     arrayItems.sort((a, b) => b.UsoCPU - a.UsoCPU);
-
+                    
                     tabela_processos.innerHTML = "";
 
                     arrayItems.forEach(e => {
@@ -267,99 +266,99 @@
                 agenciaServer: agencia,
                 bancoServer: banco,
                 maquinaServer: idMaq,
-
             })
         }).then(function (response) {
             if (response.ok) {
-                response.json().then(json => {
-                    json.forEach(e => {
-                        var max = e.CapacidadeMaxima;
-                        machineData.push(e);
-                        var i = 0;
+                response.json().then(e => {
 
-                        machineData.forEach(maq => {
-
-                            var Cards_maquinas = document.getElementById(`receive_i${idMaq}`);
-
-                            if (machineData[i].NomeComponente.includes("Processador") && machineData[i].IdMaquina == idMaq) {
-
-                                if (machineData[i].UsoAtual >= procMoreUsed) {
-                                    procMoreUsed = machineData[i].UsoAtual
-                                    numMaqProc = machineData[i].IdMaquina;
-                                    dataHoraProc = machineData[i].DataHora;
-                                }
-
-                                Cards_maquinas.innerHTML = `
-                            <div class="card-maq card-maq${idMaq}">
-                            <div class="cab-card">
-                                <h3 class="title-card-maq">Maquina</h3>
-                                <p class="num-maquina">${machineData[i].IdMaquina}</p>
-                            </div>
-                            <div class="center-card">
-                            <div class="info-card">
-                                <p class="item">CPU</p>
-                                <p class="cons-item">${Math.round(machineData[i].UsoAtual)}%</p>
-                            </div>
-                            <div class="info-card" id="card_ram${machineData[i].IdMaquina}">
-                            </div>
-                            <div class="info-card" id="card_disco${machineData[i].IdMaquina}">
-                            </div>
-                            </div>
-                            <div class="footer-card">
-                                <div class="info-card">
-                                    <p class="stats">Status</p>
-                                    <p class="situacao-stats desativada" id="stats_maquina${machineData[i].IdMaquina}">${machineData[i].Status}</p>
-                                </div>
-                            </div>
-                            </div>
-                            `
-                            } else if (machineData[i].NomeComponente.includes("RAM") && machineData[i].IdMaquina == idMaq) {
-
-                                if (machineData[i].UsoAtual >= ramMoreUsed) {
-                                    ramMoreUsed = machineData[i].UsoAtual
-                                    numMaqRam = machineData[i].IdMaquina;
-                                    dataHoraRam = machineData[i].DataHora;
-                                }
-
-                                var Cards_ram = document.getElementById(`card_ram${machineData[i].IdMaquina}`);
-
-                                Cards_ram.innerHTML = `
-                            <p class="item">RAM</p>
-                            <p class="cons-item">${Math.round(machineData[i].UsoAtual)}%</p>
-                            `
-                            } else if (machineData[i].NomeComponente.includes("Disco") && machineData[i].IdMaquina == idMaq) {
-
-                                var cards_disco = document.getElementById(`card_disco${machineData[i].IdMaquina}`);
-                                var calcPercentage = (machineData[i].UsoAtual * 100) / machineData[i].CapacidadeMaxima
-
-                                if (machineData[i].UsoAtual >= diskMoreUsed) {
-                                    diskMoreUsed = machineData[i].UsoAtual
-                                    numMaqDisk = machineData[i].IdMaquina;
-                                    dataHoraDisk = machineData[i].DataHora;
-                                }
-
-                                cards_disco.innerHTML = `
-                            <p class="item">Disco</p>
-                            <p class="cons-item">${Math.round(calcPercentage)}%</p>   
-                            `
-                            }
-
-                            var Cards_status = document.getElementById(`stats_maquina${machineData[i].IdMaquina}`);
-
-                            if (machineData[i].Status == 'Ativa') {
-                                Cards_status.style.color = '#88EF85'
-                            } else if (machineData[i].Status == 'Inativa') {
-                                Cards_status.style.color = '#FF3D3D'
-                            } else if (machineData[i].Status == 'Manutenção') {
-                                Cards_status.style.color = '#FFDE68'
-                            } else {
-                                Cards_status.style.color = 'black';
-                            }
-                            i++;
-                        })
-                    })
-
+                    
+                    machineData = machineData.concat(e);
+                    
+                    machineData.sort((a, b) => b.IdMaquina + a.IdMaquina);  
                 })
+                machineData.forEach(data => {
+                    var cards_maquinas = document.getElementById(`receive_i${data.IdMaquina}`);
+                    
+                    cards_maquinas.innerHTML = `
+                        <div class="card-maq card-maq${data.IdMaquina}">
+                        <div class="cab-card">
+                            <h3 class="title-card-maq">Maquina</h3>
+                            <p class="num-maquina">${data.IdMaquina}</p>
+                        </div>
+                        <div class="center-card">
+                        <div class="info-card" id="card_cpu${data.IdMaquina}">
+                        </div>
+                        <div class="info-card" id="card_ram${data.IdMaquina}">
+                        </div>
+                        <div class="info-card" id="card_disco${data.IdMaquina}">
+                        </div>
+                        </div>
+                        <div class="footer-card">
+                            <div class="info-card">
+                                <p class="stats">Status</p>
+                                <p class="situacao-stats desativada" id="stats_maquina${data.IdMaquina}">${data.Status}</p>
+                            </div>
+                        </div>
+                        </div>
+                        `
+                })
+                machineData.forEach(card => {
+                            
+                                if (card.NomeComponente.includes("Processador")) {
+                                    
+                                    if (card.UsoAtual >= procMoreUsed) {
+                                        procMoreUsed = card.UsoAtual
+                                        numMaqProc = card.IdMaquina;
+                                        dataHoraProc = card.DataHora;
+                                    }
+                                    
+                                    var card_cpu = document.getElementById(`card_cpu${card.IdMaquina}`);
+                                    card_cpu.innerHTML = `
+                                    <p class="item">CPU</p>
+                                    <p class="cons-item">${Math.round(card.UsoAtual)}%</p>
+                                    `;
+                                }
+                                    var cards_disco = document.getElementById(`card_disco${card.IdMaquina}`);
+                                    var calcPercentage = (card.UsoAtual * 100) / card.CapacidadeMaxima
+
+                                    if (card.UsoAtual >= diskMoreUsed) {
+                                        diskMoreUsed = card.UsoAtual
+                                        numMaqDisk = card.IdMaquina;
+                                        dataHoraDisk = card.DataHora;
+                                    }
+
+                                    cards_disco.innerHTML = `
+                                    <p class="item">Disco</p>
+                                    <p class="cons-item">${Math.round(calcPercentage)}%</p>   
+                                    `
+                                if (card.NomeComponente.includes("RAM")) {
+    
+                                    if (card.UsoAtual >= ramMoreUsed) {
+                                        ramMoreUsed = card.UsoAtual
+                                        numMaqRam = card.IdMaquina;
+                                        dataHoraRam = card.DataHora;
+                                    }
+    
+                                    var Cards_ram = document.getElementById(`card_ram${card.IdMaquina}`);
+    
+                                    Cards_ram.innerHTML = `
+                                <p class="item">RAM</p>
+                                <p class="cons-item">${Math.round(card.UsoAtual)}%</p>
+                                `
+                                } 
+    
+                                var Cards_status = document.getElementById(`stats_maquina${card.IdMaquina}`);
+    
+                                if (card.Status == 'Ativa') {
+                                    Cards_status.style.color = '#88EF85'
+                                } else if (card.Status == 'Inativa') {
+                                    Cards_status.style.color = '#FF3D3D'
+                                } else if (card.Status == 'Manutenção') {
+                                    Cards_status.style.color = '#FFDE68'
+                                } else {
+                                    Cards_status.stylcard.color = 'black';
+                                }
+                        })
             }
         })
         // coloque esse timeout pq tava dando bigode
@@ -414,7 +413,6 @@
         if (maquinaSelecionada == 'x') {
             var cards = document.querySelectorAll('.card-maq');
             cards.forEach(function (card) {
-                console.log('teste')
                 card.classList.add('show');
                 card.classList.remove('hidden')
                 cards_maquinas.style.gap = '20px'

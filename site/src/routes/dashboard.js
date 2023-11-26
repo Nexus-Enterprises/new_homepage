@@ -50,6 +50,10 @@ router.post("/listarConsumoMaquina", function (req, res) {
   dashboardController.listarConsumoMaquina(req, res);
 });
 
+router.post("/listarFuncionarios", function (req, res) {
+  dashboardController.listarFuncionarios(req, res);
+});
+
 router.post("/ultimosRegistros", function (req, res) {
   dashboardController.ultimosRegistros(req, res);
 });

@@ -39,8 +39,8 @@ function listarLocalizacao(req, res) {
 }
 
 function listarMaquinas(req, res) {
-  const agencia = req.body.agenciaServer;
-  dashboardModel.listarMaquinas(agencia)
+  const banco = req.body.bancoServer;
+  dashboardModel.listarMaquinas(banco)
   .then(function (resultado) {
     if (resultado.length > 0) {
       res.status(200).json(resultado);
@@ -57,22 +57,21 @@ function listarMaquinas(req, res) {
 }
 
 function listarProcessos(req, res) {
-  const idMaq = req.body.maquinaServer;
+  const { maquinaServer } = req.body;
 
-  dashboardModel.listarProcessos(idMaq)
-  .then(function (resultado) {
-    if (resultado.length > 0) {
-      res.status(200).json(resultado);
-    } else {
-      res.status(204).send("Nenhum resultado encontrado!")
-    }
-  }).catch(
-    function (erro) {
+  dashboardModel.listarProcessos(maquinaServer)
+    .then(resultado => {
+      if (resultado.length > 0) {
+        res.status(200).json(resultado);
+      } else {
+        res.status(204).send("Nenhum resultado encontrado!");
+      }
+    })
+    .catch(erro => {
       console.log(erro);
       console.log("Houve um erro ao realizar a consulta! Erro: ", erro.sqlMessage);
       res.status(500).json(erro.sqlMessage);
-    }
-  );
+    });
 }
 
 function listarMaquinasAg(req, res) {
@@ -101,6 +100,26 @@ function statusMaquinas(req, res) {
   const idMaq = req.body.maquinaServer;
 
   dashboardModel.statusMaquinas(agencia, banco, idMaq)
+  .then(function (resultado) {
+    if (resultado.length > 0) {
+      res.status(200).json(resultado);
+    } else {
+      res.status(204).send("Nenhum resultado encontrado!")
+    }
+  }).catch(
+    function (erro) {
+      console.log(erro);
+      console.log("Houve um erro ao realizar a consulta! Erro: ", erro.sqlMessage);
+      res.status(500).json(erro.sqlMessage);
+    }
+  );
+}
+
+function listarFuncionarios(req, res) {
+  const agencia = req.body.agenciaServer;
+  const banco = req.body.bancoServer;
+
+  dashboardModel.listarFuncionarios(agencia, banco)
   .then(function (resultado) {
     if (resultado.length > 0) {
       res.status(200).json(resultado);
@@ -241,9 +260,6 @@ function altoConsumoDiscoFunc(req, res) {
 
 function listarConsumoMaquina(req, res) {
     const funcionario = req.body.funcionarioServer;
-    console.log("entrei no controller"),
-
-  
     dashboardModel.listarConsumoMaquina(funcionario)
     .then(function (resultado) {
       if (resultado.length > 0) {
@@ -344,6 +360,7 @@ function verificarAgilidade(req, res) {
   );
 }
 module.exports = {
+  listarFuncionarios,
   listarProcessos,
   listarAgenciasNOC,
   listarMaquinas,

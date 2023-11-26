@@ -163,8 +163,6 @@
         var agencia = sessionStorage.AGENCIA;
         var maquina =  sessionStorage.ID_MAQUINA;
 
-        console.log(maquina);
-
         if (nome != null) {
             name_user.innerHTML = `${nome} ${sobrenome}`;
             agenciaFunc.innerHTML += `${agencia}`;
@@ -281,9 +279,6 @@
                         const myChart = new Chart(
                             document.getElementById('myChart'),
                             config);
-
-                        console.log(json);
-
                     });
                 });
             }
@@ -893,7 +888,6 @@
                     var totalCapacidade = 0;
                     var velocidadeTotal = 0;
                     json.forEach(element => {
-                        console.log(element);
 
                         totalCapacidade += element.CapacidadeMaxima;
 
@@ -902,9 +896,6 @@
                         var porcetagemAtual = Math.round((usoAtual * 100) / totalCapacidade);
 
                         velocidadeTotal = 100 - (porcetagemAtual / 200) * 100;
-
-                        console.log(porcetagemAtual);
-                        console.log(velocidadeTotal);
                     })
 
                     const data = {
