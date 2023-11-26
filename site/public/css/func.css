@@ -288,24 +288,28 @@ a:hover {
 
 /* lista de funcionario */
 
-.card-details .card-nome,
+/* .card-details .card-nome,
 .card-details .card-email {
     padding: 0 19vh;
-}
+} */
 
 .card-details .card-funcional,
 .card-details .card-maquina {
     padding: 0 11vh;
 }
 
+.icon-plus {
+    color: #9E6AE1;
+}
+
 .card-details .card-status.desativada {
     padding: 0 24vh 0 26vh;
 }
 
-.card-details .card-status.ativo,
+/* .card-details .card-status.ativo,
 .card-details .card-num-maquina {
     padding: 0 26vh;
-}
+} */
 
 .card-details .card-sistema {
     padding: 0 14vh;
@@ -386,12 +390,30 @@ i {
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
+
 .container_options a {
     display: flex;
     gap: 10px;
-    }
-    .list_func .text_initial {
-        width: 200px;
-        padding: 0;
-        margin: 0;
-    }
+}
+
+.list_func .text_initial {
+    width: 200px;
+    padding: 0;
+    margin: 0;
+}
+
+.row-infos{
+    width: 90%;
+}
+
+.card-nome, .card-status, .icon-plus{
+    width: 33%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.card-nome{
+    display: flex;
+    justify-content: left;
+}

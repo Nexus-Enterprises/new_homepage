@@ -115,9 +115,6 @@
         <div class="s-part">
             <div class="container-s-part">
                 <h1 class="title-container-s-part">Maquinas que mais utilizaram os componentes</h1>
-                <!-- <select id="agencias">
-                    <option value="" selected disabled>Maquinas</option>
-                </select> -->
                 <div class="container-alertas" id="container_alertas">
                 </div>
             </div>
@@ -129,7 +126,6 @@
 </html>
 
 <script>
-
     function validarSessao() {
         var email = sessionStorage.EMAIL_USUARIO;
         var nome = sessionStorage.NOME_USUARIO;
@@ -140,10 +136,8 @@
             window.location = "login.html";
         }
     }
-
-    window.onload = validarSessao(), listarMaquinas();
+    window.onload = validarSessao(), listarMaquinas(), listarAlerta();
     var machineData = [];
-
     function listarMaquinas() {
         var agencia = sessionStorage.AGENCIA;
 
@@ -183,7 +177,6 @@
 
         });
     }
-
     var procMoreUsed = 0;
     var numMaqProc = 0;
     var dataHoraProc = '';
@@ -193,9 +186,7 @@
     var diskMoreUsed = 0;
     var numMaqDisk = 0;
     var dataHoraDisk = '';
-
     var arrayItems = [];
-
     function listarProcessos(idMaq) {
         var tabela_processos = document.getElementById('tabela_processos');
 
@@ -245,15 +236,12 @@
             }
         });
     }
-
-
     var listaDiscos = [];
     var listaProcessadores = [];
     var listaMemorias = [];
-    
+    var banco = sessionStorage.BANCO;
     function listarStatusMaquinas(idMaquina) {
         var agencia = sessionStorage.AGENCIA;
-        var banco = sessionStorage.BANCO;
         var idMaq = idMaquina;
         var nomeComp = "";
 
@@ -362,51 +350,7 @@
             }
         })
         // coloque esse timeout pq tava dando bigode
-        setTimeout(function () {
-            container_alertas.innerHTML = `
-            <div class="alerta" id="alerta">
-                        <div class="t-alerta">
-                            <p class="i-maquina">Máquina ${numMaqProc}</p>
-                            <div class="horario">
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                <p class="horario_alerta">${dataHoraProc}</p>
-                            </div>
-                        </div>
-                        <div class="b-alerta alert-blue">
-                            <p class="elemento-alerta">CPU</p>
-                            <p class="porcentagem-alerta">${Math.round(procMoreUsed)} %</p>
-                        </div>
-                    </div>
-                    <div class="alerta">
-                        <div class="t-alerta">
-                            <p class="i-maquina">Máquina ${numMaqRam}</p>
-                            <div class="horario">
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                <p class="horario_alerta">${dataHoraRam}</p>
-                            </div>
-                        </div>
-                        <div class="b-alerta alert-red">
-                            <p class="elemento-alerta">RAM</p>
-                            <p class="porcentagem-alerta">${Math.round(ramMoreUsed)} GB</p>
-                        </div>
-                    </div>
-                    <div class="alerta">
-                        <div class="t-alerta">
-                            <p class="i-maquina">Máquina ${numMaqDisk}</p>
-                            <div class="horario">
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                <p class="horario_alerta">${dataHoraDisk}</p>
-                            </div>
-                        </div>
-                        <div class="b-alerta alert-yellow">
-                            <p class="elemento-alerta">DISCO</p>
-                            <p class="porcentagem-alerta">${Math.round(diskMoreUsed)} GB</p>
-                        </div>
-                    </div>
-            `
-        }, 100);
     }
-
     document.getElementById('select_maquinas').addEventListener('change', function () {
         var maquinaSelecionada = this.value;
 
@@ -437,4 +381,72 @@
             }
         }
     });
+    function listarAlerta() {
+        setTimeout(function () {
+            fetch("/dashboard/listarMaquinas", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    bancoServer: banco,
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(json => {
+                        json.forEach(element => {
+                            console.log(element)
+                            if (element.NomeComponente.includes("Processador")){
+                            container_alertas.innerHTML += `
+                                <div class="alerta" id="alerta">
+                                    <div class="t-alerta">
+                                        <p class="i-maquina">Máquina ${element.IdMaquina}</p>
+                                        <div class="horario">
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                            <p class="horario_alerta">${element.DataHora}</p>
+                                        </div>
+                                    </div>
+                                    <div class="b-alerta alert-blue">
+                                        <p class="elemento-alerta">CPU</p>
+                                        <p class="porcentagem-alerta">${Math.round(element.MaiorPorcentagem)}%</p>
+                                    </div>
+                                </div>
+                                `} else if (element.NomeComponente.includes("RAM")){
+                                    container_alertas.innerHTML += `
+                                    <div class="alerta">
+                                        <div class="t-alerta">
+                                            <p class="i-maquina">Máquina ${element.IdMaquina}</p>
+                                            <div class="horario">
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                                <p class="horario_alerta">${element.DataHora}</p>
+                                            </div>
+                                        </div>
+                                        <div class="b-alerta alert-red">
+                                            <p class="elemento-alerta">RAM</p>
+                                            <p class="porcentagem-alerta">${Math.round(element.MaiorPorcentagem)}%</p>
+                                        </div>
+                                    </div>
+                                    `;
+                                } else if (element.NomeComponente.includes("Disco"))
+                                container_alertas.innerHTML += `
+                                    <div class="alerta">
+                                        <div class="t-alerta">
+                                            <p class="i-maquina">Máquina ${element.IdMaquina}</p>
+                                            <div class="horario">
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                                <p class="horario_alerta">${element.DataHora}</p>
+                                            </div>
+                                        </div>
+                                        <div class="b-alerta alert-yellow">
+                                            <p class="elemento-alerta">DISCO</p>
+                                            <p class="porcentagem-alerta">${Math.round(element.MaiorPorcentagem)}%</p>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                    });
+                }
+            });
+        }, 100);
+    }
 </script>

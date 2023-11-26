@@ -1141,6 +1141,11 @@ a:hover {
 .left_side_logo-func img {
     width: 23%;
 }
+
+.icon-plus i, .fa .fa-plus{
+    color: #9E6AE1;
+    font-size: 18px;
+}
 .num-funcional{
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
