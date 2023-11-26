@@ -14,9 +14,6 @@
 </head>
 
 <body>
-
-  <!-- Inicio da Nav-bar-->
-
   <div class="left_side_logo-add-func">
     <div class="container-logo-top-side">
       <img src="./assets/img-nexus/logo_nexs.svg" alt="Logo Nexus." srcset="">
@@ -115,13 +112,53 @@
           </div>
         </div>
         <div class="icons" id="#icons">
-          <i class="fa fa-pencil" aria-hidden="true"></i>
+          <i class="fa fa-pencil" aria-hidden="true" onclick="openModal()"></i>
           <i class="fa fa-trash" aria-hidden="true"></i>
         </div>
       </div>
     </div>
   </div>
+  <div class="modal" id="modal">
+    <div class="container-modal">
+      <div class="top-side-modal">
+        <h2 class="title-modal">ATUALIZANDO DADOS</h2>
+        <p class="close-button"><i class="fa fa-times" aria-hidden="true"></i></p>
+      </div>
+      <div class="bottom-side-modal">
+        <div class="left-side-modal">
+          <div class="name-input">
+            <p id="title-input">Nome</p>
+            <input type="text" class="inputs-modal" value="Marcos">
+          </div>
+          <div class="lastname-input">
+            <p id="title-input">Sobrenome</p>
+            <input type="text" class="inputs-modal" value="Trajano">
+          </div>
+          <div class="email-input">
+            <p id="title-input">Email Corporativo</p>
+            <input type="text" class="inputs-modal" value="marcos.vt.souza@bradesco.com.br">
+          </div>
+          <div class="tel-input">
+            <p id="title-input">Telefone</p>
+            <input type="text" class="inputs-modal" value="9-9999-9999">
+          </div>
+          <div class="role-input">
+            <p id="title-input">Cargo</p>
+            <input type="text" class="inputs-modal" value="Gerente">
+          </div>
+        </div>
+        <div class="right-side-modal">
+          <div class="button-modal">
+            <p>Atualizar funcionário <i class="fa fa-pencil" aria-hidden="true" id="botao-fechar"></i></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
+
+  </div>
+
   </div>
 </body>
 
@@ -130,6 +167,16 @@
 <script>
 
   // window.onload = validarSessao(), listarFuncionarios();
+
+  function openModal() {
+    var modal = document.getElementById("modal");
+    modal.style.display = 'flex';
+
+    var closeButton = document.querySelector("#modal .close-button");
+    closeButton.addEventListener('click', function () {
+      modal.style.display = 'none';
+    });
+  }
 
 
   function validarSessao() {
