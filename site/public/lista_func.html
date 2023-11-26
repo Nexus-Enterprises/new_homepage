@@ -90,32 +90,8 @@
         <h1>Nome</h1>
         <h1>Status</h1>
       </div>
-      <div class="card-container">
-        <div class="card-details">
-          <div class="row row-infos">
-            <h1 class="card-nome">Marcos</h1>
-            <h1 class="card-status ativo">Ativo</h1>
-            <div class="icon-plus" id="icon_plus">
-              <i class="fa fa-plus" aria-hidden="true"></i>
-            </div>
-          </div>
-          <div class="row hidden">
-            <div class="card-email">
-              <h2>Email:</h2>
-              <p>marcos@email.com</p>
-            </div>
-            <div class="card-telefone">
-              <h2>Telefone:</h2>
-              <p>9-9999-9999</p>
-            </div>
-            <div class="card-maquina">
-              <h2>Máquina:</h2>
-              <p>1</p>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
+  </div>
   </div>
   </div>
 </body>
@@ -124,7 +100,8 @@
 
 <script>
 
-  window.onload
+  window.onload = validarSessao(), listarFuncionarios();
+
 
   function validarSessao() {
     var email = sessionStorage.EMAIL_USUARIO;
@@ -161,7 +138,7 @@
             listaDeFuncionarios.innerHTML += `
             <div class="card-container">
                   <div class="card-details">
-                    <div class="row">
+                    <div class="row row-infos">
                       <h1 class="card-nome">${e.NomeFuncionario}</h1>
                       <h1 class="card-status ativo">${e.SituacaoFuncionario}</h1>
                       <div class="icon-plus" id="icon_plus">
@@ -187,11 +164,12 @@
                 `
             contador++
           })
-          var cardContents = document.querySelectorAll('.card-container');
+          var cardContents = document.querySelectorAll('.icon-plus');
+          var elementosPai = document.querySelectorAll('.card-container');
 
-          cardContents.forEach(cardContainer => {
+          cardContents.forEach((cardContainer, index) => {
             cardContainer.addEventListener('click', () => {
-              cardContainer.classList.toggle('expanded');
+              elementosPai[index].classList.toggle('expanded');
             });
           });
         });

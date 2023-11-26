@@ -281,6 +281,9 @@ a:hover {
     display: flex;
     flex-direction: column;
     max-height: 3.5vh;
+    align-items: center;
+    width: 105%;
+
 }
 
 .card-details .row {
@@ -291,6 +294,7 @@ a:hover {
 
 .card-email, .card-telefone, .card-maquina{
     width: 33%;
+    max-width: 12%;
 }
 
 /* lista de funcionario */
@@ -306,6 +310,11 @@ a:hover {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    max-width: 17.6%;
+}
+
+#icon_plus{
+    font-size: 18px;
 }
 
 .icon-plus {
