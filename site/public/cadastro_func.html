@@ -15,12 +15,13 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="validarSessao()">
+<body>
+
     <div class="topo">
-        <a href="index.html" style="color: white;">
+        <a href="lista_func.html" style="color: white;">
             <button class="btn-voltar">
                 <div class="seta-voltar"></div>
-                Voltar para tela principal
+                Voltar para tela anterior
             </button>
         </a>
         <div class="imagem-title">
@@ -31,60 +32,46 @@
 
 
     <div class="container">
-
         <div class="progress">
             <div class="circle-active">1</div>
-            <div class="circle">2</div>
-            <div class="circle">3</div>
-            <div class="circle">4</div>
+            <div class="circle-active">2</div>
         </div>
-
-        <h1 class="primary-title">Bem-Vindo ao Nexus</h1>
-
-        <p>Coloque suas informações básicas para fazer o cadastro</p>
+        <p>Coloque as informações básicas para o cadastro do Funcionario</p>
 
         <!-- Informações adicionais -->
         <div class="information-login">
             <div>
-            <label for="first-name">Nome*</label>
-            <input id="firstName" name="first-name" required placeholder="Insira seu nome">
-        </div>
-        <div>
-            <label for="last_name">Sobrenome*</label>
-            <input id="lastName" name="last-name" required placeholder="Insira seu sobrenome">
-        </div>
-        <div>
-            <label for="email">Email corporativo*</label>
-            <input id="email" name="email" required placeholder="Insira seu email">
-        </div>
-        <div>
-            <label for="cargo">Cargo*</label>
-            <input name="role" id="role" required placeholder="Insira seu cargo">
-        </div>
+                <label for="first-name">Nome*</label>
+                <input id="firstName" name="first-name" required placeholder="Insira seu nome">
+            </div>
+            <div>
+                <label for="last_name">Sobrenome*</label>
+                <input id="lastName" name="last-name" required placeholder="Insira seu sobrenome">
+            </div>
+            <div>
+                <label for="email">Email corporativo*</label>
+                <input id="email" name="email" required placeholder="Insira seu email">
+            </div>
+            <div>
+                <label for="cargo">Cargo*</label>
+                <input name="role" id="role" required placeholder="Insira seu cargo">
+            </div>
             <div class="phone">
                 <div class="ddd">
                     <label for="id_ddd">DDD</label>
-                    <input id="phone_ddd" class="tel-ddd" name="phone_ddd" placeholder="(99)">  
+                    <input id="phone_ddd" class="tel-ddd" name="phone_ddd" placeholder="(99)">
                 </div>
                 <div class="telefone">
-                <label for="Telefone">Telefone Corporativo*</label>
-                <input id="phone_number" name="phone-number" placeholder="99999-9999">
+                    <label for="Telefone">Telefone Corporativo*</label>
+                    <input id="phone_number" name="phone-number" placeholder="99999-9999">
                 </div>
             </div>
 
-            <div class="agency">
-                <label for="Agency">Banco*</label>
-                <div class="agencia">
-                    <select id="agency_empresa" required>
-                        <option selected>Selecione um Banco</option>
-                    </select>
-                </div>
-            </div>
             <a class="submit-proxima"><button class="submit-proxima" onclick="register()">Póxima etapa</button></a>
         </div>
 
 
-        
+
     </div>
 
 </body>
@@ -92,43 +79,18 @@
 </html>
 
 <script>
-
-    function validarSessao() {
-        sessionStorage.clear();
-        
-        fetch("/usuarios/listarEmpresa", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-            })
-        }).then(function (response) {
-            if (response.ok) {
-                response.json().then(json => {
-
-                    json.forEach(element => {
-                        agency_empresa.innerHTML += `
-            <option value="${element.nomeEmpresa}">${element.nomeEmpresa}</option>
-          `;
-                    });
-                })
-            }
-        });
-    }
-
     function register() {
         var firstNameVar = document.getElementById("firstName").value;
         var lastNameVar = document.getElementById("lastName").value;
         var emailVar = document.getElementById("email").value;
         var phoneDDDVar = document.getElementById("phone_ddd").value;
         var phoneNumberVar = document.getElementById("phone_number").value;
-        var agencyEmpreVar = document.getElementById("agency_empresa").value;
+        var agencia = sessionStorage.AGENCIA;
+        var agencyEmpreVar = sessionStorage.BANCO;
         var roleVar = document.getElementById("role").value;
-        var fkFunc = null;
-        var agencia = 1;
+        var fkFunc = sessionStorage.ID_FUNCIONARIO
 
-        if (firstNameVar == "" || lastNameVar == "" || emailVar == "" || phoneDDDVar == "" || phoneNumberVar == "" || roleVar == "" || agencyEmpreVar == "") {
+        if (firstNameVar == "" || lastNameVar == "" || emailVar == "" || phoneDDDVar == "" || phoneNumberVar == "" || roleVar == "") {
             console.log("Erro ao cadastrar! Confira os campos");
             return false;
         }
@@ -144,23 +106,19 @@
                 emailServer: emailVar,
                 phoneDDDServer: phoneDDDVar,
                 phoneNumberServer: phoneNumberVar,
+                agenciaServer: agencia,
                 roleServer: roleVar,
                 agencyEmpreServer: agencyEmpreVar,
-                fkfuncServer: fkFunc,
-                agenciaServer: agencia,
+                fkfuncServer: fkFunc
             })
         }).then(function (response) {
             if (response.status === 200) {
-                sessionStorage.FUNCIONARIO = firstNameVar;
-                sessionStorage.BANCO = agencyEmpreVar;
-                sessionStorage.Email = emailVar;
-
-                console.log("Cadastro realizado com sucesso!");
+                sessionStorage.EMAILFUNC2 = emailVar
                 setTimeout(() => {
-                    window.location = "cadastro02.html";
+                    window.location = "cadastro_maq_func.html";
                 }, "2000")
             } else {
-                console.log("Erro ao realizar o cadastro.");
+                console.log("Erro ao realizar o cadastro." + response);
             }
         }).catch(function (error) {
             console.log("Erro na resposta:", error);

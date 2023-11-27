@@ -12,12 +12,10 @@ function autenticar(email, token) {
 }
 
 // Coloque os mesmos parâmetros aqui. Vá para a var instrucao
-function cadastrarFuncionario(firstName, lastName, email, phoneDDD, phoneNumber, role, agencyEmpre) {
-    console.log("model")
+function cadastrarFuncionario(firstName, lastName, email, phoneDDD, phoneNumber, role , agencia, agencyEmpre, fkFuncionario) {
     var instrucao = `
-        INSERT INTO Funcionario (nome, sobrenome, emailCorporativo, ddd, telefone, cargo, situacao, fkAgencia, fkEmpresa) VALUES ('${firstName}', '${lastName}', '${email}', '${phoneDDD}', '${phoneNumber}', '${role}', 'Ativo', 1, (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${agencyEmpre}'));
+        INSERT INTO Funcionario (nome, sobrenome, emailCorporativo, ddd, telefone, cargo, situacao, fkAgencia, fkEmpresa, fkFuncionario) VALUES ('${firstName}', '${lastName}', '${email}', '${phoneDDD}', '${phoneNumber}', '${role}', 'Ativo', ${agencia}, (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${agencyEmpre}'), ${fkFuncionario});
     `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }
 
@@ -47,13 +45,14 @@ function cadastrarAgencia(agencia, digito, organizacao, email, ddd, telefone, en
 
 function listarFuncionario(agencia, empresa) {
     console.log(agencia);
+    console.log(empresa);
 
     var instrucao = `
         SELECT Funcionario.idFuncionario, Funcionario.nome
         FROM Funcionario
         INNER JOIN Agencia ON Funcionario.fkAgencia = Agencia.idAgencia
         INNER JOIN Empresa ON Agencia.fkEmpresa = Empresa.idEmpresa
-        WHERE Agencia.numero = '${agencia}'
+        WHERE Agencia.idAgencia = ${agencia}
         AND Empresa.nomeEmpresa = '${empresa}';
     `;
 
@@ -68,10 +67,10 @@ function listarEmpresa() {
     return database.executar(instrucao);
 }
 
-function cadastrarMaquina(brand, model, situation, funcionario, agencia, banco, email) {
+function cadastrarMaquina(brand, model, situation, agencia, banco, email) {
 
     var instrucao = `
-    INSERT INTO Maquina (marca, modelo, situacao, fkFuncionario, fkAgencia, fkEmpresa) VALUES ('${brand}', '${model}', '${situation}', (SELECT idFuncionario FROM Funcionario WHERE emailCorporativo = '${email}'), (SELECT idAgencia FROM Agencia WHERE numero = ${agencia}), (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}'));
+    INSERT INTO Maquina (marca, modelo, situacao, fkFuncionario, fkAgencia, fkEmpresa) VALUES ('${brand}', '${model}', '${situation}', (SELECT idFuncionario FROM Funcionario WHERE emailCorporativo = '${email}'), ${agencia}, (SELECT idEmpresa FROM Empresa WHERE nomeEmpresa = '${banco}'));
     `;
 
     return database.executar(instrucao);
@@ -87,6 +86,17 @@ function cadastrarToken(email, token) {
     return database.executar(instrucao);
 }
 
+function idAgencia(agencia) {
+
+    var instrucao = `
+    SELECT *
+        FROM Agencia
+        WHERE numero = '${agencia}';
+    `;
+
+    return database.executar(instrucao);
+}
+
 module.exports = {
     autenticar,
     cadastrarFuncionario,
@@ -95,5 +105,6 @@ module.exports = {
     listarFuncionario,
     cadastrarMaquina,
     cadastrarToken,
-    listarEmpresa
+    listarEmpresa,
+    idAgencia
 };

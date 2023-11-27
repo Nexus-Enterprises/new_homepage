@@ -587,7 +587,9 @@ i:hover{
 }
 
 .right-side-modal{
-    align-items: flex-end;
+    align-items: center;
     display: flex;
     justify-content: flex-start;
+    flex-direction: column;
+    margin: 39.8% 20% 0 2%;
 }

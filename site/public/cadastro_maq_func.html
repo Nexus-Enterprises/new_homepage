@@ -15,7 +15,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="validarSessao()">
+<body onload="funcionario()">
   <body>
     <div class="topo">
       <a href="cadastro03.html" style="color: white;">
@@ -34,9 +34,6 @@
       <div class="progress">
         <div class="circle-active">1</div>
         <div class="circle-active">2</div>
-        <div class="circle-active">3</div>
-        <div class="circle-active">4</div>
-
       </div>
 
       <h1 class="primary-title">Cadastre sua Maquina</h1>
@@ -80,7 +77,8 @@
     var modelVar = document.getElementById("model").value;
     var situationVar = document.getElementById("situation").value;
     var funcionarioVar = document.getElementById("funcionario_slc").value;
-    var email = sessionStorage.Email;
+    var email = sessionStorage.EMAILFUNC2;
+
 
     if (brandVar == "" || modelVar == "" || situationVar == "" || funcionarioVar == "") {
       console.log("Erro ao cadastrar! Confira os campos");
@@ -96,10 +94,9 @@
         brandServer: brandVar,
         modelServer: modelVar,
         situationServer: situationVar,
-        funcionarioServer: funcionarioVar,
         agenciaServer: sessionStorage.AGENCIA,
         bancoServer: sessionStorage.BANCO,
-        emailServer: email
+        emailServer: sessionStorage.EMAILFUNC2
       })
     }).then(function (response) {
       if (response.status === 200) {
@@ -121,7 +118,6 @@
   function funcionario() {
     var agencia = sessionStorage.AGENCIA;
     var banco = sessionStorage.BANCO;
-    var email =
 
     fetch("/usuarios/listarFuncionario", {
       method: "POST",
@@ -148,36 +144,5 @@
 
     return false;
   }
-
-  function validarSessao() {
-    // aguardar();
-    var endereco = sessionStorage.ENDERECO;
-    var funcionario = sessionStorage.FUNCIONARIO;
-    var banco = sessionStorage.BANCO;
-    var agencia = sessionStorage.AGENCIA;
-
-      fetch("/usuarios/idAgencia", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        agenciaServer: sessionStorage.AGENCIA,
-      })
-    }).then(function (response) {
-      if (response.ok) {
-        response.json().then(json => {
-          console.log(json)
-          json.forEach(e => {
-            sessionStorage.AGENCIA = e.idAgencia;
-          })
-        })
-      } else {
-        console.log("Erro ao realizar o cadastro.");
-      }
-    }).catch(function (error) {
-      console.log("Erro na resposta:", error);
-    });
-    funcionario()
-  }
+  
 </script>

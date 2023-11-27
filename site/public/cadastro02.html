@@ -196,7 +196,7 @@
       })
     }).then(function (response) {
       if (response.status === 200) {
-        sessionStorage.Endereco = enderecoVar;
+        sessionStorage.ENDERECO = enderecoVar;
 
         console.log("Cadastro realizado com sucesso!");
         setTimeout(() => {
@@ -214,9 +214,9 @@
 
   function validarSessao() {
     // aguardar();
-    var endereco = sessionStorage.Endereco;
-    var funcionario = sessionStorage.Funcionario;
-    var banco = sessionStorage.Banco;
+    var endereco = sessionStorage.ENDERECO;
+    var funcionario = sessionStorage.FUNCIONARIO;
+    var banco = sessionStorage.BANCO;
 
     if (funcionario != null) {
 

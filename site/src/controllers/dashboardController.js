@@ -27,17 +27,17 @@ function atualizarFuncionario(req, res) {
   var cargo = req.body.cargoServer;
   var idFuncionario = req.body.idFuncionarioServer;
 
-
   dashboardModel.atualizarFuncionario(nome,sobrenome,email,telefone,cargo, idFuncionario)
-    .then(function (resultado) {
-      console.log("O update foi realizado com sucesso!")
-    }).catch(
-      function (erro) {
-        console.log(erro);
-        console.log("Houve um erro ao realizar ao atualizar! Erro: ", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
-      }
-    );
+  .then(function (resultado) {
+    console.log(resultado);
+    console.log("O update foi realizado com sucesso!");
+    res.status(200).json({ mensagem: "Update realizado com sucesso!" });
+  })
+  .catch(function (erro) {
+    console.log(erro);
+    console.log("Houve um erro ao realizar ao atualizar! Erro: ", erro.sqlMessage);
+    res.status(500).json({ erro: erro.sqlMessage });
+  });
 }
 
 function deletarFuncionario(req, res){

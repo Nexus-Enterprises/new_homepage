@@ -40,6 +40,8 @@ function cadastrarFuncionario(req, res) {
     const phoneNumber = req.body.phoneNumberServer;
     const role = req.body.roleServer;
     const agencyEmpre = req.body.agencyEmpreServer;
+    const fkFunc = req.body.fkfuncServer;
+    const agencia = req.body.agenciaServer
 
     // Validar os valores
     if (!firstName || !lastName || !email || !phoneDDD || !phoneNumber || !role || !agencyEmpre) {
@@ -47,7 +49,7 @@ function cadastrarFuncionario(req, res) {
     }
 
     // Passar os valores como parâmetros para o modelo de usuário (usuarioModel)
-    usuarioModel.cadastrarFuncionario(firstName, lastName, email, phoneDDD, phoneNumber, role, agencyEmpre)
+    usuarioModel.cadastrarFuncionario(firstName, lastName, email, phoneDDD, phoneNumber, role, agencia, agencyEmpre, fkFunc)
         .then(function (resultado) {
             console.log("Cadastro realizado com sucesso!");
             res.json(resultado);
@@ -123,6 +125,7 @@ function listarFuncionario(req, res) {
     console.log("controller")
     usuarioModel.listarFuncionario(agencia, empresa)
         .then(function (resultado) {
+
             if (resultado.length > 0) {
                 res.status(200).json(resultado);
             } else {
@@ -159,18 +162,17 @@ function cadastrarMaquina(req, res) {
     const brand = req.body.brandServer
     const model = req.body.modelServer;
     const situation = req.body.situationServer;
-    const funcionario = req.body.funcionarioServer;
     const agencia = req.body.agenciaServer;
     const banco = req.body.bancoServer;
     const email = req.body.emailServer;
-
+    console.log(brand, model, situation, agencia, banco, email)
     // Validar os valores
-    if (!brand || !model || !situation || !funcionario) {
+    if (!brand || !model || !situation) {
         return res.status(400).json({ error: "Por favor, preencha todos os campos corretamente." });
     }
 
     // Passar os valores como parâmetros para o modelo de usuário (usuariomodel)
-    usuarioModel.cadastrarMaquina(brand, model, situation, funcionario, agencia, banco, email)
+    usuarioModel.cadastrarMaquina(brand, model, situation, agencia, banco, email)
         .then(function (resultado) {
             console.log("Cadastro realizado com sucesso!");
             res.json(resultado);
@@ -198,6 +200,21 @@ function cadastrarToken(req, res) {
         });
 }
 
+function idAgencia(req, res) {
+    // Obter os valores do corpo da solicitação
+    const agencia = req.body.agenciaServer;
+
+    usuarioModel.idAgencia(agencia)
+        .then(function (resultado) {
+            console.log("Cadastro realizado com sucesso!");
+            res.json(resultado);
+        })
+        .catch(function (erro) {
+            console.log("Houve um erro ao realizar o cadastro:", erro);
+            res.status(500).json({ error: "Houve um erro ao realizar o cadastro." });
+        });
+}
+
 module.exports = {
     autenticar,
     cadastrarFuncionario,
@@ -206,5 +223,6 @@ module.exports = {
     listarFuncionario,
     cadastrarMaquina,
     cadastrarToken,
-    listarEmpresa
+    listarEmpresa,
+    idAgencia
 }

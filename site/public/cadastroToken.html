@@ -56,10 +56,10 @@
   }
 
   function validarSessao() {
-    var endereco = sessionStorage.Endereco;
-    var funcionario = sessionStorage.Funcionario;
-    var banco = sessionStorage.Banco;
-    var agencia = sessionStorage.Agencia;
+    var endereco = sessionStorage.ENDERECO;
+    var funcionario = sessionStorage.FUNCIONARIO;
+    var banco = sessionStorage.BANCO;
+    var agencia = sessionStorage.AGENCIA;
     var email = sessionStorage.Email;
 
     if (funcionario != null) {
@@ -76,7 +76,7 @@
 
     var emailVar = sessionStorage.Email;
     var tokenVar = token;
-    var funcionarioVar = sessionStorage.Funcionario;
+    var funcionarioVar = sessionStorage.FUNCIONARIO;
 
     if (sessionStorage.Token == null) {
       fetch("/usuarios/cadastrarToken", {

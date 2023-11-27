@@ -36,5 +36,8 @@ router.post("/cadastrarToken", function (req, res) {
     usuarioController.cadastrarToken(req, res);
 });
 
+router.post("/idAgencia", function (req, res) {
+    usuarioController.idAgencia(req, res);
+});
 
 module.exports = router;

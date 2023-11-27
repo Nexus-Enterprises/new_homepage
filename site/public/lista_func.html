@@ -20,10 +20,12 @@
       <h2 class="left_side_title">Nexus.</h2>
     </div>
     <div class="num-agencia">Agencia 001</div>
-    <div class="container-add-func-top-side">
-      <i class="fa fa-user-plus" aria-hidden="true"></i>
-      <p class="text-add-func">Funcionário</p>
-    </div>
+    <a href="cadastro_func.html" style="color: white;">
+      <div class="container-add-func-top-side" >
+        <i class="fa fa-user-plus" aria-hidden="true"></i>
+        <p class="text-add-func">Funcionário</p>
+      </div>
+    </a>
   </div>
   <div class="container">
     <div class="left_side">
@@ -100,6 +102,8 @@
 </html>
 
 <script>
+  var cardContents = "";
+  var elementosPai = "";
 
   window.onload = validarSessao(), listarFuncionarios();
 
@@ -116,6 +120,12 @@
     });
   }
 
+  function closeModal(idFuncionario) {
+    var modalFuncionario = document.getElementById(`modal${idFuncionario}`);
+    var modalPai = document.getElementById("modal")
+    modalPai.style.display = 'none';
+    modalFuncionario.style.display = 'none';
+  }
 
   function validarSessao() {
     var email = sessionStorage.EMAIL_USUARIO;
@@ -149,15 +159,25 @@
         idFuncionarioServer: idFuncionario
       })
     }).then(function (resposta) {
-      if (resposta.ok) {
-        
-        console.log("Update realizado com sucesso")
-
+      if (resposta.status == 200) {
+        const erroLogin = document.getElementById(`erroLogin${idFuncionario}`);
+        erroLogin.innerHTML = `
+          Mudança Realizada!
+        `;
+        setTimeout(function () {
+          erroLogin.innerHTML = `
+        `;
+        }, 5000);
+        setTimeout(function () {
+          console.log("fechar")
+          closeModal(idFuncionario)
+        }, 5100)
+        console.log(resposta.status)
       }
     })
   }
 
-  function deletarFuncionario(idFuncionario){
+  function deletarFuncionario(idFuncionario) {
 
     fetch("/dashboard/deletarFuncionario", {
       method: "POST",
@@ -169,7 +189,7 @@
       })
     }).then(function (resposta) {
       if (resposta.ok) {
-        
+
         console.log("Update realizado com sucesso")
 
       }
@@ -262,19 +282,20 @@
                       <p id="title-input">Cargo</p>
                       <input type="text" class="inputs-modal" value="${e.CargoFuncionario}" id="input-cargo-${e.idFuncionario}">
                     </div>
-                  </div>
-                  <div class="right-side-modal">
-                    <div class="button-modal" onclick="atualizarFuncionario(${e.idFuncionario})">
-                      <p>Atualizar funcionário <i class="fa fa-pencil" aria-hidden="true" id="botao-fechar"></i></p>
                     </div>
+                    <div class="right-side-modal">
+                      <p id="erroLogin${e.idFuncionario}" style="color: white"></p>
+                    <div class="button-modal" onclick="atualizarFuncionario(${e.idFuncionario})">
+                      <p>Atualizar funcionário </p>
+                      </div>
                   </div>
                 </div>
               </div>`
 
             contador++
           })
-          var cardContents = document.querySelectorAll('.icon-plus');
-          var elementosPai = document.querySelectorAll('.card-container');
+          cardContents = document.querySelectorAll('.icon-plus');
+          elementosPai = document.querySelectorAll('.card-container');
 
           cardContents.forEach((cardContainer, index) => {
             cardContainer.addEventListener('click', () => {
@@ -283,9 +304,6 @@
           });
         });
       }
-
     });
-
-
   }
 </script>

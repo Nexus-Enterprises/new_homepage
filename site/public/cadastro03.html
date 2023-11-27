@@ -97,7 +97,7 @@
     var emailVar = document.getElementById("id_email").value;
     var dddVar = document.getElementById("id_ddd").value;
     var telefoneVar = document.getElementById("id_telefone").value;
-    var enderecoVar = sessionStorage.Endereco
+    var enderecoVar = sessionStorage.ENDERECO
     var emailFunc = sessionStorage.Email
     console.log(emailFunc)
 
@@ -125,11 +125,11 @@
       })
     }).then(function (response) {
       if (response.status === 200) {
-        sessionStorage.Agencia = agenciaVar;
+        sessionStorage.AGENCIA = agenciaVar;
         console.log("Cadastro realizado com sucesso!");
         setTimeout(() => {
           window.location = "cadastro04.html";
-        }, "200000000000000000000")
+        }, "2000")
       } else {
         console.log("Erro ao realizar o cadastro.");
       }
@@ -142,9 +142,9 @@
 
   function validarSessao() {
     // aguardar();
-    var endereco = sessionStorage.Endereco;
-    var funcionario = sessionStorage.Funcionario;
-    var banco = sessionStorage.Banco;
+    var endereco = sessionStorage.ENDERECO;
+    var funcionario = sessionStorage.FUNCIONARIO;
+    var banco = sessionStorage.BANCO;
     banco_ip.innerHTML = `
       <label for="id_organizacao">Organização</label>
       <input type="text" id="id_organizacao" name="name-organizacao" value="${banco}">
