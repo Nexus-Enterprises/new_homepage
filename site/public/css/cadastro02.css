@@ -145,7 +145,7 @@ a:hover {
 /* Estilos para o formulário de login */
 .information-login {
   max-width: 400px;
-  margin: 0 auto;
+  margin: 0 0;
   padding: 20px;
   color: white;
   border-radius: 5px;
@@ -172,16 +172,16 @@ a:hover {
   max-width: 10%;
   width: 10px;
   height: 43px;
-  margin-top: 26px;
+  margin-top: 24px;
   padding: 10px;
   box-sizing: border-box;
-  background-color: white;
-  border: 1px solid #ccc;
+  background-color: transparent;
+  border: 3px solid #9F84A9;
   border-radius: 5px;
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: black;
+  color: white;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
 }
@@ -192,23 +192,43 @@ a:hover {
 }
 
 #search_cep:hover{
-  background-color: #ffd5d5;
+  background-color: #9E6AE1;
 }
 
 .ceps,
 .enderecos,
 .cidade-uf {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+}
+.enderecos {
+  width: 100%;
+  gap: 10px;
 }
 
-.ceps>div,
-.enderecos>div,
-.cidade-uf>div {
+.ceps>div {
   flex: 1;
   min-width: 100px;
   margin-right: 10px;
 }
+.logradouro {
+  width: 70%;
+  
+ }
+ .numero {
+  width: 25%;
+ }
+ .cidade {
+  width: 70%;
+ }
+ .uf {
+  width: 25%;
+ }
+ .cidade-uf {
+  width: 100%;
+  gap: 10px;
+
+ }
 
 .ceps input[type="text"] {
   width: 100%;
@@ -217,21 +237,20 @@ a:hover {
   border-radius: 5px;
 }
 
-.ceps>div,
-.enderecos>div,
-.cidade-uf>div {
-  display: flex;
-  flex-direction: column;
-}
-
 #id_bairro,
 #id_complemento {
   width: 98%;
 }
+.botao-div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 
 .submit-proxima {
   width: 100%;
-  max-width: 400px;
+  margin-top: 17px;
+  max-width: 390px;
   padding: 12px;
   box-sizing: border-box;
   border-radius: 5px;

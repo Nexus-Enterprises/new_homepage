@@ -54,16 +54,15 @@
           <input type="text" id="id_cep" name="name-cep" required placeholder="99999-999">
           <div id="cep-error" style="color: red;"></div>
         </div>
-
         <div id="search_cep"><i class="fa fa-search" aria-hidden="true"></i></div>
       </div>
       <div id="enderecoAgencia">
         <div class="enderecos">
-          <div>
+          <div class="logradouro">
             <label>Logradouro*</label>
             <input type="text" id="id_endereco" name="name-endereco" required placeholder="Av. Paulista...">
           </div>
-          <div>
+          <div class="numero">
             <label>Número</label>
             <input type="text" id="id_numero" name="name-numero" required placeholder="0000">
           </div>
@@ -73,11 +72,11 @@
           <input type="text" id="id_bairro" name="name-bairro" required placeholder="Interlagos">
         </div>
         <div class="cidade-uf">
-          <div>
+          <div class="cidade">
             <label>Cidade*</label>
             <input type="text" id="id_cidade" name="name-cidade" required placeholder="São Paulo">
           </div>
-          <div>
+          <div class="uf">
             <label>UF*</label>
             <input type="text" id="id_uf" name="name-uf" required placeholder="SP">
           </div>
@@ -87,10 +86,10 @@
           <input type="text" id="id_complemento" name="name-complemento" placeholder="Casa 03 ou Ap: 54">
         </div>
       </div>
+        <button class="submit-proxima" onclick="register()">Próxima etapa</button>
     </div>
 
 
-    <button class="submit-proxima" onclick="register()">Próxima etapa</button>
 
   </div>
 
@@ -109,7 +108,7 @@
     const cep = document.getElementById("id_cep").value;
     const cepError = document.getElementById("cep-error");
 
-    id_cep.addEventListener("blur", () => {
+    id_cep.addEventListener("click", () => {
       const cepValue = id_cep.value;
       const cepPattern = /^\d{5}-\d{3}$/;
 

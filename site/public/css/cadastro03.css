@@ -159,10 +159,19 @@ a:hover {
   outline: none;
 }
 
+.numeroAgencia {
+  width: 85%;
+}
+.numeroDigito {
+  width: 15%;
+}
+
+
 .agencia {
+  width: 100%;
+  gap: 10px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
 }
 
@@ -178,7 +187,7 @@ a:hover {
 }
 
 .agencia input {
-  width: 245px;
+  width: 100%;
   padding: 12px;
   box-sizing: border-box;
   border-radius: 5px;
@@ -187,21 +196,24 @@ a:hover {
   outline: none;
 }
 
+
 #id_digito {
-  width: 150px;
+  width: 3vw;
 }
 
 .telefone {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
-  width: 105%;
+  width: 100%;
 }
 
 .telefone div {
   flex-direction: column;
   align-items: center;
+}
+.ddd {
+  width: 20%;
 }
 
 .telefone label {
@@ -212,7 +224,7 @@ a:hover {
 }
 
 .telefone input {
-  width: 300px;
+  width: 100%;
   box-sizing: border-box;
   border-radius: 5px;
   margin-bottom: 20px;
@@ -221,7 +233,7 @@ a:hover {
 }
 
 #id_ddd {
-  width: 90px;
+  width: 3vw;
 }
 
 .submit-proxima {

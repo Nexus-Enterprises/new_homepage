@@ -45,38 +45,46 @@
 
         <!-- Informações adicionais -->
         <div class="information-login">
+            <div>
             <label for="first-name">Nome*</label>
             <input id="firstName" name="first-name" required placeholder="Insira seu nome">
-
+        </div>
+        <div>
             <label for="last_name">Sobrenome*</label>
             <input id="lastName" name="last-name" required placeholder="Insira seu sobrenome">
-
+        </div>
+        <div>
             <label for="email">Email corporativo*</label>
             <input id="email" name="email" required placeholder="Insira seu email">
-
+        </div>
+        <div>
             <label for="cargo">Cargo*</label>
             <input name="role" id="role" required placeholder="Insira seu cargo">
-
+        </div>
             <div class="phone">
+                <div class="ddd">
+                    <label for="id_ddd">DDD</label>
+                    <input id="phone_ddd" class="tel-ddd" name="phone_ddd" placeholder="(99)">  
+                </div>
+                <div class="telefone">
                 <label for="Telefone">Telefone Corporativo*</label>
-                <div>
-                    <input id="phone_ddd" class="tel-ddd" name="phone_ddd" placeholder="(99)">
-                    <input id="phone_number" name="phone-number" placeholder="99999-9999">
+                <input id="phone_number" name="phone-number" placeholder="99999-9999">
                 </div>
             </div>
 
             <div class="agency">
                 <label for="Agency">Banco*</label>
-                <div>
+                <div class="agencia">
                     <select id="agency_empresa" required>
                         <option selected>Selecione um Banco</option>
                     </select>
                 </div>
             </div>
+            <a class="submit-proxima"><button class="submit-proxima" onclick="register()">Póxima etapa</button></a>
         </div>
 
 
-        <a class="submit-proxima"><button class="submit-proxima" onclick="register()">Póxima etapa</button></a>
+        
     </div>
 
 </body>
